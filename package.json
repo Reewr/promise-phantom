@@ -1,0 +1,23 @@
+{
+  "name": "phantom-promise",
+  "version": "1.0.0",
+  "description": "Promise-wrapper for phantom-library",
+  "main": "index.js",
+  "scripts": {
+    "test": "bndg test/index.js | tap-spec"
+  },
+  "keywords": [
+    "promise",
+    "phantom",
+    "phantomjs"
+  ],
+  "author": "Alexander Imenes",
+  "license": "MIT",
+  "devDependencies": {
+    "bandage": "^0.2.3",
+    "tap-spec": "^4.1.0"
+  },
+  "dependencies": {
+    "phantom": "^0.8.3"
+  }
+}

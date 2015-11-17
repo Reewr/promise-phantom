@@ -1,0 +1,28 @@
+{
+  "passfail": false,
+  "maxerr": 100,
+  "node": true,
+  "forin": false,
+  "boss": true,
+  "noarg": true,
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "indent": 2,
+  "white": false,
+  "predef": [
+    "exports",
+    "require",
+    "process"
+  ],
+  "esnext": true,
+  "shadow": true,
+  "supernew": true,
+  "strict": false,
+  "unused": true,
+  "nonbsp": true,
+  "maxstatements": 20,
+  "maxparams": 6
+}
