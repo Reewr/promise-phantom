@@ -1,5 +1,7 @@
 # phantom-promise
 
+Note: Large changes are coming to this library. It will contain extensive documentation, both from testing and from the documentation at PhantomJS' own website. It will also not use phantomjs-node, but instead use node-phantom-simple, due to being simplier in implementation.
+
 This library is a promise-wrapper around the [phantomjs-node](https://github.com/sgentle/phantomjs-node) library made by [Sam Gentle](https://github.com/sgentle).
 
 ## Prerequisits
