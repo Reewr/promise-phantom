@@ -1,6 +1,6 @@
 # phantom-promise
 
-This library is a promise-wrapper around the [phantomjs-node](https://github.com/sgentle/phantomjs-node) library made by [Sam Gentle](https://github.com/sgentle).
+This library is a promise-wrapper around the [node-simple-phantom](LINK_NEEDED) library.
 
 ## Prerequisits
 
@@ -18,32 +18,18 @@ And get into an interpreter, you're good to go when it comes to PhantomJS. For W
 
 ## Usage
 
-While the wrapper is not complete yet, some of the most useful functionaility is already there. For documentation, please check out both [mine](docs/phantom.md) and [phantomjs-node](https://github.com/sgentle/phantomjs-node/wiki) as well as the [PhantomJS API](http://phantomjs.org/api/).
+While the wrapper is not complete yet, some of the most useful functionaility is already there. For documentation, please check out the documentation under /docs. The documentation includes most of PhantomJS documentation too. In addition it also contains links to the equal function in PhantomJS. Usage is very similar, except for the callbacks etc, where this uses promises.
 
 In addition to most of the features of phantomjs-node, this library also includes a function to render a PDF and get the data-string, instead of having to retrieve it through a file. It should be noted that behind-the-scenes, the library has to save the file, before loading it. Large files may therefore take significant longer to render.
 
-Example usage is pretty much as phantomjs-node, except for the use of promises instead of callbacks. Every function returns a promise. The only exception to this rule is functions starting with 'on' such as 'onConsoleMessage' as those
-are handlers that you can attach.
+Example usage is pretty much as phantomjs-node, except for the use of promises instead of callbacks. Every function returns a promise. The only exception to this rule is functions starting with 'on' such as 'onConsoleMessage' as those are handlers that you can attach.
 
 ```javascript
 "use strict";
-let Phantom = require('phantom-promise');
-
-// phantomjs-node syntax
-Phantom.create(function(ph) {
-  ph.createPage(function(page) {
-    page.open('http://www.google.com', function(status) {
-      page.set('viewportSize', {width: 640, height: 480}, function() {
-        page.renderPDF('my/temporary/directory', function(pdf) {
-          return doSomethingWithContents(pdf);
-        });
-      });
-    });
-  }, options);
-}, options);
+let phantom = require('phantom-promise');
 
 // Promise syntax
-Phantom.create(options)
+phantom.create(options)
   .then((ph) => {
     return ph.createPage(options);
   }).then((page) => {
@@ -59,7 +45,7 @@ Phantom.create(options)
 
 // With the CO-library, this gets significantly cleaner
 let renderGoogle = function* () {
-  let ph   = yield Phantom.create(options);
+  let ph   = yield phantom.create(options);
   let page = yield ph.createPage(options);
 
   yield page.open('http://www.google.com', options);
@@ -76,18 +62,30 @@ co(renderGoogle).then((contents) => {
 
 ```
 
-## Usage in Windows
+## Installation
 
-**Note**: Due to a massive installation that has to do with ````node-gyp```, you should probably add the following options when creating a new instance of Phantom
 
-```javascript
-let phantom = require('phantom-promise');
+## How does it work?
 
-phantom.create({
-  dnodeOpts: {
-    weak: false
-  }
-});
-```
+Now, PhantomJS cannot run in a node environment, as mentioned by their [FAQ, Why is PhantomJS not written as a Node.js module?](http://phantomjs.org/faq.html):
 
-Read more at [phantomjs-node](https://github.com/sgentle/phantomjs-node#use-it-in-windows)
+> A: The short answer: "No one can serve two masters."
+>
+> A longer explanation is as follows.
+> As of now, it is technically very challenging to do so.
+>
+> Every Node.js module is essentially "a slave" to the core of Node.js, i.e. "the master". In its current state, PhantomJS (and its included WebKit) needs to have the full control (in a synchronous matter) over everything: event loop, network stack, and JavaScript execution.
+> 
+> If the intention is just about using PhantomJS right from a script running within Node.js, such a "loose binding" can be achieved by launching a PhantomJS process and interact with it.
+
+This module itself does nothing to interact with PhantomJS, but that is where [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple) comes in. 
+
+What this does is the following:
+
+1. Creates a PhantomJS webserver that listens on a random port.
+2. Figures out which port it is by looking at the process id of PhantomJS.
+3. Uses HTTP.Requests to send information back and forth between node and PhantomJS.
+
+This process includes a lot of async action and is therefore perfect for promises. There already exists some promise wrappers for node-phantom-simple, but they are rather lacking when it comes to documentation. 
+
+This module includes all documentation that is relevant for NodeJS code as well as for PhantomJS code. You should not need to look in two different APIs in order to understand how to use it.

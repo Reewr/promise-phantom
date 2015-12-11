@@ -14,10 +14,10 @@
   "author": "Alexander Imenes",
   "license": "MIT",
   "devDependencies": {
-    "bandage": "^0.2.3",
+    "bandage": "^0.4.0",
     "tap-spec": "^4.1.0"
   },
   "dependencies": {
-    "phantom": "^0.8.3"
+    "node-phantom-simple": "^2.2.0"
   }
 }
