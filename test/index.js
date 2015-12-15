@@ -67,7 +67,7 @@ describe('Phantom', function() {
       expect(() => phantom.setProxy('192', 80, 'http', 5, 'pw')).to.throw(TypeError);
     });
 
-    it('should throw on invalid ip', function() {
+    it('should throw on invalid password', function() {
       expect(() => phantom.setProxy('192', 80, 'http', 'un', 5)).to.throw(TypeError);
     });
 
@@ -153,6 +153,10 @@ describe('Phantom', function() {
       utils.saveFile(filePath, testFn.toString()).then(() => {
         done();
       }).catch((err) => done(err));
+    });
+
+    it('should throw on non-strings', function() {
+      expect(() => phantom.injectJs({not: 'string'})).to.throw(TypeError);
     });
 
     it('should inject a JavaScript file and return true', function() {
