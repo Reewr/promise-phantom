@@ -1,453 +1,433 @@
+/* globals describe, it, before, after, beforeEach, afterEach*/
 'use strict';
-const test    = require('bandage');
-const driver  = require('../lib/phantom-promise');
-const utils   = require('../lib/utils');
-const pageW   = require('../lib/webpage-wrapper');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const driver = require('../lib/phantom-promise');
+const utils  = require('../lib/utils');
 
-const isErrorEqual = function* (t, message, fn, err) {
-  let numTest = err && err.message === '' ? 2 : 3;
+chai.should();
+chai.use(chaiAsPromised);
 
-  yield t.test(message, function* (st) {
-    st.plan(numTest);
-    st.throws(fn, 'It should throw');
+const expect = chai.expect;
+const assert = chai.assert;
 
-    let caughtErr = yield fn().then(() => {}).catch(err => err);
-
-    st.equals(caughtErr.name, err.name, 'Error names should be equal');
-
-    if (numTest === 2) {
-      return;
-    }
-
-    st.equals(caughtErr.message, err.message, 'Error messages should be equal');
-  });
-};
-
-const phantom = driver.create().then(() => {
-
-test('Should create a webpage object', function* T(t) {
-  let page = yield phantom.createPage();
-
-  t.ok(page instanceof pageW, 'Page should be instance of pageWrapper');
-
-  yield page.close();
-});
-
-test('Should remove functions after close', function * T(t) {
-  let page = yield phantom.createPage();
-
-  yield page.close();
-
-  t.notOk(page.close, 'Page.close should be a false value');
-});
-
-test('Page.Open, Page.onLoadStarted, Page.onLoadFinished', function* T(t) {
-  let page = yield phantom.createPage();
-
-  t.plan(2);
-  page.onLoadStarted(function() { t.pass('onLoadStarted called'); });
-  page.onLoadFinished(function() { t.pass('onLoadFinished called'); });
-  yield page.open('./test/resources/test.html');
-
-  yield page.close();
-});
-
-test('Page.addCookie, Page.getCookie, Page.clearCookies, Page.deleteCookie', function* T(t) {
-  let page = yield page.createPage();
+describe('Page', function() {
+  let phantom;
+  let page;
+  let testPage = './test/resources/test.html';
+  let resourcePage = './test/resources/test-resource.html';
   let cookieOptions = {
     name    : 'phantom-cookie',
     value   : 'phantom-value',
     path    : '/',
-    domain  : 'google.com',
+    domain  : '.google.com',
     httponly: false,
     secure  : false
   };
-  let filterCookie = x => x.name && x.name === cookieOptions.name;
 
-  yield t.test('Should throw error on invalid input', function ST(st) {
-    let undef;
-    let noName  = {value: 'test', path : '/'};
-    let noValue = {name : 'test', path : '/'};
-    let noPath  = {name : 'test', value: 'test-val'};
-
-    isErrorEqual('page.addCookie should throw on no inputs or empty object', st, () => {
-      return page.addCookie(undef);
-    }, new TypeError('Options has to be an object'));
-
-    isErrorEqual('page.addCookie should throw on no name', st, () => {
-      return page.addCookie(noName);
-    }, new TypeError('Options.name has to be defined as a string'));
-
-    isErrorEqual('page.addCookie should throw on no value', st, () => {
-      return page.addCookie(noValue);
-    }, new TypeError('Options.value has to be defined as a string'));
-
-    isErrorEqual('page.addCookie should throw on no path', st, () => {
-      return page.addCookie(noPath);
-    }, new TypeError('Options.path has to be defined as a string'));
-
-    isErrorEqual('page.deleteCookie should throw on no name or not string', st, () => {
-      return page.deleteCookie(5);
-    }, new TypeError('Name needs to be a string'));
-
-    isErrorEqual('page.getCookie should throw on no name or not string', st, () => {
-      return page.getCookie(5);
-    }, new TypeError('Name needs to be a string'));
+  before(function startPhantom(done) {
+    driver.create().then((ph) => {
+      phantom = ph;
+      done();
+    }).catch((err) => done(err));
   });
 
-  yield t.test('Should add cookie', function* ST(st) {
-    let addedCookie = yield page.addCookie(cookieOptions);
-    let cookies = yield page.get('cookies');
-    let cookie  = cookies.filter(filterCookie)[0];
-
-    st.ok(addedCookie, 'Should return true on successful add');
-    st.equals(cookies.length, 1, 'Cookies array should one element');
-    st.equals(cookie, cookieOptions, 'Cookie should be equal to added cookie');
+  after(function stopPhantom(done) {
+    phantom.exit().then(done).catch(done);
   });
 
-  yield t.test('Should delete cookies', function* ST(st) {
-    let cookies = yield page.get('cookies');
-    let cookie  = cookies.filter(filterCookie)[0];
+  beforeEach(function startPage(done) {
+    if (page) {
+      throw new Error('Page was not closed');
+    }
 
-    st.equals(cookies.length, 1, 'Cookie object contain 1 element from previous test');
-    st.equals(cookie, cookieOptions, 'Cookie should be equal to previously added cookie');
-
-    let result = yield page.deleteCookie(cookieOptions.name);
-    cookies = yield page.get('cookies');
-    cookie  = cookies.filter(filterCookie)[0];
-
-    st.ok(result, 'Result should be true, indicating deletion of cookie');
-    st.equals(cookies.length, 0, 'Cookies list should be empty');
-    st.equals(cookie, undefined, 'Cookie shoule be undefined');
+    phantom.createPage().then(p => {
+      page = p;
+      done();
+    }).catch(err => done(err));
   });
 
-  yield t.test('Should be able to get cookies through getCookie', function *ST(st) {
-    let addedCookie = yield page.addCookie(cookieOptions);
-    let cookies = yield page.get('cookies');
-    let cookie1 = yield page.getCookie(cookieOptions.name);
-    let cookie2 = cookies.filter(filterCookie)[0];
+  afterEach(function closePage(done) {
+    if (!page) {
+      return done();
+    }
 
-    st.ok(addedCookie, 'Should return true on successful add of cookie');
-    st.equals(cookies.length, 1, 'Cookie should exist');
-    st.equals(cookie1, cookie2, 'Cookie gotten through `cookies` should be equal to getCookie');
+    page.close().then(() => {
+      page = null;
+      done();
+    }).catch(err => done(err));
   });
 
-  yield t.test('Should clear all cookies', function *ST(st) {
-    let result  = yield page.clearCookies();
-    let cookies = yield page.get('cookies');
-    let cookie  = yield page.getCookie(cookieOptions.name);
+  describe('Page.open, Page.onLoadStarted, Page.onLoadFinished', function() {
+    it('should open page, call onLoadStarted, then onLoadFinished', function(done) {
+      let calls  = 0;
+      let isDone = function(message) {
+        calls++;
+        assert(true, message);
+        if (calls >= 3) {
+          return done();
+        }
+      };
 
-    st.ok(result, 'Result shoule be true, indicating clearing of cookies');
-    st.equals(cookies.length, 0, 'The cookie array should be empty');
-    st.equals(cookie, undefined, 'The cookie should be undefined');
-  });
-
-  yield page.close();
-});
-
-test('Page.set, Page.get, Page.NYI_setOptions', function* T(t) {
-  let page = phantom.createPage();
-
-  yield t.test('Should throw error on invalid input', function ST(st) {
-
-    isErrorEqual('page.set should throw on invalid key', st, () => {
-      return page.set('this-property-does-not-exist', 5);
-    }, new TypeError());
-
-    isErrorEqual('page.set should throw on read-only values', st, () => {
-      return page.set('framePlainText', '');
-    }, new TypeError());
-
-    isErrorEqual('page.get should throw on invalid key', st, () => {
-      return page.get('this-property-does-not-exist', 5);
-    }, new TypeError());
-
-    isErrorEqual('page.NYI_setOptions should throw on error on call', st, () => {
-      return page.NYI_setOptions();
-    }, new Error('Not yet implemented'));
-  });
-
-  yield t.test('Should set property and be able to retrieve, no object', function* ST(st) {
-    let setWidth = 500;
-    let result = yield page.set('viewportSize.width', setWidth);
-    let width  = yield page.get('viewportSize.width');
-
-    st.ok(result, 'Should return true to indicate setting of variable');
-    st.equals(width, setWidth, 'Value should be set and retrievable');
-  });
-
-  yield t.test('Should set property and be able to retrieve, object', function* ST(st) {
-    let setViewportSize = {width: 1000, height: 1000};
-    let result       = yield page.set('viewportSize', setViewportSize);
-    let viewportSize = yield page.get('viewportSize');
-    let width        = yield page.get('viewportSize.width');
-    let height       = yield page.get('viewportSize.height');
-
-    st.ok(result, 'Should return true to indicate setting of variable');
-    st.equals(setViewportSize, viewportSize, 'Objects should be equal');
-    st.equals(setViewportSize.width, width, 'Width should be equal');
-    st.equals(setViewportSize.height, height, 'Height should be equal');
-  });
-
-  yield page.close();
-});
-
-test('Page.injectJs, Page.evaluate, Page.onConsoleMessage, Page.open', function* T(t) {
-  let page = yield phantom.create();
-  let file = './test/resources/test.html';
-  let url  = 'http://www.google.com';
-
-  yield t.test('Should throw errors on invalid input', function ST(st) {
-    isErrorEqual('page.evaluate should throw when a function is not given as first argument', st, () => {
-      return page.evaluate(5, function() {});
-    }, new TypeError('First argument must be the function that is to be evaluted'));
-
-    isErrorEqual('page.injectJs should throw on non-strings', st, () => {
-      return page.injectJs(5);
-    }, new TypeError('Filename must be a string'));
-
-    isErrorEqual('page.onConsoleMessage should throw on non-functions', st, () => {
-      return page.onConsoleMessage('test');
-    }, new TypeError('Handler needs to be a function'));
-
-    isErrorEqual('page.open should throw on non-strings for URLs', st, () => {
-      return page.open({'this-is-not-a-string': true});
-    }, new TypeError('URL has to be a string'));
-  });
-
-  yield t.test('page.open should be able to open both files and webpages', function* ST(st) {
-    let statusWebpage = yield page.open(url);
-    let statusFile    = yield page.open(file);
-
-    st.equals(statusWebpage, 'success', 'Webpage should be successful');
-    st.equals(statusFile, 'success', 'File opening should be successful');
-  });
-
-  yield t.test('page.evaluate should take in arguments, do something and return', function* ST(st) {
-    let status = yield page.open(file);
-    let fn = function(number) {
-      return typeof number === 'number' ? 15 : -1;
-    };
-
-    let resultEval1 = yield page.evaluate(fn, 10);
-    let resultEval2 = yield page.evaluate(fn, 'string');
-
-    st.equals(status, 'success', 'Page.open should be successful');
-    st.equals(resultEval1, 15, 'Page.evaluate should return 15 on numbers');
-    st.equals(resultEval2, -1, 'Page.evaluate should return -1 on anything else');
-  });
-
-  yield t.test('page.onConsoleMessage should catch messages', function* ST(st) {
-    st.plan(3);
-    let status  = yield page.open(file);
-    let message = 'This is a message';
-    let fn = function(incMessage) {
-      console.log(incMessage);
-      return true;
-    };
-
-    page.onConsoleMessage(function(incMessage) {
-      st.pass('Caught console message');
-      st.equals(message, incMessage, 'Messages should be equal');
+      page.onLoadStarted(() => isDone('onLoadStarted was called'));
+      page.onLoadFinished(() => isDone('onLoadFinished was called'));
+      page.open(testPage).then((status) => {
+        expect(status).to.be.equal('success');
+        isDone();
+      }).catch(err => done(err));
     });
 
-    let resultEval = yield page.evaluate(fn, message);
-
-    st.equals(status, 'success', 'page.open should return "success"');
-    st.ok(resultEval, 'page.Evaluate should return true');
+    it('should open both files and webpages', function() {
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return page.open('http://www.google.com').should.eventually.equal('success');
+      }).then(() => {
+        return page.clearCookies();
+      });
+    });
   });
 
-  yield t.test('page.injectJs should inject JavaScript and run it.', function* ST(st) {
-    st.plan(5);
-    let testFn = function testFunction() { console.log('I was called'); };
-    let status = yield page.open('./test/resources/test.html');
+  describe('Page.addCookie', function() {
 
-    yield utils.saveFile('./test/resources/js.js', testFn.toString());
-
-    page.onConsoleMessage(function(message) {
-      st.pass('Caught console message');
-      st.equals('I was called', message, 'Messages should be equal');
+    it('should throw on no inputs', function() {
+      expect(() => page.addCookie()).to.throw(TypeError);
     });
 
-    let resultInject = yield page.injectJs('./test/resources/js.js');
-    let resultEval   = yield page.evaluate(function() {
-      /* jshint ignore:start */
-      testFunction(); // js-hint complains that this does not exist, this is browser scope
-      /* jshint ignore:end */
+    it('should throw on empty object', function() {
+      let empty = {};
+      expect(() => page.addCookie(empty)).to.throw(TypeError);
+    });
+
+    it('should throw on options without name', function() {
+      let noName = {value: 'test', path: '/'};
+      expect(() => page.addCookie(noName)).to.throw(TypeError);
+    });
+
+    it('should throw on options without value', function() {
+      let noValue = {name: 'test', path: '/'};
+      expect(() => page.addCookie(noValue)).to.throw(TypeError);
+    });
+
+    it('should throw on options without path', function() {
+      let noPath = {name: 'test', value: 'test-val'};
+      expect(() => page.addCookie(noPath)).to.throw(TypeError);
+    });
+
+    it('should add cookie and return true', function() {
+      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
+        return page.get('cookies').should.eventually.deep.equal([cookieOptions]);
+      });
+    });
+  });
+
+  describe('Page.getCookie', function() {
+    it('should throw on no name or not a string', function() {
+      expect(() => page.deleteCookie()).to.throw(TypeError);
+    });
+
+    it('should get cookie by name if exists', function() {
+      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
+        return page.getCookie(cookieOptions.name).should.eventually.deep.equal(cookieOptions);
+      });
+    });
+
+    it('should return undefined on cookies that does not exist', function() {
+      return page.getCookie('does-not-exist').should.eventually.equal(undefined);
+    });
+  });
+
+  describe('Page.deleteCookie', function() {
+    it('should throw on no name or not a string', function() {
+      expect(() => page.deleteCookie()).to.throw(TypeError);
+    });
+
+    it('should delete cookie and return true', function() {
+      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
+        return page.deleteCookie(cookieOptions.name).should.eventually.equal(true).then(() => {
+          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined);
+        });
+      });
+    });
+  });
+
+  describe('Page.clearCookies', function() {
+    it('should clear all cookies added and return true', function() {
+      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
+        return page.clearCookies().should.eventually.equal(true).then(() => {
+          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined);
+        });
+      });
+    });
+  });
+
+  describe('Page.set', function() {
+    it('should throw on keys that doesn\'t exist', function() {
+      expect(() => page.set('this-does-not-exist')).to.throw(TypeError);
+    });
+
+    it('should throw on keys that are read only', function() {
+      expect(() => page.set('framePlainText')).to.throw(TypeError);
+    });
+
+    it('should set valid values', function() {
+      let height = 400;
+      return page.set('viewportSize.height', height).should.eventually.equal(true).then(() => {
+        return page.get('viewportSize.height').should.eventually.equal(height);
+      });
+    });
+  });
+
+  describe('Page.get', function() {
+    it('should throw on keys that doesn\'t exist', function() {
+      expect(() => page.get('this-does-not-exist')).to.throw(TypeError);
+    });
+
+    it('should retrieve values', function() {
+      let viewportSize = {height: 500, width: 600};
+      return page.set('viewportSize', viewportSize).should.eventually.equal(true).then(() => {
+        return page.get('viewportSize').should.eventually.deep.equal(viewportSize);
+      });
+    });
+  });
+
+  describe('Page.NYI_setOptions', function() {
+    it('should throw an error', function() {
+      expect(() => page.NYI_setOptions()).to.throw(Error);
+    });
+  });
+
+  describe('Page.onConsoleMessage', function() {
+    it('should throw error on non-functions', function() {
+      expect(() => page.onConsoleMessage(5)).to.throw(TypeError);
+    });
+
+    it('should give be called with console messages from client', function(done) {
+      page.onConsoleMessage(function(message) {
+        expect(message).to.equal('Script loaded');
+        done();
+      });
+      page.open(resourcePage);
+    });
+  });
+
+  describe('Page.evaluate', function() {
+    it('should throw error on non-functions as first argument', function() {
+      expect(() => page.evaluate(5, function() {})).to.throw(TypeError);
+    });
+
+    it('should evaluate a function and call it', function(done) {
+      let sendMessage = 'Hello World!';
+      page.onConsoleMessage(function(message) {
+        expect(message).to.equal(sendMessage);
+        done();
+      });
+
+      return page.open(testPage).then(() => {
+        return page.evaluate(function(msg) {
+          console.log(msg);
+          return 5;
+        }, sendMessage).should.eventually.equal(5);
+      }).should.eventually.equal('success');
+    });
+
+    it('should pass arguments to evaluated fn and return values', function() {
+      let object = {hello: 'world'};
+      return page.evaluate(function(o) {
+        return o;
+      }, object).should.eventually.deep.equal(object);
+    });
+  });
+
+  describe('page.evaluateAsync', function() {
+    it('should throw on non-functions', function() {
+      expect(() => page.evaluateAsync(5)).to.throw(TypeError);
+    });
+
+    it('should execute the function, but return undefined', function() {
+      let sendMessage = 'this is a message';
+      page.onConsoleMessage(function(message) {
+        expect(message).to.equal(sendMessage);
+      });
+
+      return page.evaluateAsync(function() {
+        console.log('this is a message');
+      }).should.eventually.equal(undefined);
+    });
+  });
+
+  describe('Page.injectJs', function() {
+    let testFn = function testFunction() {
+      console.log('I was called');
       return 5;
+    };
+    let injectFile = './test/resources/js.js';
+
+    it('should throw on non-strings', function() {
+      expect(() => page.injectJs(5)).to.throw(TypeError);
     });
 
-    st.equals(status, 'success', 'Page.open should be successful');
-    st.ok(resultInject, 'Page.injectJs should be truish');
-    st.equals(resultEval, 5, 'Page.injectJS should be true');
+    before(function(done) {
+      utils.saveFile(injectFile, testFn.toString())
+        .then(done)
+        .catch(done);
+    });
 
-    yield utils.deleteFile('./test/resources/js.js');
+    after(function(done) {
+      utils.deleteFile(injectFile)
+        .then(done)
+        .catch(done);
+    });
+
+    it('should inject and run Javascript', function() {
+      page.onConsoleMessage(function(message) {
+        expect(message).to.equal('I was called');
+      });
+      return page.open(testPage).then(() => {
+        return page.injectJs(injectFile).should.eventually.equal(true).then(() => {
+          return page.evaluate(function() {
+            return testFunction();
+          }).should.eventually.equal(5);
+        });
+      });
+    });
   });
 
-  yield page.close();
+  describe('Page.onResourceRequested', function() {
+    it('should throw errors on non-functions', function() {
+      expect(() => page.onResourceRequested(5)).to.throw(TypeError);
+    });
+
+    it('should call when requesting data', function(done) {
+      page.onResourceRequested(function(requestData, networkData) {
+        expect(requestData.url.indexOf('html')).to.not.equal(-1);
+        done();
+      });
+
+      return page.open(testPage).should.eventually.equal('success');
+    });
+  });
+
+  describe('Page.onResourceReceived', function() {
+    it('should throw errors on non-functions', function() {
+      expect(() => page.onResourceReceived(5)).to.throw(TypeError);
+    });
+
+    let amountOfCalls = 0; // should be 2
+    it('should call when getting data', function(done) {
+      page.onResourceReceived(function(response) {
+        expect(response.url.indexOf('html')).to.not.equal(-1);
+        amountOfCalls++;
+        if (amountOfCalls >= 2) {
+          return done();
+        }
+      });
+
+      return page.open(testPage).should.eventually.equal('success');
+    });
+  });
+
+  describe('Page.onResourceError', function() {
+    it('should throw errors on non-functions', function() {
+      expect(() => page.onResourceError(5)).to.throw(TypeError);
+    });
+
+    it('should call when it causes an error', function(done) {
+      page.onResourceError(function(err) {
+        expect(err).to.not.be.equal(undefined);
+        expect(err.url.indexOf('does-not-exist.js')).to.not.equal(-1);
+        done();
+      });
+
+      return page.open(resourcePage).should.eventually.equal('success');
+    });
+  });
+
+  describe('Page.renderBase64', function() {
+    it('should throw errors on invalid formats', function() {
+      expect(() => page.renderBase64('not-accepted')).to.throw(TypeError);
+    });
+
+    it('should render images to a base64 string', function() {
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return Promise.all([
+          page.renderBase64().should.eventually.not.equal(''),
+          page.renderBase64('jpeg').should.eventually.not.equal(''),
+          page.renderBase64('gif').should.eventually.not.equal('')
+        ]);
+      });
+    });
+  });
+
+  describe('Page.render', function() {
+    let file1 = './test/resources/rendered_png.png';
+    let file2 = './test/resources/rendered_jpg.jpeg';
+    let file3 = './test/resources/rendered_pdf.pdf';
+
+    it('should throw on non-string filenames', function() {
+      expect(() => page.render(5)).to.throw(TypeError);
+    });
+
+    it('should throw on non-accepted format', function() {
+      expect(() => page.render('filename.myown')).to.throw(TypeError);
+    });
+
+    it('should throw on invalid quality', function() {
+      expect(() => page.render('myfile.pdf', 'pdf', 'not')).to.throw(TypeError);
+    });
+
+    it('should render images to file', function() {
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return Promise.all([
+          page.render(file1).should.eventually.equal(true),
+          page.render(file2).should.eventually.equal(true),
+          page.render(file3).should.eventually.equal(true)
+        ]).then(() => {
+          return Promise.all([
+            utils.deleteFile(file1),
+            utils.deleteFile(file2),
+            utils.deleteFile(file3)
+          ]);
+        });
+      });
+    });
+  });
+
+  describe('Page.renderTemplate', function() {
+    it('should throw on non-objects without .render function', function() {
+      expect(() => page.renderTemplate({})).to.throw(TypeError);
+    });
+
+    it('should throw on .render functions that does not return strings', function() {
+      expect(() => page.renderTemplate({render: () => true})).to.throw(TypeError);
+    });
+
+    it('should render templates to string', function() {
+      let sentOptions = {this: 'should', be: 'sent', to: 'render'};
+      let renderDir   = './test/resources';
+      let templateObject = {
+        render: (options) => {
+          expect(options).to.deep.equal(sentOptions);
+          return '' +
+            '<!DOCTYPE html>' +
+            '<html>' +
+            '<head><title>Test</title></head>' +
+            '<body>Body</body>' +
+            '</html>';
+        }
+      };
+
+      return page.renderTemplate(templateObject, renderDir, sentOptions)
+        .should
+        .eventually
+        .not
+        .equal('');
+    });
+  });
+
+  describe('Page.close', function() {
+    it('should close the page, any functions called after should throw', function() {
+      return page.close().should.eventually.equal(undefined).then(() => {
+        expect(() => page.get('viewportSize')).to.throw(Error);
+      });
+    });
+  });
 });
-
-test('Page.onResourceRequested, page.onResourceRecieved, page.onResourceError', function* T(t) {
-  let page = yield phantom.createPage();
-
-  yield t.test('Should throw errors on invalid input', function ST(st) {
-
-    isErrorEqual('page.onResourceRequested should throw on non-functions', st, () => {
-      return page.onResourceRequested('test');
-    }, new TypeError('Handler needs to be a function'));
-
-    isErrorEqual('page.onResourceReceived should throw on non-functions', st, () => {
-      return page.onResourceReceived('test');
-    }, new TypeError('Handler needs to be a function'));
-
-    isErrorEqual('page.onResourceError should throw on non-functions', st, () => {
-      return page.onResourceError('test');
-    }, new TypeError('Handler needs to be a function'));
-
-  });
-
-  yield t.test('Should call resourceRequested, resourceRecieved', function* ST(st) {
-    page.onConsoleMessage(function(message) {
-      st.equals(message, 'Script loaded', 'Script should call console.log');
-    });
-
-    /* jshint ignore:start */
-    // Network data has to be defined, otherwise requestData is an array of two elements
-    page.onResourceRequested(function(requestData, networkData) {
-
-      if (requestData.url.indexOf('html') !== -1) {
-        st.ok(requestData.url.indexOf('test-resource.html') !== -1, 'Requested: test-resource.html');
-      } else {
-        st.ok(requestData.url.indexOf('test-resource.js') !== -1, 'Requested: test-resource.js');
-      }
-    });
-    /* jshint ignore:end */
-
-    page.onResourceReceived(function(response) {
-      let hasHTML = response.url.indexOf('html') !== -1;
-
-      if (hasHTML && response.stage === 'start') {
-        st.ok(response.url.indexOf('test-resource.html') !== -1, 'Receieved Start: test-resource.html');
-      } else if (response.stage === 'start') {
-        st.ok(response.url.indexOf('test-resource.js') !== -1, 'Receieved Start: test-resource.js');
-      }
-
-      if (hasHTML && response.stage === 'end') {
-        st.pass('Receieved End: test-resource.html');
-      } else if (response.stage === 'end') {
-        st.pass('Receieved End: test-resource.js');
-      }
-    });
-
-    page.onResourceError(function(err) {
-      console.log(err);
-    });
-
-    yield page.open('./test/resources/test-resource.html');
-  });
-
-  yield page.close();
-});
-
-test('Page.renderBase64, page.renderPDF, page.renderTemplate, page.render', function * T(t) {
-  let page = yield phantom.createPage();
-
-  yield t.test('Should throw errors on invalid input', function ST(st) {
-    let renderBase64Msg = 'page.renderBase64 should throw error on invalid format';
-    let renderPDFMsg1   = 'page.renderPDF should throw error non-strings';
-    let renderPDFMsg2   = 'page.renderPDF should throw error on non-directory';
-    let renderTemp1Msg  = 'page.renderTemplate should throw on non-objects without .render function';
-    let renderTemp2Msg  = 'page.renderTemplate should throw on .render functions not returning strings';
-
-    isErrorEqual(renderBase64, st, () => page.renderBase64(), new TypeError());
-    isErrorEqual(renderPDFMsg1, st, () => page.renderPDF(), new TypeError());
-    isErrorEqual(renderPDFMsg2, st, () => page.renderPDF('./not-a-directory'), new TypeError());
-    isErrorEqual(renderTemp1Msg, st, () => page.renderTemplate({}), new TypeError());
-    isErrorEqual(renderTemp2Msg, st, () => {
-      return page.renderTemplate({render: () => true})
-    }, new TypeError());
-
-  });
-});
-
-// test('Page should renderBase64 images', function* T(t) {
-//   let page  = yield phantom.createPage();
-
-//   yield page.open('./test/resources/test.html');
-//   let res = yield page.renderBase64('png');
-
-//   t.ok(res, 'Result should be defined');
-
-//   yield page.close();
-// });
-
-
-// }).catch(err => {throw err;});
-
-// test('Page should be able to render pdf to file', function * T(t) {
-//   let page  = yield phantom.createPage();
-
-//   yield page.open('./test/resources/test.html');
-//   yield page.render('./test/resources/test-pdf.pdf', {format: 'pdf'});
-
-//   let myFile = yield utils.loadFile('./test/resources/test-pdf.pdf');
-//   yield utils.deleteFile('./test/resources/test-pdf.pdf');
-
-//   t.ok(myFile, 'PDF should exist');
-
-//   yield page.close();
-// });
-
-// test('Page should be able to render pdf to string', function* T(t) {
-//   let page  = yield phantom.createPage();
-
-//   yield page.open('./test/resources/test.html');
-//   let file = yield page.renderPDF('./test');
-
-//   t.ok(file.toString(), 'PDFs should be equal');
-
-//   yield page.close();
-// });
-
-// test('Page should fail on render pdf to string if temp directory is not set', function* T(t) {
-//   t.plan(2);
-
-//   let page = yield phantom.createPage();
-
-//   yield page.open('./test/resources/test.html');
-
-//   try {
-//     yield page.renderPDF();
-//   } catch (err) {
-//     t.ok(err, 'Error is defined');
-//     t.equals(err.message, 'Temporary Directory has to be a string', 'Error should be descriptive');
-//   }
-
-//   yield page.close();
-// });
-
-// test('Page.renderTemplate should accept an object with render function', function* T(t) {
-//   t.plan(2);
-
-//   let page           = yield phantom.createPage({templateRenderDir: './test'});
-//   let sentOptions    = {this: 'should', be: 'sent', to: 'render'};
-//   let templateObject = {
-//     render: function(options) {
-//       t.pass('Render was called');
-//       t.equals(sentOptions, options, 'Options should be sent to it');
-//       return '' +
-//         '<!DOCTYPE html>' +
-//         '<html>' +
-//         '<head><title>Test</title></head>' +
-//         '<body>Body</body>' +
-//         '</html>';
-//     }
-//   };
-
-//   let file = yield page.renderTemplate(templateObject, sentOptions);
-
-//   t.ok(file, 'FileString should be defined');
-
-//   yield page.close();
-// });
-

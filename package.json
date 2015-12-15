@@ -4,7 +4,9 @@
   "description": "Promise-wrapper for phantom-library",
   "main": "index.js",
   "scripts": {
-    "test": "bndg test/index.js | tap-spec"
+    "test": "mocha",
+    "coverage": "istanbul cover mocha && cat coverage/lcov.info",
+    "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls"
   },
   "keywords": [
     "promise",
@@ -14,10 +16,13 @@
   "author": "Alexander Imenes",
   "license": "MIT",
   "devDependencies": {
-    "bandage": "^0.4.0",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "mocha": "^2.3.4",
     "tap-spec": "^4.1.0"
   },
   "dependencies": {
-    "node-phantom-simple": "^2.2.0"
+    "node-phantom-simple": "^2.2.0",
+    "tmp": "0.0.28"
   }
 }
