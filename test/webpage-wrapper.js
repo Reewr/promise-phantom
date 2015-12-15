@@ -272,9 +272,9 @@ describe('Page', function() {
     });
 
     after(function(done) {
-      utils.deleteFile(injectFile)
-        .then(done)
-        .catch(done);
+      utils.wait(500).then(() => {
+        return utils.deleteFile(injectFile);
+      }).then(done).catch(done);
     });
 
     it('should inject and run Javascript', function() {

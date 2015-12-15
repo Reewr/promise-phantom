@@ -21,12 +21,12 @@ describe('Phantom', function() {
       return p.should.be.rejectedWith(Error);
     });
 
-    it('should create an instance of Phantom', function() {
+    it('should create an instance of Phantom', function(done) {
       this.timeout(3000);
       return driver.create().then((ph) => {
         phantom = ph;
         return ph;
-      }).should.eventually.be.instanceOf(phantomW);
+      }).should.eventually.be.instanceOf(phantomW).should.notify(done);
     });
   });
 
