@@ -1,6 +1,6 @@
 {
   "name": "promise-phantom",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Promise-wrapper for phantom-library",
   "main": "index.js",
   "scripts": {
