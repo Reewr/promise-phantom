@@ -1,9 +1,9 @@
 /* globals describe, it, before, after, beforeEach, afterEach*/
 'use strict';
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+const chai   = require('chai');
 const driver = require('../lib/phantom-promise');
 const utils  = require('../lib/utils');
+const chaiAsPromised = require('chai-as-promised');
 
 chai.should();
 chai.use(chaiAsPromised);
@@ -281,6 +281,7 @@ describe('Page', function() {
       page.onConsoleMessage(function(message) {
         expect(message).to.equal('I was called');
       });
+      // testFunction is defined, but not in this scope (node-scope) 
       return page.open(testPage).then(() => {
         return page.injectJs(injectFile).should.eventually.equal(true).then(() => {
           return page.evaluate(function() {
@@ -297,6 +298,7 @@ describe('Page', function() {
     });
 
     it('should call when requesting data', function(done) {
+      // network data has to be defined, otherwise requestData is an array
       page.onResourceRequested(function(requestData, networkData) {
         expect(requestData.url.indexOf('html')).to.not.equal(-1);
         done();

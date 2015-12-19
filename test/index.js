@@ -1,11 +1,11 @@
 /* globals describe, it, before, after*/
 'use strict';
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const driver = require('../lib/phantom-promise');
+const chai     = require('chai');
+const driver   = require('../lib/phantom-promise');
 const phantomW = require('../lib/phantom-wrapper');
 const utils    = require('../lib/utils');
-const pageW   = require('../lib/webpage-wrapper');
+const pageW    = require('../lib/webpage-wrapper');
+const chaiAsPromised = require('chai-as-promised');
 
 chai.should();
 chai.use(chaiAsPromised);
@@ -22,7 +22,8 @@ describe('Phantom', function() {
     });
 
     it('should create an instance of Phantom', function(done) {
-      this.timeout(3000);
+      // starting up phantom may take some time on the first run
+      this.timeout(5000);
       return driver.create().then((ph) => {
         phantom = ph;
         return ph;
