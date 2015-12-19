@@ -115,9 +115,9 @@ As mentioned earlier, this module includes all documentation that is relevant fo
 
 For full documentation of the objects, please see the following links:
 
-- [Phantom](https://github.com/Reewr/promise-phantom/docs/phantom.md)
-- [Page](https://github.com/Reewr/promise-phantom/docs/page.md)
-- [Phantom-Promise](https://github.com/Reewr/promise-phantom/docs/phantom.md)
+- [Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/phantom.md)
+- [Page](https://github.com/Reewr/promise-phantom/blob/master/docs/page.md)
+- [Phantom-Promise](https://github.com/Reewr/promise-phantom/blob/master/docs/index.md)
 
 ## Issues
 
