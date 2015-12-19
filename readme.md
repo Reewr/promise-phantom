@@ -19,7 +19,7 @@ And get into an interpreter, you're good to go when it comes to PhantomJS. For W
 
 The wrapper contains all the functions that PhantomJS and node-simple-phantom exports. In addition to this, it also contains some useful functions such as rendering a page to a PDF-binary string.
 
-Nearly all functions in this library returns promises. The only functions that does not return promises are functions that either check the status of a page or phantom object (whether they have been closed/exited or not) and the handler functions (such as onConsoleMessage). 
+Nearly all functions in this library returns promises. The only functions that does not return promises are functions that either check the status of a page or phantom object (whether they have been closed/exited or not) and the handler functions (such as onConsoleMessage).
 
 The objects that you will be interacting with when using this library is for the most part the [Phantom](docs/phantom-wrapper.md)-object and the [Page](docs/page-wrapper.md)-object.
 
@@ -87,10 +87,10 @@ Now, PhantomJS cannot run within a node environment, as mentioned by their [FAQ,
 > As of now, it is technically very challenging to do so.
 >
 > Every Node.js module is essentially "a slave" to the core of Node.js, i.e. "the master". In its current state, PhantomJS (and its included WebKit) needs to have the full control (in a synchronous matter) over everything: event loop, network stack, and JavaScript execution.
-> 
+>
 > If the intention is just about using PhantomJS right from a script running within Node.js, such a "loose binding" can be achieved by launching a PhantomJS process and interact with it.
 
-This module itself does nothing to interact with PhantomJS, but that is where [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple) comes in. 
+This module itself does nothing to interact with PhantomJS, but that is where [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple) comes in.
 
 What this wrapper does is the following:
 
@@ -114,6 +114,6 @@ For full documentation of the objects, please see the following links:
 
 ## Issues
 
-If you find any issues, please create a new issue for this library. When creating an issue, it is very much appreciated if you include relevant examples as well as logs so it is easier for me to debug. 
+If you find any issues, please create a new issue for this library. When creating an issue, it is very much appreciated if you include relevant examples as well as logs so it is easier for me to debug.
 
 I will, when I have found the problem figure out whether this issue is regarding this library, node-phantom-simple or PhantomJS and update you / them accordingly.
