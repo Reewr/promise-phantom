@@ -15,6 +15,16 @@ $ phantomjs
 
 And get into an interpreter, you're good to go when it comes to PhantomJS. For Windows users, try the same in CMD or Powershell. If this does not work, you can either get the source and build for Linux or get the zip-file and extract for Windows and Mac. The downloads for PhantomJS can be found [here](http://phantomjs.org/download.html)
 
+## Installation
+
+Using npm:
+
+```
+npm install promise-phantom
+```
+
+Package can be found [here](https://www.npmjs.com/package/promise-phantom):
+
 ## Usage
 
 The wrapper contains all the functions that PhantomJS and node-simple-phantom exports. In addition to this, it also contains some useful functions such as rendering a page to a PDF-binary string.
