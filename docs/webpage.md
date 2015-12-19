@@ -39,7 +39,6 @@ The Page object contains most of the functionality of PhantomJS and it iswhat y
         * [.switchToParentFrame()](#Page+switchToParentFrame)
         * [.uploadFile(selector, filename)](#Page+uploadFile)
         * [.clearMemoryCache()](#Page+clearMemoryCache)
-        * [.NYI_setOptions(options)](#Page+NYI_setOptions)
         * [.renderPdf()](#Page+renderPdf)
         * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml)
         * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate)
@@ -279,7 +278,7 @@ page.set('paperSize.width', '50px')  .then((result) => {// result is true or fa
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+render"></a>
 ### page.render(filename, format, quality)
-[render](http://phantomjs.org/api/webpage/method/render.html)Renders the webpage to an image buffer and saves it as the specifiedfilename. Currently the ouput format is automatically set based on the fileextension.*Developer Note*: Sadly, due to how PhantomJS handles PDF rendering, thePDF needs to be saved to a file. This wrapper does however include `renderPdf`which gives the PDF back as a binary string.*Another development note*: PhantomJS says to support `GIF` images, however,the documentation on[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)does not include `GIF`.Use with caution.There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
+[render](http://phantomjs.org/api/webpage/method/render.html)Renders the webpage to an image buffer and saves it as the specifiedfilename. Currently the ouput format is automatically set based on the fileextension.*Developer Note*: Sadly, due to how PhantomJS handles PDF rendering, thePDF needs to be saved to a file. This wrapper does however include `renderPdf`which gives the PDF back as a binary string.*Another Developer Note*: PhantomJS says to support `GIF` images, however,the documentation on[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)does not include `GIF`.Use with caution.There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
@@ -291,7 +290,7 @@ page.set('paperSize.width', '50px')  .then((result) => {// result is true or fa
 
 <a name="Page+renderBase64"></a>
 ### page.renderBase64(format)
-[renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)Renders the webpage to an image buffer and returns the result as aBase64-encoded string representation of that image.*Developer note*: PhantomJS says to support gifs, but Qt (library it is using)does not support it. There is also an issue regarding this functionand the return of empty strings when using gifs:[issue](https://github.com/ariya/phantomjs/issues/13135)
+[renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)Renders the webpage to an image buffer and returns the result as aBase64-encoded string representation of that image.*Developer Note*: PhantomJS says to support `GIF` images, however,the documentation on[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)does not include `GIF`.Use with caution.There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Promise**: <code>string</code>            base64-encoded string  
@@ -357,16 +356,6 @@ page.set('paperSize.width', '50px')  .then((result) => {// result is true or fa
 *Developer Note*: There is little to no documentation on this function,but from what I can gather from an [issue](https://github.com/ariya/phantomjs/issues/10357)on their github, this function clears the HTTP-cache.[Commit](https://github.com/ariya/phantomjs/commit/5768b705a019da719fa356fdbf370f3ea72b4c93)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+NYI_setOptions"></a>
-### page.NYI_setOptions(options)
-*Wrapper Specific*This allows you to set multiple settings in one go. This does exactly thesame as multiple this.set calls.In addition to this, it also checks if all values are correct accordingto the PhantomJS docs. Some options are missing from the checkand will not be validated, as they lack documentation. These are the following:*NOT YET IMPLEMENTED*- event- focusedFrameName- frameTitle- frameCount- offlineStoragePath- offlineStorageQuota- ownsPages- pages- pagesWindowName- windowNameThe following options are read-only values are will throw errors when used:- framePlainText- frameUrl- framesName
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | An object with multiple options |
-
 <a name="Page+renderPdf"></a>
 ### page.renderPdf()
 *Wrapper Specific*Renders a PDF and returns the content as a binary string. Due to PhantomJSthis function has to save a file to disk.This wrapper uses [node-tmp](https://github.com/raszi/node-tmp) to dothis. This saves a temporary file (in memory or file, depending on OS), whichis deleted after it is completed or throws an error.

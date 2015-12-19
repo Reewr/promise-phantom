@@ -92,13 +92,16 @@ Now, PhantomJS cannot run within a node environment, as mentioned by their [FAQ,
 
 This module itself does nothing to interact with PhantomJS, but that is where [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple) comes in.
 
-What this wrapper does is the following:
+What node-phantom-simple does is the following:
 
 1. Creates a PhantomJS webserver that listens on a random port.
 2. Figures out which port it is by looking at the process id of PhantomJS.
-3. Uses HTTP.Requests from to send information back and forth between node and PhantomJS.
+3. Uses HTTP.Requests from NodeJS to send information back and forth between NodeJS and PhantomJS.
 
-node-phantom-simple will continuously poll the PhantomJS server for new events that has happened. This means two things; Handler functions cannot return values or call PhantomJS functions and all events are somewhat delayed.
+node-phantom-simple will continuously poll (every 500ms) the PhantomJS server for new events that has happened. This means two things;
+
+1. Handler functions cannot return values or call PhantomJS functions
+2. All events are somewhat delayed.
 
 This process includes a lot of async action and is therefore perfect for promises. There already exists multitudes of different promise-wrappers for PhantomJS libraries, but most of these are either lacking in documentation or using a phantom-wrapper library that complicates the process of interacting with PhantomJS.
 
@@ -116,4 +119,4 @@ For full documentation of the objects, please see the following links:
 
 If you find any issues, please create a new issue for this library. When creating an issue, it is very much appreciated if you include relevant examples as well as logs so it is easier for me to debug.
 
-I will, when I have found the problem figure out whether this issue is regarding this library, node-phantom-simple or PhantomJS and update you / them accordingly.
+I will, when I have found the problem, figure out whether this issue is regarding this library, node-phantom-simple or PhantomJS and update you / them accordingly.
