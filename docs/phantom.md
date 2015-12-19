@@ -29,7 +29,7 @@ The Phantom Class contains all the functionaility that would otherwisebe in the
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+createPage"></a>
 ### phantom.createPage()
-Creates a page, with certain optionsThis is equivalent to doing `webpage.create()` in PhantomJS
+Creates a PageThis is equivalent to doing `webpage.create()` in PhantomJSSee [webpage docs](./webpage.md) for how to use the Page object
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 **Promise**: <code>Page</code>  

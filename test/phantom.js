@@ -1,10 +1,10 @@
 /* globals describe, it, before, after*/
 'use strict';
-const chai     = require('chai');
-const driver   = require('../lib/phantom-promise');
-const phantomW = require('../lib/phantom-wrapper');
-const utils    = require('../lib/utils');
-const pageW    = require('../lib/webpage-wrapper');
+const chai    = require('chai');
+const driver  = require('../index');
+const utils   = require('../lib/utils');
+const Phantom = require('../lib/phantom');
+const Page    = require('../lib/webpage');
 const chaiAsPromised = require('chai-as-promised');
 
 chai.should();
@@ -27,7 +27,7 @@ describe('Phantom', function() {
       return driver.create().then((ph) => {
         phantom = ph;
         return ph;
-      }).should.eventually.be.instanceOf(phantomW).should.notify(done);
+      }).should.eventually.be.instanceOf(Phantom).should.notify(done);
     });
   });
 
@@ -173,7 +173,7 @@ describe('Phantom', function() {
 
   describe('phantom.createPage', function() {
     it('should create a webpage object', function() {
-      return phantom.createPage().should.eventually.be.instanceOf(pageW);
+      return phantom.createPage().should.eventually.be.instanceOf(Page);
     });
   });
 

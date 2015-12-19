@@ -1,7 +1,7 @@
 /* globals describe, it, before, after, beforeEach, afterEach*/
 'use strict';
 const chai   = require('chai');
-const driver = require('../lib/phantom-promise');
+const driver = require('../index');
 const utils  = require('../lib/utils');
 const chaiAsPromised = require('chai-as-promised');
 
