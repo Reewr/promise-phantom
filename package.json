@@ -1,5 +1,5 @@
 {
-  "name": "phantom-promise",
+  "name": "promise-phantom",
   "version": "1.0.0",
   "description": "Promise-wrapper for phantom-library",
   "main": "index.js",
