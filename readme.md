@@ -77,15 +77,9 @@ co(renderGoogle).then((contents) => {
 
 ## Handlers
 
-A special note about all the handlers. Any handler can be set through `on[NameHere]`, where [NameHere] is replaced by that specific handler. All of these functions are set in NodeJS, and called whenever node-simple-phantom receives any events from PhantomJS. As this is an async process, you cannot return values. Any functions that needs a return value, such as `onConfirm` or `onPrompt` must instead be set though the `.setFn` function.
+A special note about all the handlers. Any handler can be set through `on[NameHere]`, where `[NameHere]` is replaced by that specific handler. All of these functions are set in NodeJS, and called whenever node-simple-phantom receives any events from PhantomJS. As this is an async process, you cannot return values. Any functions that needs a return value, such as `onConfirm` or `onPrompt` must instead be set though the `.setFn` function.
 
 When using the `.setFn` function, keep in mind that this function is stringified and then evaluated in PhantomJS. This means that the scope of function will be that of the PhantomJS process and not the NodeJS process.
-
-## Installation
-
-Installation is pretty simple if you have PhantomJS installed:
-
-`npm install promise-phantom`
 
 ## How does it work?
 
@@ -121,9 +115,9 @@ As mentioned earlier, this module includes all documentation that is relevant fo
 
 For full documentation of the objects, please see the following links:
 
-- [Phantom](docs/phantom-wrapper.md)
-- [Page](docs/page-wrapper.md)
-- [Phantom-Promise](docs/phantom-promise.md)
+- [Phantom](https://github.com/Reewr/promise-phantom/docs/phantom.md)
+- [Page](https://github.com/Reewr/promise-phantom/docs/page.md)
+- [Phantom-Promise](https://github.com/Reewr/promise-phantom/docs/phantom.md)
 
 ## Issues
 
