@@ -31,7 +31,7 @@ The wrapper contains all the functions that PhantomJS and node-simple-phantom ex
 
 Nearly all functions in this library returns promises. The only functions that does not return promises are functions that either check the status of a page or phantom object (whether they have been closed/exited or not) and the handler functions (such as onConsoleMessage).
 
-The objects that you will be interacting with when using this library is for the most part the [Phantom](docs/phantom-wrapper.md)-object and the [Page](docs/page-wrapper.md)-object.
+The objects that you will be interacting with when using this library is for the most part the [Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/phantom.md)-object and the [Page](https://github.com/Reewr/promise-phantom/blob/master/docs/webpage.md)-object.
 
 All functions are as documented as they are on the PhantomJS documentation and you should therefore not need to jump between this library and the PhantomJS docs in order to use it correctly. For convenience, all functions that are part of PhantomJS and are documented contains a link to it's respective documentation page, if needed.
 
