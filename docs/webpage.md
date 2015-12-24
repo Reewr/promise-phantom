@@ -12,6 +12,7 @@ The Page object contains most of the functionality of PhantomJS and it iswhat y
         * [.get(name)](#Page+get)
         * [.set(name, value)](#Page+set)
         * [.evaluate(fn)](#Page+evaluate) ⇒ <code>object</code> &#124; <code>string</code> &#124; <code>number</code> &#124; <code>date</code>
+        * [.waitForSelector(selector, timeout)](#Page+waitForSelector)
         * [.addCookie(options)](#Page+addCookie)
         * [.clearCookies()](#Page+clearCookies)
         * [.close()](#Page+close)
@@ -127,6 +128,18 @@ page.set('paperSize.width', '50px')  .then((result) => {// result is true or fa
 | Param | Type | Description |
 | --- | --- | --- |
 | fn | <code>function</code> | function to be evaluated |
+
+<a name="Page+waitForSelector"></a>
+### page.waitForSelector(selector, timeout)
+*node-phantom-simple specific*Uses page.evaluate in order select an element on the page tosee if it exists. This operation is performed every 150 ms until itreaches the timeout limit. If the limit is exceeded, an error is thrown.If an element is found prior to this, the function returns, indicatingthat the element has been rendered.The selector is a selector accepted by document.querySelectorAll.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Promise**: <code>null</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| selector | <code>string</code> | selector such as '.myclass' or '#myid' |
+| timeout | <code>number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
 
 <a name="Page+addCookie"></a>
 ### page.addCookie(options)
