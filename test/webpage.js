@@ -425,6 +425,24 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.waitForSelector', function() {
+    it('should throw error on invalid selector', function() {
+      expect(() => page.waitForSelector(5)).to.throw(TypeError);
+    });
+
+    it('should wait roughly 170ms before returning', function(done) {
+      this.timeout(3000);
+      let date = Date.now();
+      page.open(testPage).then(() => {
+        page.waitForSelector('.test-class', 2500).then(() => {
+          let timeout = Date.now() - date;
+          expect(timeout).to.be.closeTo(100, 150);
+          done();
+        });
+      });
+    });
+  });
+
   describe('Page.close', function() {
     it('should close the page, any functions called after should throw', function() {
       return page.close().should.eventually.equal(undefined).then(() => {
