@@ -386,7 +386,7 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 **Returns**: <code>Promise(string)</code> - binary string  
 <a name="Page+openHtml"></a>
 ### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
-*Wrapper Specific*Uses a HTML string to open a webpage. If templateRenderDiris undefined, a temporary file is created to store the HTML.Use templateRenderDir if the HTML code includes scripts that has to beretrieved from file, as PhantomJS will look relative to the save locationfor these files if they are local ones.
+*Wrapper Specific*Uses a HTML string to open a webpage. If templateRenderDiris undefined, a temporary file is created to store the HTML.Use templateRenderDir if the HTML code includes scripts that has to beretrieved from file, as PhantomJS will look relative to the save locationfor these files if they are local ones.*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the template again. If you need to render after using .openHtml,use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(string)</code> - either success or fail  
@@ -396,9 +396,13 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 | htmlString | <code>string</code> | String to render |
 | templateRenderDir | <code>string</code> | Where to save the HTML file (optional) |
 
+**Example**  
+```js
+let htmlString = '<html><head></head><body>This is a body</body></html>';page.openHtml(htmlString)  .then(() => page.evaluate(function() {return document.body.textContent;}))  .then((textContent) => // textContent === 'This is a body')
+```
 <a name="Page+renderHtml"></a>
 ### page.renderHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
-*Wrapper Specific*Renders a HTML string to a PDF by saving the HTML as a temporary file,in the directory specified as `templateRenderDir` (this is nessassarydue to possible Javascript or CSS files that will be included) before ituses `renderPdf` to save the PDF as a temporary file, loading it and thenreturning the PDF stringIf you are sure that the HTML file does not request any JavaScript orCSS files, you can omit the templateRenderDir. The file will thenbe saved in a temporary directory and rendered like that.Will throw error if the page fails to open. Sadly, due to lack of errormessage from phantomJS, the exact reason why this happened is not known.
+*Wrapper Specific*Renders a HTML string to a PDF by saving the HTML as a temporary file,in the directory specified as `templateRenderDir` (this is nessassarydue to possible Javascript or CSS files that will be included) before ituses `renderPdf` to save the PDF as a temporary file, loading it and thenreturning the PDF stringIf you are sure that the HTML file does not request any JavaScript orCSS files, you can omit the templateRenderDir. The file will thenbe saved in a temporary directory and rendered like that.Will throw error if the page fails to open. Sadly, due to lack of errormessage from phantomJS, the exact reason why this happened is not known.*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the template again. If you need to render after using .openHtml,use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(string)</code> - PDF  
@@ -408,9 +412,13 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 | htmlString | <code>string</code> | the HTML string |
 | templateRenderDir | <code>string</code> | directory to save the temp HTML file |
 
+**Example**  
+```js
+let htmlString = '<html><head></head><body>This is a body</body></html>';page.renderHtml(htmlString)  .then((pdf) => // pdf now contains the rendered version of the htmlstring)
+```
 <a name="Page+renderTemplate"></a>
 ### page.renderTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
-*Wrapper Specific*Expects a template that has a .render function that takes the optionssent to it. A structure of such an example can be seenat [reewr-template](https://github.com/Reewr/reewr-template).This function will render the the template into a PDF and returns thecontent as a binary stringIf templateRenderDir is omitted, the HTML file will be saved in a temporarydirectory (memory or file depending on OS). If the HTML file / templatehas any includes such as CSS or JS files that are local files, you shouldspecify a templateRenderDir so that it can correctly load these. Rememberto specify the location of these CSS and JS files relative to the templateRenderDirWill throw error if the page fails to open. Sadly, due to lack of errormessage from phantomJS, the exact reason why this happened is not known.
+*Wrapper Specific*Expects a template that has a .render function that takes the optionssent to it. A structure of such an example can be seenat [reewr-template](https://github.com/Reewr/reewr-template).This function will render the the template into a PDF and returns thecontent as a binary stringIf templateRenderDir is omitted, the HTML file will be saved in a temporarydirectory (memory or file depending on OS). If the HTML file / templatehas any includes such as CSS or JS files that are local files, you shouldspecify a templateRenderDir so that it can correctly load these. Rememberto specify the location of these CSS and JS files relative to the templateRenderDirWill throw error if the page fails to open. Sadly, due to lack of errormessage from phantomJS, the exact reason why this happened is not known.*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the template again. If you need to render after using .openTemplate,use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(string)</code> - PDF string  
@@ -423,7 +431,7 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 
 <a name="Page+openTemplate"></a>
 ### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise()</code>
-*Wrapper Specific*Expects a template that has a .render function that takes the optionssent to it. A structure of such an example can be seenat [reewr-template](https://github.com/Reewr/reewr-template).This function will render the template, save the file and open it.After this has completed, the page should be ready and can be run evaluationson.If templateRenderDir is omitted, the HTML file will be saved in a temporarydirectory (memory or file depending on OS). If the HTML file / templatehas any includes such as CSS or JS files that are local files, you shouldspecify a templateRenderDir so that it can correctly load these. Rememberto specify the location of these CSS and JS files relative to the templateRenderDir
+*Wrapper Specific*Expects a template that has a .render function that takes the optionssent to it. A structure of such an example can be seenat [reewr-template](https://github.com/Reewr/reewr-template).This function will render the template, save the file and open it.After this has completed, the page should be ready and can be run evaluationson.If templateRenderDir is omitted, the HTML file will be saved in a temporarydirectory (memory or file depending on OS). If the HTML file / templatehas any includes such as CSS or JS files that are local files, you shouldspecify a templateRenderDir so that it can correctly load these. Rememberto specify the location of these CSS and JS files relative to the templateRenderDir*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the template again. If you need to render after using .openTemplate,use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
@@ -433,6 +441,10 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 | templateRenderDir | <code>string</code> | Where to render the html file |
 | options | <code>object</code> | options that should be sent to the .render function |
 
+**Example**  
+```js
+let template = {  render: function(options) {    return jade.render(options); // jade used as an example  }};page.openTemplate(template, {pretty: true})  .then(() => // do something with the open page)  .then(() => page.renderPdf())  .then((pdf) => // rendered pdf)
+```
 <a name="Page+onAlert"></a>
 ### page.onAlert(handler)
 [onAlert](http://phantomjs.org/api/webpage/handler/on-alert.html)This callback is invoked when there is a JavaScript alert on the web page.The only argument passed to the callback is the string for the message.There is no return value expected from the callback handler.
