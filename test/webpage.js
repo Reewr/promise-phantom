@@ -77,12 +77,13 @@ describe('Page', function() {
       }).catch(err => done(err));
     });
 
-    it('should open both files and webpages', function() {
+    it('should open both files and webpages', function(done) {
+      this.timeout(5000);
       return page.open(testPage).should.eventually.equal('success').then(() => {
         return page.open('http://www.google.com').should.eventually.equal('success');
       }).then(() => {
         return page.clearCookies();
-      });
+      }).should.notify(done);
     });
   });
 
@@ -112,9 +113,9 @@ describe('Page', function() {
       expect(() => page.addCookie(noPath)).to.throw(TypeError);
     });
 
-    it('should add cookie and return true', function() {
+    it('should add cookie and return true', function(done) {
       return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.get('cookies').should.eventually.deep.equal([cookieOptions]);
+        return page.get('cookies').should.eventually.deep.equal([cookieOptions]).notify(done);
       });
     });
   });
@@ -124,9 +125,9 @@ describe('Page', function() {
       expect(() => page.deleteCookie()).to.throw(TypeError);
     });
 
-    it('should get cookie by name if exists', function() {
+    it('should get cookie by name if exists', function(done) {
       return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.getCookie(cookieOptions.name).should.eventually.deep.equal(cookieOptions);
+        return page.getCookie(cookieOptions.name).should.eventually.deep.equal(cookieOptions).notify(done);
       });
     });
 
@@ -140,20 +141,20 @@ describe('Page', function() {
       expect(() => page.deleteCookie()).to.throw(TypeError);
     });
 
-    it('should delete cookie and return true', function() {
+    it('should delete cookie and return true', function(done) {
       return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
         return page.deleteCookie(cookieOptions.name).should.eventually.equal(true).then(() => {
-          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined);
+          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined).notify(done);
         });
       });
     });
   });
 
-  describe('Page.clearCookies', function() {
+  describe('Page.clearCookies', function(done) {
     it('should clear all cookies added and return true', function() {
       return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
         return page.clearCookies().should.eventually.equal(true).then(() => {
-          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined);
+          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined).notify(done);
         });
       });
     });
@@ -168,10 +169,10 @@ describe('Page', function() {
       expect(() => page.set('framePlainText')).to.throw(TypeError);
     });
 
-    it('should set valid values', function() {
+    it('should set valid values', function(done) {
       let height = 400;
       return page.set('viewportSize.height', height).should.eventually.equal(true).then(() => {
-        return page.get('viewportSize.height').should.eventually.equal(height);
+        return page.get('viewportSize.height').should.eventually.equal(height).notify(done);
       });
     });
   });
@@ -181,10 +182,10 @@ describe('Page', function() {
       expect(() => page.get('this-does-not-exist')).to.throw(TypeError);
     });
 
-    it('should retrieve values', function() {
+    it('should retrieve values', function(done) {
       let viewportSize = {height: 500, width: 600};
       return page.set('viewportSize', viewportSize).should.eventually.equal(true).then(() => {
-        return page.get('viewportSize').should.eventually.deep.equal(viewportSize);
+        return page.get('viewportSize').should.eventually.deep.equal(viewportSize).notify(done);
       });
     });
   });
@@ -242,15 +243,20 @@ describe('Page', function() {
       expect(() => page.evaluateAsync(5)).to.throw(TypeError);
     });
 
-    it('should execute the function, but return undefined', function() {
+    it('should execute the function, but return undefined', function(done) {
+      this.timeout(5000);
       let sendMessage = 'this is a message';
       page.onConsoleMessage(function(message) {
+        console.log(message);
         expect(message).to.equal(sendMessage);
+        done();
       });
 
-      return page.evaluateAsync(function() {
-        console.log('this is a message');
-      }).should.eventually.equal(undefined);
+      page.open('http://www.google.com').then(() => {
+        page.evaluateAsync(function(args) {
+          console.log('this is a message', args);
+        }, 1000, ['test']).should.eventually.equal(undefined).notify(done);
+      });
     });
   });
 
@@ -277,7 +283,7 @@ describe('Page', function() {
       }).then(done).catch(done);
     });
 
-    it('should inject and run Javascript', function() {
+    it('should inject and run Javascript', function(done) {
       page.onConsoleMessage(function(message) {
         expect(message).to.equal('I was called');
       });
@@ -286,7 +292,7 @@ describe('Page', function() {
         return page.injectJs(injectFile).should.eventually.equal(true).then(() => {
           return page.evaluate(function() {
             return testFunction();
-          }).should.eventually.equal(5);
+          }).should.eventually.equal(5).notify(done);
         });
       });
     });
@@ -376,7 +382,8 @@ describe('Page', function() {
       expect(() => page.render('myfile.pdf', 'pdf', 'not')).to.throw(TypeError);
     });
 
-    it('should render images to file', function() {
+    it('should render images to file', function(done) {
+      this.timeout(5000);
       return page.open(testPage).should.eventually.equal('success').then(() => {
         return Promise.all([
           page.render(file1).should.eventually.equal(true),
@@ -387,7 +394,7 @@ describe('Page', function() {
             utils.deleteFile(file1),
             utils.deleteFile(file2),
             utils.deleteFile(file3)
-          ]);
+          ]).should.notify(done);
         });
       });
     });
@@ -436,8 +443,12 @@ describe('Page', function() {
       expect(() => page.renderHtml(true)).to.throw(TypeError);
     });
 
-    it('should be rejected on non-directories', function() {
+    it('should be rejected on non existing directories', function() {
       return page.renderHtml('someString', 'this-is-not-directory').should.be.rejectedWith(Error);
+    });
+
+    it('should be rejected on non-directories', function() {
+      return page.renderHtml('someString', './index.js').should.be.rejectedWith(Error);
     });
 
     it('should render a pdf', function() {

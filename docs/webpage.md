@@ -18,7 +18,7 @@ The Page object contains most of the functionality of PhantomJS and it iswhat y
         * [.deleteCookie(name)](#Page+deleteCookie) ⇒ <code>Promise(Boolean)</code>
         * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
         * [.evaluateJavaScript(javaScriptStr)](#Page+evaluateJavaScript) ⇒ <code>Promise()</code>
-        * [.evaluateAsync(fn)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
+        * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
         * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code>
         * [.go(index)](#Page+go) ⇒ <code>Promise()</code>
         * [.goBack()](#Page+goBack) ⇒ <code>Promise()</code>
@@ -204,14 +204,20 @@ page.open(somePage)  .then(() => page.waitForSelector('.select'))  .then(() =>
 | javaScriptStr | <code>string</code> | 
 
 <a name="Page+evaluateAsync"></a>
-### page.evaluateAsync(fn) ⇒ <code>Promise()</code>
-[evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)Evaulates a given function in the context of the webpage without blockingthe current execution (Phantom process - not Node). Unlike `evaluate`, thisfunction cannot take any arguments and will not return any values.
+### page.evaluateAsync(fn, num, args) ⇒ <code>Promise()</code>
+[evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)Evaulates a given function in the context of the webpage without blockingthe current execution (Phantom process - not Node). Unlike `evaluate`, thisfunction cannot take any arguments and will not return any values.*Developer Note*: It seems like the signature of the function is wrong accordingto [this](http://stackoverflow.com/questions/22474525/how-we-can-use-evaluateasync-in-phantomjs) stackoverflowquestion. I cannot find any sources to back it up, so I will have to check this later.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
+**Todo**
+
+- [ ] Make sure to throughly test this function
+
 
 | Param | Type | Description |
 | --- | --- | --- |
 | fn | <code>function</code> | Function to be evaluated |
+| num | <code>number</code> | number of miliseconds to wait until the function should run |
+| args | <code>args</code> | arguments to send |
 
 <a name="Page+getPage"></a>
 ### page.getPage(windowName) ⇒ <code>Promise(Page)</code>
