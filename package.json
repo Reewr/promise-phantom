@@ -1,6 +1,6 @@
 {
   "name": "promise-phantom",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A more extensive promise wrapper around a wrapper for PhantomJS",
   "main": "index.js",
   "scripts": {
