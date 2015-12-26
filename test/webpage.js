@@ -404,7 +404,6 @@ describe('Page', function() {
 
     it('should render templates to string', function() {
       let sentOptions = {this: 'should', be: 'sent', to: 'render'};
-      let renderDir   = './test/resources';
       let templateObject = {
         render: (options) => {
           expect(options).to.deep.equal(sentOptions);
@@ -417,11 +416,93 @@ describe('Page', function() {
         }
       };
 
-      return page.renderTemplate(templateObject, renderDir, sentOptions)
+      return page.renderTemplate(templateObject, sentOptions)
         .should
         .eventually
         .not
         .equal('');
+    });
+  });
+
+  describe('Page.renderHtml', function() {
+    let html =  '' +
+      '<!DOCTYPE html>' +
+      '<html>' +
+      '<head><title>Test</title></head>' +
+      '<body>Body</body>' +
+      '</html>';
+
+    it('should throw on non-strings', function() {
+      expect(() => page.renderHtml(true)).to.throw(TypeError);
+    });
+
+    it('should be rejected on non-directories', function() {
+      return page.renderHtml('someString', 'this-is-not-directory').should.be.rejectedWith(Error);
+    });
+
+    it('should render a pdf', function() {
+      return page.renderHtml(html).should.eventually.not.equal('');
+    });
+  });
+
+  describe('Page.openHtml', function() {
+    let html = '' +
+      '<!DOCTYPE html>' +
+      '<html>' +
+      '<head><title>Test</title></head>' +
+      '<body>Page.openHtml</body>' +
+      '</html>';
+
+    let retBody = function() {
+      return document.body.textContent;
+    };
+
+    it('should throw on non-strings', function() {
+      expect(() => page.openHtml()).to.throw(TypeError);
+    });
+
+    it('should be rejected on non-directories, if specified', function() {
+      return page.openHtml(html, 'this-is-not-directory').should.be.rejectedWith(Error);
+    });
+
+    it('should open HTML', function(done) {
+      let openHtmlPromise = page.openHtml(html).should.eventually.equal('success');
+      let pageEvalPromise = openHtmlPromise.then(() => page.evaluate(retBody));
+      pageEvalPromise.should.eventually.equal('Page.openHtml').notify(done);
+    });
+  });
+
+  describe('Page.openTemplate', function() {
+    let sentOptions = {this: 'should', be: 'sent', to: 'render'};
+    let templateObject = {
+      render: (options) => {
+        expect(options).to.deep.equal(sentOptions);
+        return '' +
+          '<!DOCTYPE html>' +
+          '<html>' +
+          '<head><title>Test</title></head>' +
+          '<body>page.openTemplate</body>' +
+          '</html>';
+      }
+    };
+
+    let retBody = function() {
+      return document.body.textContent;
+    };
+
+    it('should throw error on invalid template object', function() {
+      expect(() => page.openTemplate({})).to.throw(TypeError);
+    });
+
+    it('should throw on .render function not returning string', function() {
+      expect(() => page.openTemplate({render: () => true})).to.throw(TypeError);
+    });
+
+    it('should open templates', function(done) {
+      let openPromise = page.openTemplate(templateObject, './test/resources', sentOptions);
+      openPromise.should.eventually.equal('success').then(() => {
+        return page.evaluate(retBody);
+      }).should.eventually.equal('page.openTemplate').notify(done);
     });
   });
 

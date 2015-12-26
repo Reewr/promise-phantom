@@ -1,6 +1,8 @@
 # promise-phantom
 
-This library is a promise-wrapper around the [node-simple-phantom](https://github.com/baudehlo/node-phantom-simple) library.
+This library is a more extensive promise-wrapper around the [node-simple-phantom](https://github.com/baudehlo/node-phantom-simple) library.
+
+It includes all the documentation gathered from PhantomJSs official documentation, as well as some notes from personal experience and issue-hunting.
 
 ## Prerequisites
 In order to use this library you need to have two things:
@@ -15,15 +17,17 @@ $ phantomjs
 
 And get into an interpreter, you're good to go when it comes to PhantomJS. For Windows users, try the same in CMD or Powershell. If this does not work, you can either get the source and build for Linux or get the zip-file and extract for Windows and Mac. The downloads for PhantomJS can be found [here](http://phantomjs.org/download.html)
 
+You can also specify a path when using the `.create` function, if you have PhantomJS located on your system, but it is not in your environment path.
+
 ## Installation
 
-Using npm:
+The package is on NPM, so it can easily be installed with:
 
 ```
 npm install promise-phantom
 ```
 
-Package can be found [here](https://www.npmjs.com/package/promise-phantom):
+Package can be found [here](https://www.npmjs.com/package/promise-phantom)
 
 ## Usage
 
@@ -33,29 +37,25 @@ Nearly all functions in this library returns promises. The only functions that d
 
 The objects that you will be interacting with when using this library is for the most part the [Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/phantom.md)-object and the [Page](https://github.com/Reewr/promise-phantom/blob/master/docs/webpage.md)-object.
 
-All functions are as documented as they are on the PhantomJS documentation and you should therefore not need to jump between this library and the PhantomJS docs in order to use it correctly. For convenience, all functions that are part of PhantomJS and are documented contains a link to it's respective documentation page, if needed.
+All functions are as documented as they are on the PhantomJS documentation and you should therefore not need to jump between this library and the PhantomJS docs in order to use it correctly. For convenience, all functions that are part of PhantomJS and are documented contains a link to it's respective documentation page, if needed. In addition, all functions that are not a part of PhantomJS is specified with which wrapper they originated from.
 
 Example usage of the library can be seen below:
 
 ```javascript
 "use strict";
-let driver = require('phantom-promise');
-
+let driver = require('promise-phantom');
+let options = {path: 'path/to/phantomjs/if/not/in/global/path'};
 // Promise syntax
 driver.create(options)
-  .then((phantom) => {
-    return phantom.createPage();
-  }).then((page) => {
-    page.open('http://www.google.com')
-        .then((status) => {
-          return page.set('viewportSize', {width: 640, height: 480})
-        }).then(() => {
-          return page.renderPdf();
-        }).then((binaryStr) => {
-          return doSomethingWithPdf(binaryStr);
-        });
+  .then((phantom) => phantom.createPage())
+  .then((page) => {
+    return page.open('http://www.google.com')
+      .then((status) => page.set('viewportSize', {width: 640, height: 480}))
+      .then(() => page.renderPdf())
+      .then((binaryStr) => doSomethingWithPdf(binaryStr));
   }).catch(console.error.bind(console));
 
+let co = require('co');
 // With the CO-library, this gets significantly cleaner
 let renderGoogle = function* () {
   let phantom = yield driver.create(options);
@@ -64,7 +64,9 @@ let renderGoogle = function* () {
   yield page.open('http://www.google.com');
   yield page.set('viewportSize', {width: 640, height: 480});
 
-  let contents = yield page.renderPDF('my/temporary/directory');
+  // page.renderPdf is exclusive to this wrapper and returns a Pdf binary string
+  // for saving to file, use page.render(filename);
+  let contents = yield page.renderPdf();
 
   return contents;
 };
@@ -117,10 +119,19 @@ For full documentation of the objects, please see the following links:
 
 - [Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/phantom.md)
 - [Page](https://github.com/Reewr/promise-phantom/blob/master/docs/webpage.md)
-- [Phantom-Promise](https://github.com/Reewr/promise-phantom/blob/master/docs/index.md)
+- [Promise-Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/index.md)
 
 ## Issues
 
 If you find any issues, please create a new issue for this library. When creating an issue, it is very much appreciated if you include relevant examples as well as logs so it is easier for me to debug.
 
 I will, when I have found the problem, figure out whether this issue is regarding this library, node-phantom-simple or PhantomJS and update you / them accordingly.
+
+## Version history
+
+Below is a table showing what has been changed. Only includes major and minor versions, and can also contain patch versions if they are important enough. For a detailed description of what has happened, please see [changes.md]((https://github.com/Reewr/promise-phantom/blob/master/changes.md))
+
+Version | Description
+------- | ------------
+  2.1   | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter. Read more [here](https://github.com/Reewr/promise-phantom/blob/master/changes.md)
+  2.0   | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)
