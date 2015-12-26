@@ -400,6 +400,14 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.renderPdf', function() {
+    it('should render template to a buffer', function(done) {
+      return page.open(testPage).then(() => {
+        return page.renderPdf();
+      }).should.eventually.be.instanceOf(Buffer).notify(done);
+    });
+  });
+
   describe('Page.renderTemplate', function() {
     it('should throw on non-objects without .render function', function() {
       expect(() => page.renderTemplate({})).to.throw(TypeError);
@@ -409,7 +417,7 @@ describe('Page', function() {
       expect(() => page.renderTemplate({render: () => true})).to.throw(TypeError);
     });
 
-    it('should render templates to string', function() {
+    it('should render templates to a buffer', function(done) {
       let sentOptions = {this: 'should', be: 'sent', to: 'render'};
       let templateObject = {
         render: (options) => {
@@ -426,8 +434,8 @@ describe('Page', function() {
       return page.renderTemplate(templateObject, sentOptions)
         .should
         .eventually
-        .not
-        .equal('');
+        .be
+        .instanceOf(Buffer).notify(done);
     });
   });
 
@@ -451,8 +459,8 @@ describe('Page', function() {
       return page.renderHtml('someString', './index.js').should.be.rejectedWith(Error);
     });
 
-    it('should render a pdf', function() {
-      return page.renderHtml(html).should.eventually.not.equal('');
+    it('should render a pdf', function(done) {
+      return page.renderHtml(html).should.eventually.be.instanceOf(Buffer).notify(done);
     });
   });
 

@@ -31,7 +31,7 @@ Package can be found [here](https://www.npmjs.com/package/promise-phantom)
 
 ## Usage
 
-The wrapper contains all the functions that PhantomJS and node-simple-phantom exports. In addition to this, it also contains some useful functions such as rendering a page to a PDF-binary string.
+The wrapper contains all the functions that PhantomJS and node-simple-phantom exports. In addition to this, it also contains some useful functions such as rendering a page to a PDF using buffers.
 
 Nearly all functions in this library returns promises. The only functions that does not return promises are functions that either check the status of a page or phantom object (whether they have been closed/exited or not) and the handler functions (such as onConsoleMessage).
 
@@ -52,7 +52,7 @@ driver.create(options)
     return page.open('http://www.google.com')
       .then((status) => page.set('viewportSize', {width: 640, height: 480}))
       .then(() => page.renderPdf())
-      .then((binaryStr) => doSomethingWithPdf(binaryStr));
+      .then((buffer) => doSomethingWithPdf(buffer));
   }).catch(console.error.bind(console));
 
 let co = require('co');
@@ -64,15 +64,15 @@ let renderGoogle = function* () {
   yield page.open('http://www.google.com');
   yield page.set('viewportSize', {width: 640, height: 480});
 
-  // page.renderPdf is exclusive to this wrapper and returns a Pdf binary string
-  // for saving to file, use page.render(filename);
-  let contents = yield page.renderPdf();
+  // page.renderPdf is exclusive to this wrapper and returns a buffer.
+  // For saving to file, use page.render(filename);
+  let buffer = yield page.renderPdf();
 
-  return contents;
+  return buffer;
 };
 
-co(renderGoogle).then((contents) => {
-  return doSomethingWithFileContents(contents);
+co(renderGoogle).then((buffer) => {
+  return doSomethingWithFileBuffer(buffer);
 }).catch(console.error.bind(console));
 
 ```
@@ -132,6 +132,7 @@ I will, when I have found the problem, figure out whether this issue is regardin
 Below is a table showing what has been changed. Only includes major and minor versions, and can also contain patch versions if they are important enough. For a detailed description of what has happened, please see [changes.md]((https://github.com/Reewr/promise-phantom/blob/master/changes.md))
 
 Version | Description
-------- | ------------
-  2.1   | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter. Read more [here](https://github.com/Reewr/promise-phantom/blob/master/changes.md)
+------- | --------------------------------------------------------------------
+  3.0   | `Page.renderHtml`, `Page.renderTemplate` and `Page.renderPdf` returns buffers instead of strings
+  2.1   | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter.
   2.0   | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)

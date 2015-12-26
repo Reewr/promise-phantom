@@ -1,5 +1,17 @@
 # Changes
 
+## Version 3.0
+
+**Changed**: Page.renderPdf()
+**Changed**: Page.renderHtml(htmlString, renderDirectory)
+**Changed**: Page.renderTemplate(template, renderDirectory, option)
+
+Due to an issue that sometimes caused the Pdf to be rendered blank, the above mentioned functions has been changed from returning a `string` to a `buffer`.
+
+When using `buffer.toString()` some of the data seems get lost and the rendered PDF was therefore blank.
+
+Due to a breaking change, the version has gone from 2.1 to 3.0.
+
 ## Version 2.1
 
 **Added:** Page.openHtml(htmlString, renderDirectory)<br>
