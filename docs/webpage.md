@@ -43,7 +43,7 @@ The Page object contains most of the functionality of PhantomJS and it iswhat y
         * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
         * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
         * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
-        * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise()</code>
+        * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
         * [.onAlert(handler)](#Page+onAlert)
         * [.onCallback(handler)](#Page+onCallback)
         * [.onClosing(handler)](#Page+onClosing)
@@ -436,10 +436,11 @@ let htmlString = '<html><head></head><body>This is a body</body></html>';page.r
 | options | <code>object</code> | options that should be sent to the .render function |
 
 <a name="Page+openTemplate"></a>
-### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise()</code>
+### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
 *Wrapper Specific*Expects a template that has a .render function that takes the optionssent to it. A structure of such an example can be seenat [reewr-template](https://github.com/Reewr/reewr-template).This function will render the template, save the file and open it.After this has completed, the page should be ready and can be run evaluationson.If templateRenderDir is omitted, the HTML file will be saved in a temporarydirectory (memory or file depending on OS). If the HTML file / templatehas any includes such as CSS or JS files that are local files, you shouldspecify a templateRenderDir so that it can correctly load these. Rememberto specify the location of these CSS and JS files relative to the templateRenderDir*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the template again. If you need to render after using .openTemplate,use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(string)</code> - status that is either fail or success  
 
 | Param | Type | Description |
 | --- | --- | --- |
