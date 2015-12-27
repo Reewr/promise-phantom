@@ -129,7 +129,7 @@ I will, when I have found the problem, figure out whether this issue is regardin
 
 ## Version history
 
-Below is a table showing what has been changed. Only includes major and minor versions, and can also contain patch versions if they are important enough. For a detailed description of what has happened, please see [changes.md]((https://github.com/Reewr/promise-phantom/blob/master/changes.md))
+Below is a table showing what has been changed. Only includes major and minor versions, and can also contain patch versions if they are important enough. For a detailed description of what has happened, please see [changes.md](https://github.com/Reewr/promise-phantom/blob/master/changes.md)
 
 Version | Description
 ------- | --------------------------------------------------------------------
