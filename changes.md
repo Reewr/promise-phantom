@@ -2,9 +2,9 @@
 
 ## Version 3.0
 
-**Changed**: Page.renderPdf()
-**Changed**: Page.renderHtml(htmlString, renderDirectory)
-**Changed**: Page.renderTemplate(template, renderDirectory, option)
+**Changed**: Page.renderPdf()<br>
+**Changed**: Page.renderHtml(htmlString, renderDirectory)<br>
+**Changed**: Page.renderTemplate(template, renderDirectory, option)<br>
 
 Due to an issue that sometimes caused the Pdf to be rendered blank, the above mentioned functions has been changed from returning a `string` to a `buffer`.
 
