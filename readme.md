@@ -59,7 +59,7 @@ let co = require('co');
 // With the CO-library, this gets significantly cleaner
 let renderGoogle = function* () {
   let phantom = yield driver.create(options);
-  let page    = yield phatnom.createPage();
+  let page    = yield phantom.createPage();
 
   yield page.open('http://www.google.com');
   yield page.set('viewportSize', {width: 640, height: 480});
