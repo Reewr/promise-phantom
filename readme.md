@@ -131,8 +131,8 @@ I will, when I have found the problem, figure out whether this issue is regardin
 
 Below is a table showing what has been changed. Only includes major and minor versions, and can also contain patch versions if they are important enough. For a detailed description of what has happened, please see [changes.md](https://github.com/Reewr/promise-phantom/blob/master/changes.md)
 
-Version | Description
-------- | --------------------------------------------------------------------
-  3.0   | `Page.renderHtml`, `Page.renderTemplate` and `Page.renderPdf` returns buffers instead of strings
-  2.1   | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter.
-  2.0   | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)
+Version | Date       | Description
+------- | ---------- | --------------------------------------------------------
+  3.0   | 27.12.2015 | `Page.renderHtml`, `Page.renderTemplate` and `Page.renderPdf` returns buffers instead of strings
+  2.1   | 26.12.2015 | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter.
+  2.0   | 19.12.2015 | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)

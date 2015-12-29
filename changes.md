@@ -2,6 +2,7 @@
 
 ## Version 3.0
 
+**Date:** 27.12.2015<br>
 **Changed**: Page.renderPdf()<br>
 **Changed**: Page.renderHtml(htmlString, renderDirectory)<br>
 **Changed**: Page.renderTemplate(template, renderDirectory, option)<br>
@@ -14,6 +15,7 @@ Due to a breaking change, the version has gone from 2.1 to 3.0.
 
 ## Version 2.1
 
+**Date:** 26.12.2015 <br>
 **Added:** Page.openHtml(htmlString, renderDirectory)<br>
 **Added:** Page.openTemplate(template, renderDirectory, options)<br>
 **Changed:** Page.renderTemplate(template, renderDirectory, options)<br>
@@ -36,6 +38,7 @@ As with minor versions, none of the changes should be breaking changes and every
 
 ## Version 2.0
 
+**Date:** 19.12.2015 <br>
 **Added:** Page <br>
 **Added:** Phantom <br>
 **Changed:** Too much to specify
@@ -45,5 +48,7 @@ Major rewrite of the entire library and now uses node-phantom-simple instead. Al
 In addition, this version was also pushed to NPM.
 
 ## Version 1.0
+
+**Date:** 17.11.2015<br>
 
 Uses phantomjs-node as the wrapper around PhantomJS.
