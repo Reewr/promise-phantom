@@ -3,5 +3,4 @@ node_js:
   - "5.0"
 
 after_script:
-  - npm install coverals
-  - npm run coverage | coveralls
+  - npm run coverage 
