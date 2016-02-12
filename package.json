@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "precoverasge": "istanbul instrument lib -o lib-cov",
     "coverage": "istanbul cover mocha && cat coverage/lcov.info",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls"
   },
@@ -18,8 +19,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
-    "mocha": "^2.3.4",
-    "tap-spec": "^4.1.0"
+    "mocha": "^2.3.4"
   },
   "bugs": {
     "url": "https://github.com/Reewr/promise-phantom/issues"
