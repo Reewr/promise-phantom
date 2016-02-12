@@ -20,9 +20,9 @@ describe('Page', function() {
     name    : 'phantom-cookie',
     value   : 'phantom-value',
     path    : '/',
-    domain  : '.google.com',
     httponly: false,
-    secure  : false
+    secure  : false,
+    expires : (new Date()).getTime() + (1000 * 60 * 60)
   };
 
   before(function startPhantom(done) {
@@ -114,9 +114,13 @@ describe('Page', function() {
     });
 
     it('should add cookie and return true', function(done) {
-      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.get('cookies').should.eventually.deep.equal([cookieOptions]).notify(done);
-      });
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return page.addCookie(cookieOptions);
+      }).should.eventually.equal(true).then(() => {
+        return page.getCookie(cookieOptions.name);
+      }).then(cookie => {
+        return cookie.name === cookieOptions.name;
+      }).should.eventually.equal(true).notify(done);
     });
   });
 
@@ -126,9 +130,13 @@ describe('Page', function() {
     });
 
     it('should get cookie by name if exists', function(done) {
-      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.getCookie(cookieOptions.name).should.eventually.deep.equal(cookieOptions).notify(done);
-      });
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return page.addCookie(cookieOptions);
+      }).should.eventually.equal(true).then(() => {
+        return page.getCookie(cookieOptions.name);
+      }).then(cookie => {
+        return cookie.name === cookieOptions.name;
+      }).should.eventually.equal(true).notify(done);
     });
 
     it('should return undefined on cookies that does not exist', function() {
@@ -142,21 +150,29 @@ describe('Page', function() {
     });
 
     it('should delete cookie and return true', function(done) {
-      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.deleteCookie(cookieOptions.name).should.eventually.equal(true).then(() => {
-          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined).notify(done);
-        });
-      });
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return page.addCookie(cookieOptions);
+      }).should.eventually.equal(true).then(() => {
+        return page.getCookie(cookieOptions.name);
+      }).then(cookie => {
+        return cookie.name === cookieOptions.name;
+      }).should.eventually.equal(true).then(() => {
+        return page.deleteCookie(cookieOptions.name);
+      }).should.eventually.equal(true).notify(done);
     });
   });
 
   describe('Page.clearCookies', function(done) {
     it('should clear all cookies added and return true', function() {
-      return page.addCookie(cookieOptions).should.eventually.equal(true).then(() => {
-        return page.clearCookies().should.eventually.equal(true).then(() => {
-          return page.getCookie(cookieOptions.name).should.eventually.equal(undefined).notify(done);
-        });
-      });
+      return page.open(testPage).should.eventually.equal('success').then(() => {
+        return page.addCookie(cookieOptions);
+      }).should.eventually.equal(true).then(() => {
+        return page.getCookie(cookieOptions.name);
+      }).then(cookie => {
+        return cookie.name === cookieOptions.name;
+      }).should.eventually.equal(true).then(() => {
+        return page.clearCookies();
+      }).should.eventually.equal(true).notify(done);
     });
   });
 
@@ -287,7 +303,7 @@ describe('Page', function() {
       page.onConsoleMessage(function(message) {
         expect(message).to.equal('I was called');
       });
-      // testFunction is defined, but not in this scope (node-scope) 
+      // testFunction is defined, but not in this scope (node-scope)
       return page.open(testPage).then(() => {
         return page.injectJs(injectFile).should.eventually.equal(true).then(() => {
           return page.evaluate(function() {
