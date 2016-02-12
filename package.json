@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/Reewr/promise-phantom#readme",
   "dependencies": {
-    "node-phantom-simple": "^2.2.0",
+    "node-phantom-simple": "~2.2.4",
     "tmp": "0.0.28"
   }
 }

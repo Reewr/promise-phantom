@@ -46,6 +46,9 @@ module.exports = {
    * `webdriver`                   | string                   | starts in `Remote WebDriver mode` (embedded GhostDriver): `[[:]]` (default `127.0.0.1:8910`)
    * `webdriver-selenium-grid-hub` | string                   | URL to the Selenium Grid HUB: `URLTOHUB` (default `none`) (NOTE: works only together with `--webdriver`)
    *
+   * As of version 2.2.3 of node-phantom-simple, the parameter option may also
+   * be an array of verbatim keys and values.name
+   *
    * See [Phantom]{@link ./phantom.md} for more info regarding the
    * promised Phantom-object
    *
