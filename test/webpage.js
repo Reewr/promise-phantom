@@ -126,7 +126,7 @@ describe('Page', function() {
 
   describe('Page.getCookie', function() {
     it('should throw on no name or not a string', function() {
-      expect(() => page.deleteCookie()).to.throw(TypeError);
+      expect(() => page.getCookie()).to.throw(TypeError);
     });
 
     it('should get cookie by name if exists', function(done) {
@@ -176,6 +176,16 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.getPage', function() {
+    it('should throw error on non-strings', function() {
+      expect(() => page.getPage({not: 'a string'})).to.throw(TypeError);
+    });
+
+    it('should return null on windows that does not exist', function() {
+      return page.getPage('someName').should.eventually.equal(null);
+    });
+  });
+
   describe('Page.set', function() {
     it('should throw on keys that doesn\'t exist', function() {
       expect(() => page.set('this-does-not-exist')).to.throw(TypeError);
@@ -190,6 +200,26 @@ describe('Page', function() {
       return page.set('viewportSize.height', height).should.eventually.equal(true).then(() => {
         return page.get('viewportSize.height').should.eventually.equal(height).notify(done);
       });
+    });
+  });
+
+  describe('Page.go', function() {
+    it('should throw on non-numbers', function() {
+      expect(() => page.go('string')).to.throw();
+    });
+
+    it('should return false when it does not move', function() {
+      return page.go(5).should.eventually.equal(false);
+    });
+  });
+
+  describe('Page.go[Forward|Back]', function() {
+    it('should return false when it does not move', function() {
+      return page.goBack().should.eventually.equal(false);
+    });
+
+    it('should return false when it does not move', function() {
+      return page.goForward().should.eventually.equal(false);
     });
   });
 
@@ -562,6 +592,7 @@ describe('Page', function() {
   describe('Page.close', function() {
     it('should close the page, any functions called after should throw', function() {
       return page.close().should.eventually.equal(undefined).then(() => {
+        expect(page.isClosed()).to.equal(true);
         expect(() => page.get('viewportSize')).to.throw(Error);
       });
     });

@@ -17,8 +17,7 @@ describe('Phantom', function() {
 
   describe('driver.create', function() {
     it('should throw errors on invalid PhantomJS path', function() {
-      let p = driver.create({path: './'});
-      return p.should.be.rejectedWith(Error);
+      return driver.create({path: './'}).should.be.rejected;
     });
 
     it('should create an instance of Phantom', function(done) {
@@ -112,6 +111,19 @@ describe('Phantom', function() {
     it('should add another cookie and return true', function() {
       return phantom.addCookie(cookie2).should.eventually.equal(true);
     });
+
+    it('should throw error on non-objects', function() {
+      expect(() => phantom.addCookie()).to.throw();
+    });
+
+    it('should throw error on invalid names', function() {
+      expect(() => phantom.addCookie({name: 5})).to.throw();
+      expect(() => phantom.addCookie({name: 'invalid name'})).to.throw();
+    });
+
+    it('should throw error on non-objects', function() {
+      expect(() => phantom.addCookie({name: 'valid', value: {}})).to.throw();
+    });
   });
 
   describe('phantom.getCookie', function() {
@@ -178,12 +190,13 @@ describe('Phantom', function() {
   });
 
   describe('phantom.exit', function() {
-    it('should close and return undefined', function() {
-      return phantom.exit().should.eventually.equal(undefined);
+    it('should close and return undefined', function(done) {
+      return phantom.exit().should.eventually.equal(undefined).notify(done);
     });
 
     it('should cause all other functions to throw errors', function() {
-      expect(() => phantom.get('libraryPath')).to.throw(Error);
+      expect(phantom.hasExited()).to.equal(true);
+      expect(() => phantom.throwIfExited()).to.throw(Error);
     });
   });
 
