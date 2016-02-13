@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "precoverasge": "istanbul instrument lib -o lib-cov",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "istanbul cover _mocha && istanbul-coveralls"
   },
   "keywords": [
     "promise",
@@ -18,8 +17,8 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
-    "coveralls": "^2.11.6",
-    "mocha-lcov-reporter": "^1.0.0",
+    "istanbul": "^0.4.2",
+    "istanbul-coveralls": "^1.0.3",
     "mocha": "^2.3.4"
   },
   "bugs": {
