@@ -26,6 +26,10 @@ The added functions are:
 - renderHtml
 - openTemplate
 - openHtml
+- addLocalResource
+- removeLocalResource
+- getLocalResource
+- clearLocalResources
 
 All functions that are part of PhantomJS' API include the documentation
 from their webpage. Comments outside of the PhantomJS docs will include a
@@ -71,6 +75,11 @@ The full documentation for the PhanomJS page can be found at [here](http://phant
         * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
         * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
         * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
+        * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
+        * [.addLocalResource()](#Page+addLocalResource)
+        * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
+        * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
+        * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
         * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
         * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
         * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
@@ -666,6 +675,104 @@ on their github, this function clears the HTTP-cache.
 [Commit](https://github.com/ariya/phantomjs/commit/5768b705a019da719fa356fdbf370f3ea72b4c93)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+waitForLoad"></a>
+### page.waitForLoad() ⇒ <code>Promise()</code>
+*Wrapper Specific*
+
+Waits for the page to be loaded before
+fulfilling the promise.
+
+Will reject the promise if the time for the page
+to load takes more than specified by `timeout`, which
+defaults to 20 seconds (20 000 milliseocnds)
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Params**: <code>number</code> [timeout=20000] time to wait before rejecting  
+**Example**  
+```js
+let page = yield phantom.createPage();
+let status = yield page.open('http://www.google.com');
+
+yield page.waitForLoad();
+yield page.render('./google.pdf');
+```
+<a name="Page+addLocalResource"></a>
+### page.addLocalResource()
+*Wrapper Specific*
+
+Adds a local resource for use in pages that are rendered
+using temporary files. As they pages themselves are
+located within the temp directories of the operating
+system (/tmp etc), including images, fonts and other
+resources can be tricky.
+
+If you need a local resource to be available, be it font,
+image, css or javascript, you can add these using this 
+function. All files located within the local resource
+storage of this page will be available when the page
+is loaded.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Params**: <code>object</code> options  
+**Params**: <code>string</code> options.name Unique name, used for retrieval/removal  
+**Params**: <code>buffer</code> options.content A buffer of the file content  
+**Params**: <code>string</code> options.filename Full filename and directory of
+                                  the file as it should be stored
+                                  in the temporary directory in
+                                  order to be retrievable by the page  
+**Example**  
+```js
+let page = yield phantom.createPage();
+let css  = 'body {background-color: #ccc;}';
+let html = '' +
+  '<html>' +
+    '<head>' +
+      '<title>Title</title>' +
+      '<link rel="stylesheet" href="css/my-css-file.css">' +
+    '</head>' +
+  '</html>';
+
+let cssBuffer = new Buffer(css);
+
+page.addLocalResource({
+  name    : 'mycssfile',
+  filename: 'css/my-css-file.css',
+  content : cssBuffer
+});
+
+let status = yield page.openHtml(html);
+```
+<a name="Page+removeLocalResource"></a>
+### page.removeLocalResource(name) ⇒ <code>boolean</code>
+*Wrapper Specific*
+
+Removes a localresource by name. Returns true if removed,
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>boolean</code> - true if removed, false if not found  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | the name of the resource to remove |
+
+<a name="Page+clearLocalResources"></a>
+### page.clearLocalResources() ⇒ <code>boolean</code>
+*Wrapper Specific*
+
+Removes all resouces within the resource-list
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>boolean</code> - returns true if some were removed, otherwise false  
+<a name="Page+getLocalResource"></a>
+### page.getLocalResource() ⇒ <code>object</code> &#124; <code>null</code>
+*Wrapper Specific*
+
+Retrieves a resource from the resource-list by name, if it exists.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>object</code> &#124; <code>null</code> - null if no resource was found,
+                       otherwise the resource  
+**Params**: <code>string</code> name the name of the resource  
 <a name="Page+renderPdf"></a>
 ### page.renderPdf() ⇒ <code>Promise(Buffer)</code>
 *Wrapper Specific*
