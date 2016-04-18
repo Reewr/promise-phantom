@@ -337,7 +337,9 @@ describe('Page', function() {
       return page.open(testPage).then(() => {
         return page.injectJs(injectFile).should.eventually.equal(true).then(() => {
           return page.evaluate(function() {
+            /* jshint ignore:start */
             return testFunction();
+            /* jshint ignore:end */
           }).should.eventually.equal(5).notify(done);
         });
       });
@@ -349,6 +351,7 @@ describe('Page', function() {
       expect(() => page.onResourceRequested(5)).to.throw(TypeError);
     });
 
+    /* jshint ignore:start */
     it('should call when requesting data', function(done) {
       // network data has to be defined, otherwise requestData is an array
       page.onResourceRequested(function(requestData, networkData) {
@@ -358,6 +361,7 @@ describe('Page', function() {
 
       return page.open(testPage).should.eventually.equal('success');
     });
+    /* jshint ignore:end */
   });
 
   describe('Page.onResourceReceived', function() {
@@ -510,7 +514,7 @@ describe('Page', function() {
     });
   });
 
-  describe('Page.openHtml', function() {
+  describe('Page.openHtml without local resources', function() {
     let html = '' +
       '<!DOCTYPE html>' +
       '<html>' +
@@ -534,6 +538,52 @@ describe('Page', function() {
       let openHtmlPromise = page.openHtml(html).should.eventually.equal('success');
       let pageEvalPromise = openHtmlPromise.then(() => page.evaluate(retBody));
       pageEvalPromise.should.eventually.equal('Page.openHtml').notify(done);
+    });
+  });
+
+  describe('Page.openHtml with local resources', function() {
+    let css = 'body { height: 400px; background-color: blue; }';
+    let html = '' +
+      '<!DOCTYPE html>' +
+      '<html>' +
+      '<head>' +
+        '<title>Test</title>' +
+        '<link rel="stylesheet" href="css/something.css">' +
+        '<link rel="stylesheet" href="css/should_not_exist.css">' +
+        '</head>' +
+      '<body>Page.openHtml</body>' +
+      '</html>';
+
+    let retBody = function() {
+      return {
+        text: document.body.textContent,
+        css: document.styleSheets[0].rules[0].cssText
+      };
+    };
+
+    let retContent = {text: 'Page.openHtml', css: css};
+
+    it('should open HTML and request resources', function(done) {
+      page.onResourceError(function(err) {
+        expect(err.errorCode).to.equal(203);
+        expect(err.url.indexOf('css/should_not_exist.css')).to.not.equal(-1);
+      });
+
+      page.onResourceRequested(function(request, empty) {
+        let isOkay = request.url.indexOf('.css') !== -1 ||
+                     request.url.indexOf('.html') !== -1;
+        expect(isOkay).to.equal(true);
+      });
+
+      page.addLocalResource({
+        name    : 'something.css',
+        filename: 'css/something.css',
+        content : new Buffer(css)
+      });
+
+      let openHtmlPromise = page.openHtml(html).should.eventually.equal('success');
+      let pageEvalPromise = openHtmlPromise.then(() => page.evaluate(retBody));
+      pageEvalPromise.should.eventually.deep.equal(retContent).notify(done);
     });
   });
 

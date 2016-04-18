@@ -1,5 +1,59 @@
 # Changes
 
+## Version 3.1
+
+**Date:** 18.04.2016 <br>
+**Added:** Page.addLocalResource(options)<br>
+**Added:** Page.removeLocalResource(name)<br>
+**Added:** Page.getLocalResource(name)<br>
+**Added:** Page.clearLocalResources()<br>
+**Added:** Page.waitForLoad([timeout])<br>
+
+Fixes #1
+
+Prior to this version, if you had any local resources when you opened a HTML string or template using either `page.openHtml`, `page.renderHtml`, `page.openTemplate` or `page.renderTemplate`, these resources wouldn't be retrieved correctly when not using a specific rendering / opening directory. These changes allow you to add resources that you want to be retrievable by the webpage.
+
+The `options` in `page.addLocalResource` is of type `{name: string, filename: string, content: buffer}` where `name` is a unique name, `filename` is the name of the file (where it should be stored in the temporary directory) and `content` is the buffer of the file.
+
+A quick example (using co, for simplicity):
+
+```javascript
+let page = yield phantom.createPage();
+let css  = 'body {background-color: #ccc;}';
+let html = '' +
+  '<html>' +
+    '<head>' + 
+      '<title>Title</title>' +
+      '<link rel="stylesheet" href="css/my-css-file.css">' +
+    '</head>' +
+  '</html>';
+
+let cssBuffer = new Buffer(css);
+
+page.addLocalResource({
+  name    : 'mycssfile',
+  filename: 'css/my-css-file.css',
+  content : cssBuffer
+});
+
+let status = yield page.openHtml(html);
+```
+
+The above webpage should now open the string and make a local request for the css file, which should be successful as temporary directory will look something like this (Unix-example):
+
+```
+/tmp/
+ tmp-XXXXXXX/
+   tmp-XXXXX.html
+   css/
+    my-css-file.css
+ ...
+```
+
+All local resources are saved each time a new page is open and are deleted the moment the page has loaded.
+
+`page.getLocalResource` will return the resource if it exists, `page.removeLocalResource` will remove one if it exist and return a boolean that indicates if anything has been removed. `page.clearLocalResources` will remove all local resources.
+
 ## Version 3.0
 
 **Date:** 27.12.2015<br>
