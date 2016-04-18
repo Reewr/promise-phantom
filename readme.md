@@ -136,6 +136,7 @@ Below is a table showing what has been changed. Only includes major and minor ve
 
 Version | Date       | Description
 ------- | ---------- | --------------------------------------------------------
+  3.1   | 18.04.2016 | 'Page.addLocalResource', `Page.removeLocalResource`, `Page.getLocalResource`, `Page.clearLocalResources` and `Page.waitForLoad` added.
   3.0   | 27.12.2015 | `Page.renderHtml`, `Page.renderTemplate` and `Page.renderPdf` returns buffers instead of strings
   2.1   | 26.12.2015 | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter.
   2.0   | 19.12.2015 | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)
