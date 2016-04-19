@@ -10,6 +10,19 @@ chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 const assert = chai.assert;
+const expectDoneCalls = function(num, done) {
+  return function(err) {
+    if (err) {
+      return done(err);
+    }
+    num--;
+
+    if (num <= 0) {
+      return done();
+    }
+  };
+};
+
 
 describe('Page', function() {
   let phantom;
@@ -58,20 +71,18 @@ describe('Page', function() {
     }).catch(err => done(err));
   });
 
-  describe('Page.open, Page.onLoadStarted, Page.onLoadFinished', function() {
-    it('should open page, call onLoadStarted, then onLoadFinished', function(done) {
-      let calls  = 0;
-      let isDone = function(message) {
-        calls++;
-        assert(true, message);
-        if (calls >= 3) {
-          return done();
-        }
-      };
+  describe('Page.open', function() {
+    it('should throw on invalid options', function() {
+      expect(() => page.open(5)).to.throw(TypeError);
+      expect(() => page.open({})).to.throw(TypeError);
+    });
 
-      page.onLoadStarted(() => isDone('onLoadStarted was called'));
-      page.onLoadFinished(() => isDone('onLoadFinished was called'));
-      page.open(testPage).then((status) => {
+    it('should open page, call onLoadStarted, then onLoadFinished', function(done) {
+      let isDone = expectDoneCalls(3, done);
+
+      page.onLoadStarted(() => isDone());
+      page.onLoadFinished(() => isDone());
+      page.open(testPage, {operation: 'GET'}).then((status) => {
         expect(status).to.be.equal('success');
         isDone();
       }).catch(err => done(err));
@@ -293,7 +304,6 @@ describe('Page', function() {
       this.timeout(5000);
       let sendMessage = 'this is a message';
       page.onConsoleMessage(function(message) {
-        console.log(message);
         expect(message).to.equal(sendMessage);
         done();
       });
@@ -303,6 +313,69 @@ describe('Page', function() {
           console.log('this is a message', args);
         }, 1000, ['test']).should.eventually.equal(undefined).notify(done);
       });
+    });
+  });
+
+  describe('Page.evaluateJavascript', function() {
+    it('should throw on non-strings', function() {
+      expect(() => page.evaluateJavaScript({})).to.throw(TypeError);
+      expect(() => page.evaluateJavaScript(5)).to.throw(TypeError);
+      expect(() => page.evaluateJavaScript(null)).to.throw(TypeError);
+    });
+
+    let fn = function() {
+      return 5 + 5;
+    }.toString();
+
+    it('should execute string functions and return correct result', function() {
+      return page.evaluateJavaScript(fn.toString()).should.eventually.equal(10);
+    });
+
+    it('should execute string functions and return correct result', function() {
+      return page.evaluateJavaScript(fn.toString()).should.eventually.not.equal(11);
+    });
+  });
+
+  describe('Page.onAlert', function() {
+    let msg = 'I am alert';
+
+    let fn = function() {
+      alert('I am alert');
+      return true;
+    };
+
+    it('should be called whenever alerts are raised', function(done) {
+      let isDone = expectDoneCalls(2, done);
+
+      page.onAlert(function(message) {
+        expect(message).to.equal(msg);
+        isDone();
+      });
+
+      page.open(testPage)
+        .then(() => page.evaluate(fn)).should.eventually.equal(true).notify(isDone);
+    });
+  });
+
+  describe('Page.includeJs', function() {
+    it('should throw on non-strings', function() {
+      expect(() => page.includeJs({})).to.throw(TypeError);
+      expect(() => page.includeJs(5)).to.throw(TypeError);
+      expect(() => page.includeJs(null)).to.throw(TypeError);
+    });
+
+    let scriptUrl = 'https://raw.githubusercontent.com/Reewr/promise-phantom/master/test/resources/test-resource.js';
+    let message = 'Script loaded';
+
+    it('should retrieve JS from a website', function(done) {
+      this.timeout(5000);
+      let isDone = expectDoneCalls(2, done);
+
+      page.onConsoleMessage(function(msg) {
+        expect(msg).to.equal(message);
+        isDone();
+      });
+      page.includeJs(scriptUrl).should.eventually.equal('success').notify(isDone);
     });
   });
 
@@ -369,14 +442,11 @@ describe('Page', function() {
       expect(() => page.onResourceReceived(5)).to.throw(TypeError);
     });
 
-    let amountOfCalls = 0; // should be 2
     it('should call when getting data', function(done) {
+      let isDone = expectDoneCalls(2, done);
       page.onResourceReceived(function(response) {
         expect(response.url.indexOf('html')).to.not.equal(-1);
-        amountOfCalls++;
-        if (amountOfCalls >= 2) {
-          return done();
-        }
+        isDone();
       });
 
       return page.open(testPage).should.eventually.equal('success');
