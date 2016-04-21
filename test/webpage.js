@@ -754,8 +754,15 @@ describe('Page', function() {
       expect(() => page.openTemplate({render: () => true})).to.throw(TypeError);
     });
 
-    it('should open templates', function(done) {
+    it('should open templates in render directories', function(done) {
       let openPromise = page.openTemplate(templateObject, './test/resources', sentOptions);
+      openPromise.should.eventually.equal('success').then(() => {
+        return page.evaluate(retBody);
+      }).should.eventually.equal('page.openTemplate').notify(done);
+    });
+
+    it('should open templates in temporary directories', function(done) {
+      let openPromise = page.openTemplate(templateObject, sentOptions);
       openPromise.should.eventually.equal('success').then(() => {
         return page.evaluate(retBody);
       }).should.eventually.equal('page.openTemplate').notify(done);
