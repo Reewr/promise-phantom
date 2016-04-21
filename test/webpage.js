@@ -583,6 +583,76 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.addLocalResource, Page.getLocalResource', function() {
+    it('should throw error on invalid input', function() {
+      expect(() => page.addLocalResource()).to.throw(TypeError);
+      expect(() => page.addLocalResource({name: ''})).to.throw(TypeError);
+      expect(() => page.addLocalResource({name: {}})).to.throw(TypeError);
+      expect(() => page.addLocalResource({name: 'something', filename: ''})).to.throw(TypeError);
+      expect(() => page.addLocalResource({name: 'name', filename: 'file', content: {}})).to.throw(TypeError);
+    });
+
+    it('should throw error on invalid input to getLocalResource', function() {
+      expect(() => page.getLocalResource()).to.throw(TypeError);
+      expect(() => page.getLocalResource(5)).to.throw(TypeError);
+    });
+
+    it('should add local resource and be retrievable through getLocalResource', function() {
+      let options = {name: 'myFile', filename: 'mypath.js', content: new Buffer('myjsfile')};
+      page.addLocalResource(options);
+      let result = page.getLocalResource(options.name);
+
+      expect(result).to.deep.equal(options);
+    });
+
+    it('should fail to retrieve names that are not equal', function() {
+      let options = {name: 'myFile', filename: 'mypath.js', content: new Buffer('myjsfile')};
+      page.addLocalResource(options);
+      let result1 = page.getLocalResource(options.name);
+      let result2 = page.getLocalResource('myfile');
+
+      expect(result1).to.deep.equal(options);
+      expect(result2).to.equal(null);
+    });
+  });
+
+  describe('Page.removeLocalResource', function() {
+    it('should throw error on invalid input', function() {
+      expect(() => page.addLocalResource()).to.throw(TypeError);
+      expect(() => page.addLocalResource(5)).to.throw(TypeError);
+    });
+
+    it('should remove a local resource', function() {
+      let options = {name: 'myFile', filename: 'mypath.js', content: new Buffer('myjsfile')};
+      page.addLocalResource(options);
+
+      let result1 = page.removeLocalResource(options.name);
+      let result2 = page.removeLocalResource(options.name);
+      let result3 = page.getLocalResource(options.name);
+
+      expect(result1).to.equal(true);
+      expect(result2).to.equal(false);
+      expect(result3).to.equal(null);
+    });
+  });
+
+  describe('Page.clearLocalResources', function() {
+    it('should clear all local resources', function() {
+      let options1 = {name: 'myFile', filename: 'mypath.js', content: new Buffer('myjsfile')};
+      let options2 = {name: 'myOtherFile', filename: 'mypath.js', content: new Buffer('myjsfile')};
+      page.addLocalResource(options1);
+      page.addLocalResource(options2);
+
+      let result1 = page.clearLocalResources();
+      let result2 = page.getLocalResource(options1.name);
+      let result3 = page.getLocalResource(options2.name);
+
+      expect(result1).to.equal(true);
+      expect(result2).to.equal(null);
+      expect(result3).to.equal(null);
+    });
+  });
+
   describe('Page.openHtml without local resources', function() {
     let html = '' +
       '<!DOCTYPE html>' +
@@ -611,14 +681,6 @@ describe('Page', function() {
   });
 
   describe('Page.openHtml with local resources', function() {
-    it('should throw on invalid options to addLocalResource', function() {
-      expect(() => page.addLocalResouce()).to.throw(TypeError);
-      expect(() => page.addLocalResouce({name: ''})).to.throw(TypeError);
-      expect(() => page.addLocalResouce({name: {}})).to.throw(TypeError);
-      expect(() => page.addLocalResouce({name: 'something', filename: ''})).to.throw(TypeError);
-      expect(() => page.addLocalResouce({name: 'something', filename: 'someFile', content: {}})).to.throw(TypeError);
-    });
-
     let css = 'body { height: 400px; background-color: blue; }';
     let html = '' +
       '<!DOCTYPE html>' +
