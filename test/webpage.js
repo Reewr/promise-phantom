@@ -1,4 +1,4 @@
-/* globals describe, it, before, after, beforeEach, afterEach*/
+/* globals alert, prompt, describe, it, before, after, beforeEach, afterEach*/
 'use strict';
 const chai   = require('chai');
 const driver = require('../index');
@@ -9,7 +9,6 @@ chai.should();
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
-const assert = chai.assert;
 const expectDoneCalls = function(num, done) {
   return function(err) {
     if (err) {
@@ -612,6 +611,14 @@ describe('Page', function() {
   });
 
   describe('Page.openHtml with local resources', function() {
+    it('should throw on invalid options to addLocalResource', function() {
+      expect(() => page.addLocalResouce()).to.throw(TypeError);
+      expect(() => page.addLocalResouce({name: ''})).to.throw(TypeError);
+      expect(() => page.addLocalResouce({name: {}})).to.throw(TypeError);
+      expect(() => page.addLocalResouce({name: 'something', filename: ''})).to.throw(TypeError);
+      expect(() => page.addLocalResouce({name: 'something', filename: 'someFile', content: {}})).to.throw(TypeError);
+    });
+
     let css = 'body { height: 400px; background-color: blue; }';
     let html = '' +
       '<!DOCTYPE html>' +
@@ -639,11 +646,13 @@ describe('Page', function() {
         expect(err.url.indexOf('css/should_not_exist.css')).to.not.equal(-1);
       });
 
+      /* jshint ignore:start */
       page.onResourceRequested(function(request, empty) {
         let isOkay = request.url.indexOf('.css') !== -1 ||
                      request.url.indexOf('.html') !== -1;
         expect(isOkay).to.equal(true);
       });
+      /* jshint ignore:end */
 
       page.addLocalResource({
         name    : 'something.css',
@@ -706,6 +715,29 @@ describe('Page', function() {
           done();
         });
       });
+    });
+  });
+
+  describe('Page.setFn', function() {
+    it('should throw error on invalid parameters', function() {
+      expect(() => page.setFn({}, function() {})).to.throw(TypeError);
+      expect(() => page.setFn('onPrompt', {})).to.throw(TypeError);
+    });
+
+    let onPromptFn = function(message) {
+      return message + ' was changed';
+    };
+
+    let doPrompt = function() {
+      return prompt('Message');
+    };
+
+    it('should correctly handle handlers', function() {
+      return page.setFn('onPrompt', onPromptFn).then(() => {
+        return page.open(testPage);
+      }).then(() => {
+        return page.evaluate(doPrompt);
+      }).should.eventually.equal('Message was changed');
     });
   });
 
