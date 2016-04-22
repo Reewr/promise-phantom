@@ -3,6 +3,7 @@
 const chai   = require('chai');
 const driver = require('../index');
 const utils  = require('../lib/utils');
+const Page   = require('../lib/webpage');
 const chaiAsPromised = require('chai-as-promised');
 
 chai.should();
@@ -810,6 +811,26 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.reload', function() {
+    it('should reload page', function(done) {
+      let isDone = expectDoneCalls(4, done);
+      let navigationType = 'Other';
+
+      page.onNavigationRequested(function(url, type, willNavigate, main) {
+        expect(url).to.be.a('string');
+        expect(type).to.equal(navigationType);
+        expect(willNavigate).to.equal(true);
+        expect(main).to.equal(true);
+        isDone();
+      });
+
+      page.open('http://www.google.com').then(() => {
+        navigationType = 'Reload';
+        return page.reload();
+      }).should.eventually.equal(undefined).notify(isDone);
+    });
+  });
+
   describe('page.onCallback', function() {
     let html = '' +
         '<html>' +
@@ -872,24 +893,55 @@ describe('Page', function() {
     });
   });
 
-  describe('Page.reload', function() {
-    it('should reload page', function(done) {
-      let isDone = expectDoneCalls(4, done);
-      let navigationType = 'Other';
+  describe('Page.onPageCreated', function() {
+    it('should throw errors on invalid input', function() {
+      expect(() => page.onPageCreated()).to.throw(TypeError);
+    });
 
-      page.onNavigationRequested(function(url, type, willNavigate, main) {
-        expect(url).to.be.a('string');
-        expect(type).to.equal(navigationType);
-        expect(willNavigate).to.equal(true);
-        expect(main).to.equal(true);
+    it('should call onPageCreated with a new page', function(done) {
+      let html = '' +
+          '<html>' +
+            '<head><title>Test</title></head>' +
+            '<body>' +
+              '<script>window.open("");</script>' +
+            '</body>' +
+          '</html>';
+
+      let isDone = expectDoneCalls(2, done);
+
+      page.onPageCreated(function(innerPage) {
+        expect(innerPage).to.be.instanceof(Page);
+        innerPage.evaluate(function() {
+          return document.location.href;
+        }).then((url) => {
+          return url.indexOf('about:blank');
+        }).should.eventually.not.equal(-1).notify(isDone);
+      });
+
+      page.openHtml(html).should.eventually.equal('success').notify(isDone);
+
+    });
+  });
+
+  describe('Page.onInitialized', function() {
+    it('should be called when creating new child pages', function(done) {
+      let html = '' +
+          '<html>' +
+          '<head><title>Test</title></head>' +
+          '<body>' +
+          '<script>window.open("");</script>' +
+          '</body>' +
+          '</html>';
+
+      let isDone = expectDoneCalls(2, done);
+      page.onInitialized(function() {
         isDone();
       });
 
-      page.open('http://www.google.com').then(() => {
-        navigationType = 'Reload';
-        return page.reload();
-      }).should.eventually.equal(undefined).notify(isDone);
+      page.openHtml(html).should.eventually.equal('success').notify(isDone);
+
     });
+
   });
 
   describe('Page.setFn', function() {
@@ -898,16 +950,36 @@ describe('Page', function() {
       expect(() => page.setFn('onPrompt', {})).to.throw(TypeError);
     });
 
-    let onPromptFn = function(message) {
+    /* jshint unused:false */
+    // both arguments have to be defined, otherwise
+    // an array is sent as the argument
+    let onPromptFn = function(message, defaultVal) {
       return message + ' was changed';
     };
+    /* jshint unused:true */
 
     let doPrompt = function() {
       return prompt('Message');
     };
 
+    it('onPrompt should run', function(done) {
+      let isDone = expectDoneCalls(2, done);
+
+      /* jshint unused:false */
+      // both arguments have to be defined, otherwise
+      // an array is sent as the argument
+      page.onPrompt(function(message, defaultVal) {
+        expect(message).to.equal('Message');
+        isDone();
+      });
+      /* jshint unused:true */
+
+      page.open(testPage).then(() => page.evaluate(doPrompt))
+        .should.eventually.equal('').notify(isDone);
+    });
+
     it('should correctly handle handlers', function() {
-      return page.setFn('onPrompt', onPromptFn).then(() => {
+      page.setFn('onPrompt', onPromptFn).then(() => {
         return page.open(testPage);
       }).then(() => {
         return page.evaluate(doPrompt);
@@ -916,10 +988,14 @@ describe('Page', function() {
   });
 
   describe('Page.close', function() {
-    it('should close the page, any functions called after should throw', function() {
-      return page.close().should.eventually.equal(undefined).then(() => {
+    it('should close the page, any functions called after should throw', function(done) {
+      let isDone = expectDoneCalls(2, done);
+      page.onClosing(() => isDone());
+
+      page.close().then(() => {
         expect(page.isClosed()).to.equal(true);
         expect(() => page.get('viewportSize')).to.throw(Error);
+        isDone();
       });
     });
   });
