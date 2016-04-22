@@ -22,7 +22,6 @@ const expectDoneCalls = function(num, done) {
   };
 };
 
-
 describe('Page', function() {
   let phantom;
   let page;
@@ -97,8 +96,30 @@ describe('Page', function() {
     });
   });
 
-  describe('Page.addCookie', function() {
+  describe('Page.setContent', function() {
+    it('should throw error on invalid input', function() {
+      expect(() => page.setContent()).to.throw(TypeError);
+      expect(() => page.setContent('content')).to.throw(TypeError);
+      expect(() => page.setContent('content', 5)).to.throw(TypeError);
+    });
 
+    it('should set the content', function(done) {
+      let content = {url: 'http://www.mywebpage.com/', content: 'Content'};
+
+      let fn = function() {
+        return {url: window.location.href, content: document.body.innerHTML};
+      };
+
+      let html = '<html><head><title>title</title></head>' +
+          '<body>' + content.content + '</body>';
+
+      page.setContent(html, content.url).then(() => {
+        return page.evaluate(fn);
+      }).should.eventually.deep.equal(content).notify(done);
+    });
+  });
+
+  describe('Page.addCookie', function() {
     it('should throw on no inputs', function() {
       expect(() => page.addCookie()).to.throw(TypeError);
     });
@@ -651,7 +672,7 @@ describe('Page', function() {
       expect(result1).to.equal(true);
       expect(result2).to.equal(null);
       expect(result3).to.equal(null);
-      expect(result3).to.equal(false);
+      expect(result4).to.equal(false);
     });
   });
 
@@ -806,6 +827,68 @@ describe('Page', function() {
       });
 
       page.openHtml(html).should.eventually.equal('success').notify(isDone);
+    });
+  });
+
+  describe('Page.onConfirm', function() {
+    let html = '' +
+        '<html>' +
+        '<head><title>Title</title></head>' +
+        '<body>' +
+        '<script>confirm("Press a button");</script>' +
+        '</body></html>';
+
+    it('should be called whenenever a confirm is on the page', function(done) {
+      let isDone = expectDoneCalls(2, done);
+      page.onConfirm(function(message) {
+        expect(message).to.equal("Press a button");
+        isDone();
+      });
+
+      page.openHtml(html).should.eventually.equal('success').notify(isDone);
+    });
+  });
+
+  describe('Page.onNavigationRequested', function() {
+    let html = '' +
+        '<html>' +
+        '<head><title>Title</title></head>' +
+        '<body>' +
+        '<script></script>' +
+        '</body></html>';
+
+    it('should send navigation requests', function(done) {
+      let isDone = expectDoneCalls(2, done);
+
+      page.onNavigationRequested(function(url, type, willNavigate, main) {
+        expect(url).to.be.a('string');
+        expect(type).to.equal('Other');
+        expect(willNavigate).to.equal(true);
+        expect(main).to.equal(true);
+        isDone();
+      });
+
+      page.openHtml(html).should.eventually.equal('success').notify(isDone);
+    });
+  });
+
+  describe('Page.reload', function() {
+    it('should reload page', function(done) {
+      let isDone = expectDoneCalls(4, done);
+      let navigationType = 'Other';
+
+      page.onNavigationRequested(function(url, type, willNavigate, main) {
+        expect(url).to.be.a('string');
+        expect(type).to.equal(navigationType);
+        expect(willNavigate).to.equal(true);
+        expect(main).to.equal(true);
+        isDone();
+      });
+
+      page.open('http://www.google.com').then(() => {
+        navigationType = 'Reload';
+        return page.reload();
+      }).should.eventually.equal(undefined).notify(isDone);
     });
   });
 
