@@ -787,6 +787,26 @@ describe('Page', function() {
     });
   });
 
+  describe('page.onCallback', function() {
+    let html = '' +
+        '<html>' +
+        '<head><title>Title</title></head>' +
+        '<body>' +
+          '<script>window.callPhantom({hello: "world"})</script>' +
+        '</body></html>';
+
+    it('should callback from client', function(done) {
+      let isDone = expectDoneCalls(2, done);
+      page.onCallback(function(object) {
+        expect(object).to.deep.equal({hello: 'world'});
+        expect(object).to.not.deep.equal({hello: 'no-world'});
+        isDone();
+      });
+
+      page.openHtml(html).should.eventually.equal('success').notify(isDone);
+    });
+  });
+
   describe('Page.setFn', function() {
     it('should throw error on invalid parameters', function() {
       expect(() => page.setFn({}, function() {})).to.throw(TypeError);
