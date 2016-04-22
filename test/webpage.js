@@ -209,9 +209,9 @@ describe('Page', function() {
   });
 
   describe('Page.getPage', function() {
-    it('should throw error on non-strings', function() {
-      expect(() => page.getPage({not: 'a string'})).to.throw(TypeError);
-    });
+    // it('should throw error on non-strings', function() {
+    //   expect(() => page.getPage({not: 'a string'})).to.throw(TypeError);
+    // });
 
     // Test not implemented due to an issue with node-phantom-simple
     // [issue](https://github.com/baudehlo/node-phantom-simple/issues/131)
