@@ -618,8 +618,8 @@ describe('Page', function() {
 
   describe('Page.removeLocalResource', function() {
     it('should throw error on invalid input', function() {
-      expect(() => page.addLocalResource()).to.throw(TypeError);
-      expect(() => page.addLocalResource(5)).to.throw(TypeError);
+      expect(() => page.removeLocalResource()).to.throw(TypeError);
+      expect(() => page.removeLocalResource(5)).to.throw(TypeError);
     });
 
     it('should remove a local resource', function() {
@@ -646,10 +646,12 @@ describe('Page', function() {
       let result1 = page.clearLocalResources();
       let result2 = page.getLocalResource(options1.name);
       let result3 = page.getLocalResource(options2.name);
+      let result4 = page.clearLocalResources();
 
       expect(result1).to.equal(true);
       expect(result2).to.equal(null);
       expect(result3).to.equal(null);
+      expect(result3).to.equal(false);
     });
   });
 
