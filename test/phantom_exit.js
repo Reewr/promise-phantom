@@ -10,7 +10,7 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 let phantom;
 
-describe('Phantom', function() {
+describe('phantom.exit', function() {
 
   before(function(done) {
     // starting up phantom may take some time on the first run
@@ -21,14 +21,12 @@ describe('Phantom', function() {
     });
   });
 
-  describe('phantom.exit', function() {
-    it('should close and return undefined', function(done) {
-      return phantom.exit().should.eventually.equal(undefined).notify(done);
-    });
+  it('should close and return undefined', function(done) {
+    return phantom.exit().should.eventually.equal(undefined).notify(done);
+  });
 
-    it('should cause all other functions to throw errors', function() {
-      expect(phantom.hasExited()).to.equal(true);
-      expect(() => phantom.throwIfExited()).to.throw(Error);
-    });
+  it('should cause all other functions to throw errors', function() {
+    expect(phantom.hasExited()).to.equal(true);
+    expect(() => phantom.throwIfExited()).to.throw(Error);
   });
 });
