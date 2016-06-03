@@ -209,6 +209,9 @@ describe('Page', function() {
   });
 
   describe('Page.getPage', function() {
+    // This is commented out due to an error in node-phantom-js
+    // as detailed in https://github.com/Reewr/promise-phantom/issues/5
+    //
     // it('should throw error on non-strings', function() {
     //   expect(() => page.getPage({not: 'a string'})).to.throw(TypeError);
     // });
@@ -1020,6 +1023,21 @@ describe('Page', function() {
       }).then(() => {
         return page.evaluate(doPrompt);
       }).should.eventually.equal('Message was changed');
+    });
+  });
+
+  describe('page.onUrlChanged', function() {
+    it('should be called when Page changes url', function(done) {
+      let isDone = expectDoneCalls(2, done);
+
+      page.onUrlChanged(function(targetUrl) {
+        // Google redirects automatically to a unique Url
+        isDone();
+      });
+
+      page.open('http://www.google.com')
+        .then(() => isDone())
+        .catch(isDone);
     });
   });
 
