@@ -1030,7 +1030,7 @@ describe('Page', function() {
     it('should be called when Page changes url', function(done) {
       let isDone = expectDoneCalls(2, done);
 
-      page.onUrlChanged(function(targetUrl) {
+      page.onUrlChanged(function() {
         // Google redirects automatically to a unique Url
         isDone();
       });
