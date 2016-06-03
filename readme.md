@@ -22,6 +22,19 @@ And get into an interpreter, you're good to go when it comes to PhantomJS. For W
 
 You can also specify a path when using the `.create` function, if you have PhantomJS located on your system, but it is not in your environment path.
 
+You can also use [phantomjs-prebuilt](https://www.npmjs.com/package/phantomjs-prebuilt) which will simplify retrieving PhantomJS. In this case, you will be able to do the following:
+
+```javascript
+'use strict';
+let phantomPrebuilt = require('phantomjs-prebuilt');
+let driver = require('promise-phantom');
+
+driver.create({path: phantomPrebuilt.path})
+  .then((phantom) => {
+    // do something
+  });
+```
+
 ## Installation
 
 The package is on NPM, so it can easily be installed with:
@@ -57,9 +70,12 @@ driver.create(options)
       .then(() => page.renderPdf())
       .then((buffer) => doSomethingWithPdf(buffer));
   }).catch(console.error.bind(console));
+```
 
+With [co](https://github.com/tj/co), this becomes significantly cleaner:
+
+```javascript
 let co = require('co');
-// With the CO-library, this gets significantly cleaner
 let renderGoogle = function* () {
   let phantom = yield driver.create(options);
   let page    = yield phantom.createPage();
