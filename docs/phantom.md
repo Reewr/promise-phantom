@@ -1,4 +1,5 @@
 <a name="Phantom"></a>
+
 ## Phantom
 The Phantom Class contains all the functionaility that would otherwise
 be in the global `phantom`-object in PhantomJS.
@@ -31,6 +32,7 @@ The full PhantomJS documentation for the Phantom object can be found [here](http
         * [.allowedGetProperties](#Phantom.allowedGetProperties) : <code>Array.&lt;String&gt;</code>
 
 <a name="Phantom+hasExited"></a>
+
 ### phantom.hasExited() ⇒ <code>Boolean</code>
 *Wrapper specific*
 
@@ -38,6 +40,7 @@ Returns true if `phantom.exit()` has been run.
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+createPage"></a>
+
 ### phantom.createPage() ⇒ <code>Promise(Page)</code>
 Creates a Page. This is equivalent to doing `webpage.create()` in PhantomJS
 
@@ -45,6 +48,7 @@ See [webpage docs](./webpage.md) for how to use the Page object
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+setProxy"></a>
+
 ### phantom.setProxy(ip, port, proxyType, username, password) ⇒ <code>Promise()</code>
 *Developer Note*: Sets a proxy by different settings.
 This function is undocumented and is not in the API-documentation of PhantomJS.
@@ -60,6 +64,7 @@ This function is undocumented and is not in the API-documentation of PhantomJS.
 | password | <code>string</code> | password of the proxy |
 
 <a name="Phantom+injectJs"></a>
+
 ### phantom.injectJs(filename) ⇒ <code>Promise(boolean)</code>
 [injectJs](http://phantomjs.org/api/phantom/method/inject-js.html)
 
@@ -77,6 +82,7 @@ otherwise it returns false.
 | filename | <code>string</code> | 
 
 <a name="Phantom+addCookie"></a>
+
 ### phantom.addCookie(cookie) ⇒ <code>Promise(boolean)</code>
 [addCookie](http://phantomjs.org/api/phantom/method/add-cookie.html)
 
@@ -102,6 +108,7 @@ Cookie object is as follows:
 | cookie | <code>object</code> | 
 
 <a name="Phantom+getCookie"></a>
+
 ### phantom.getCookie(cookieName) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
 *Wrapper specific*
 
@@ -116,6 +123,7 @@ and finding the cookie that has the cookieName.
 | cookieName | <code>string</code> | name of the cookie (cannot contain spaces) |
 
 <a name="Phantom+clearCookies"></a>
+
 ### phantom.clearCookies() ⇒ <code>Promise(boolean)</code>
 [clearCookie](http://phantomjs.org/api/phantom/method/clear-cookies.html)
 
@@ -123,6 +131,7 @@ Delete all Cookies in the CookieJar
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+deleteCookie"></a>
+
 ### phantom.deleteCookie(cookieName) ⇒ <code>Promise(boolean)</code>
 [deleteCookie](http://phantomjs.org/api/phantom/method/delete-cookie.html)
 
@@ -138,6 +147,7 @@ Returns true if successful, otherwise false
 | cookieName | <code>string</code> | 
 
 <a name="Phantom+set"></a>
+
 ### phantom.set(property) ⇒ <code>Promise(boolean)</code>
 *node-phantom-simple specific*
 
@@ -153,6 +163,7 @@ Sets a property to a set value. The following can be changed:
 | property | <code>string</code> | 
 
 <a name="Phantom+get"></a>
+
 ### phantom.get(property) ⇒ <code>Promise(value)</code>
 *node-phantom-simple specific*
 
@@ -171,6 +182,7 @@ Returns a property, the following can be retrieved:
 | property | <code>string</code> | 
 
 <a name="Phantom+exit"></a>
+
 ### phantom.exit() ⇒ <code>Promise()</code>
 [exit](http://phantomjs.org/api/phantom/method/exit.html)
 
@@ -178,6 +190,7 @@ Exits the phantom process, will lock down all other functions
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+on"></a>
+
 ### phantom.on()
 *node-phantom-simple specific*
 
@@ -187,11 +200,13 @@ can be used to set certain event handlers on, such as
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom.allowedSetProperties"></a>
+
 ### Phantom.allowedSetProperties : <code>Array.&lt;string&gt;</code>
 A list of allowed properties that are availble through .set
 
 **Kind**: static property of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom.allowedGetProperties"></a>
+
 ### Phantom.allowedGetProperties : <code>Array.&lt;String&gt;</code>
 A list of allowed properties that is available through .get
 The ones not retrieved from .allowedSetProperties are read-only values

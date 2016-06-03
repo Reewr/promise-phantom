@@ -1,4 +1,5 @@
 <a name="Page"></a>
+
 ## Page
 The Page object contains most of the functionality of PhantomJS and it is
 what you will be interacting with the most of the time when using this wrapper.
@@ -111,6 +112,7 @@ The full documentation for the PhanomJS page can be found at [here](http://phant
         * [.validRenders](#Page.validRenders) : <code>Array.&lt;string&gt;</code>
 
 <a name="Page+isClosed"></a>
+
 ### page.isClosed() ⇒ <code>Promise(Boolean)</code>
 *Wrapper-specific*
 
@@ -118,6 +120,7 @@ Tells you whether the page has ran `close` or not
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+setFn"></a>
+
 ### page.setFn(name, fn) ⇒ <code>Promise()</code>
 *node-simple-phantom specific*
 
@@ -133,6 +136,7 @@ be used for handlers such as `onConfirm` or `onPrompt`
 | fn | <code>function</code> | handler of the event |
 
 <a name="Page+get"></a>
+
 ### page.get(name) ⇒ <code>Promise(value)</code>
 *node-phantom-simple specific*
 
@@ -171,6 +175,7 @@ page.get('paperSize.width')
   .then((value) => // value of paperSize.width);
 ```
 <a name="Page+set"></a>
+
 ### page.set(name, value) ⇒ <code>Promise()</code>
 *node-phantom-simple specific*
 
@@ -210,6 +215,7 @@ page.get('paperSize.width')
   .then((value) => // value of paperSize.width);
 ```
 <a name="Page+evaluate"></a>
+
 ### page.evaluate(fn) ⇒ <code>Promise(StringifiableValue)</code>
 [evaluate](http://phantomjs.org/api/webpage/method/evaluate.html)
 
@@ -238,6 +244,7 @@ page.evaluate(function(name, id) {
 });
 ```
 <a name="Page+waitForSelector"></a>
+
 ### page.waitForSelector(selector, timeout) ⇒ <code>Promise()</code>
 *node-phantom-simple specific*
 
@@ -266,6 +273,7 @@ page.open(somePage)
   });
 ```
 <a name="Page+addCookie"></a>
+
 ### page.addCookie(options) ⇒ <code>Promise(Boolean)</code>
 [addCookie](http://phantomjs.org/api/webpage/method/add-cookie.html)
 
@@ -286,6 +294,7 @@ Adds a cookie to the webpage. Settings can be seen below. Some are required
 | options.expires | <code>Number</code> |  | Number of miliseonds given                                                     with Date.now / Date.getTime                                                      it should be valid |
 
 <a name="Page+clearCookies"></a>
+
 ### page.clearCookies() ⇒ <code>Promise(boolean)</code>
 [clearCookie](http://phantomjs.org/api/webpage/method/clear-cookies.html)
 
@@ -293,6 +302,7 @@ Deletes all the cookies visible to the current URL.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+close"></a>
+
 ### page.close() ⇒ <code>Promise()</code>
 [close](http://phantomjs.org/api/webpage/method/close.html)
 
@@ -309,6 +319,7 @@ functions, causing them to throw errors if they are used.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+deleteCookie"></a>
+
 ### page.deleteCookie(name) ⇒ <code>Promise(Boolean)</code>
 [deletCookie](http://phantomjs.org/api/webpage/method/delete-cookie.html)
 
@@ -323,6 +334,7 @@ the argument.
 | name | <code>string</code> | Cookie name |
 
 <a name="Page+getCookie"></a>
+
 ### page.getCookie(name) ⇒ <code>Promise(object)</code>
 *Wrapper Specific*
 
@@ -337,6 +349,7 @@ Name is not case-sensitive
 | name | <code>string</code> | 
 
 <a name="Page+evaluateJavaScript"></a>
+
 ### page.evaluateJavaScript(javaScriptStr) ⇒ <code>Promise()</code>
 [evaluateJavaScript](http://phantomjs.org/api/webpage/method/evaluate-java-script.html)
 
@@ -350,6 +363,7 @@ of the webpage. It is very familiar with `evaluate`.
 | javaScriptStr | <code>string</code> | 
 
 <a name="Page+evaluateAsync"></a>
+
 ### page.evaluateAsync(fn, num, args) ⇒ <code>Promise()</code>
 [evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)
 
@@ -374,8 +388,12 @@ question. I cannot find any sources to back it up, so I will have to check this 
 | args | <code>args</code> | arguments to send |
 
 <a name="Page+getPage"></a>
+
 ### page.getPage(windowName) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
 [getPage](http://phantomjs.org/api/webpage/method/get-page.html)
+
+Does not work properly due to an issue with node-phantom-simple
+[issue](https://github.com/baudehlo/node-phantom-simple/issues/131)
 
 *Developer Note*: Above link contains no information.
 This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
@@ -394,6 +412,7 @@ and try to match.
 | windowName | <code>string</code> | 
 
 <a name="Page+go"></a>
+
 ### page.go(historyRelativeIndex) ⇒ <code>Promise(boolean)</code>
 [go](http://phantomjs.org/api/webpage/method/go.html)
 
@@ -414,6 +433,7 @@ Modelled after JavaScript "window.go(num)" method:
 | historyRelativeIndex | <code>number</code> | 
 
 <a name="Page+goBack"></a>
+
 ### page.goBack() ⇒ <code>Promise(boolean)</code>
 [goBack](http://phantomjs.org/api/webpage/method/go-back.html)
 
@@ -426,6 +446,7 @@ Goes back in the Navigation History
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(boolean)</code> - true if it does go back in Navigation History, false otherwise  
 <a name="Page+goForward"></a>
+
 ### page.goForward() ⇒ <code>Promise(boolean)</code>
 [goForward](http://phantomjs.org/api/webpage/method/go-forward.html)
 
@@ -437,6 +458,7 @@ Goes forward in the Navigation History
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(boolean)</code> - true if goes forward in Navigation History, false otherwise  
 <a name="Page+includeJs"></a>
+
 ### page.includeJs(url) ⇒ <code>Promise()</code>
 [includeJs](http://phantomjs.org/api/webpage/method/include-js.html)
 
@@ -450,6 +472,7 @@ page and executes the callback upon completion.
 | url | <code>string</code> | The url to retrieve the JS from |
 
 <a name="Page+injectJs"></a>
+
 ### page.injectJs(filename) ⇒ <code>Promise()</code>
 [injectJs](http://phantomjs.org/api/webpage/method/inject-js.html)
 
@@ -468,6 +491,7 @@ in PhantomJS) is used for additional lookup.
 | filename | <code>string</code> | filename to inject |
 
 <a name="Page+open"></a>
+
 ### page.open(url, methodOrSettings, data) ⇒ <code>Promise(string)</code>
 [open](http://phantomjs.org/api/webpage/method/open.html)
 
@@ -489,6 +513,7 @@ Will give a status in the form of 'success' or 'fail' string
 | data | <code>string</code> | Only used when methodOrSettings is a string |
 
 <a name="Page+openUrl"></a>
+
 ### page.openUrl(url, httpConf, settings) ⇒ <code>Promise()</code>
 [openUrl](http://phantomjs.org/api/webpage/method/open-url.html)
 
@@ -503,6 +528,7 @@ Will give a status in the form of 'success' or 'fail' string
 | settings | <code>settings</code> | 
 
 <a name="Page+reload"></a>
+
 ### page.reload() ⇒ <code>Promise()</code>
 [reload](http://phantomjs.org/api/webpage/method/reload.html)
 
@@ -510,6 +536,7 @@ Will give a status in the form of 'success' or 'fail' string
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+render"></a>
+
 ### page.render(filename, format, quality) ⇒ <code>Promise()</code>
 [render](http://phantomjs.org/api/webpage/method/render.html)
 
@@ -537,6 +564,7 @@ There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135
 | quality | <code>number</code> | <code>100</code> | String or number value between 0 and 100 |
 
 <a name="Page+renderBase64"></a>
+
 ### page.renderBase64(format) ⇒ <code>Promise(string)</code>
 [renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)
 
@@ -558,6 +586,7 @@ There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135
 | format | <code>string</code> | <code>&quot;png&quot;</code> | Either 'png', 'gif' or 'jpeg' |
 
 <a name="Page+sendEvent"></a>
+
 ### page.sendEvent() ⇒ <code>Promise()</code>
 [sendEvent](http://phantomjs.org/api/webpage/method/send-event.html)
 
@@ -595,6 +624,7 @@ Just give null for them.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+setContent"></a>
+
 ### page.setContent(content, url) ⇒ <code>Promise()</code>
 [setContent](http://phantomjs.org/api/webpage/method/set-content.html)
 
@@ -610,6 +640,7 @@ url, without any actual http request being made.
 | url | <code>string</code> | The URL of the webpage |
 
 <a name="Page+stop"></a>
+
 ### page.stop() ⇒ <code>Promise()</code>
 [stop](http://phantomjs.org/api/webpage/method/stop.html)
 
@@ -628,6 +659,7 @@ by node-phantom-simple
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+switchToFocusedFrame"></a>
+
 ### page.switchToFocusedFrame() ⇒ <code>Promise()</code>
 [switchToFocusedFrame](http://phantomjs.org/api/webpage/method/switch-to-focused-frame.html)
 
@@ -639,6 +671,7 @@ window element was last focus()ed, and is currently the target of key events.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+switchToFrame"></a>
+
 ### page.switchToFrame(framePosition) ⇒ <code>Promise(boolean)</code>
 [switchToFrame](http://phantomjs.org/api/webpage/method/switch-to-frame.html)
 
@@ -655,6 +688,7 @@ Switches focus from the Current Frame to a Child Frame, identified by it positio
 | framePosition | <code>number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
 
 <a name="Page+switchToMainFrame"></a>
+
 ### page.switchToMainFrame() ⇒ <code>Promise()</code>
 [switchToMainFrame](http://phantomjs.org/api/webpage/method/switch-to-main-frame.html)
 
@@ -665,6 +699,7 @@ Switches focus to the Main Frame within this Page.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+switchToParentFrame"></a>
+
 ### page.switchToParentFrame() ⇒ <code>Promise(boolean)</code>
 [switchToParentFrame](http://phantomjs.org/api/webpage/method/switch-to-parent-frame.html)
 
@@ -677,6 +712,7 @@ Switches focus to the Parent Frame of the Current Frame (if it exists).
 **Returns**: <code>Promise(boolean)</code> - true if the Current Frame is not a Main Frame,
                             false otherwise (i.e. there is no parent frame to switch to)  
 <a name="Page+uploadFile"></a>
+
 ### page.uploadFile(selector, filename) ⇒ <code>Promise()</code>
 [uploadFile](http://phantomjs.org/api/webpage/method/upload-file.html)
 
@@ -694,6 +730,7 @@ via this special function instead
 | filename | <code>string</code> | 
 
 <a name="Page+clearMemoryCache"></a>
+
 ### page.clearMemoryCache() ⇒ <code>Promise()</code>
 *Developer Note*: There is little to no documentation on this function,
 but from what I can gather from an [issue](https://github.com/ariya/phantomjs/issues/10357)
@@ -702,6 +739,7 @@ on their github, this function clears the HTTP-cache.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+waitForLoad"></a>
+
 ### page.waitForLoad() ⇒ <code>Promise()</code>
 *Wrapper Specific*
 
@@ -723,6 +761,7 @@ yield page.waitForLoad();
 yield page.render('./google.pdf');
 ```
 <a name="Page+addLocalResource"></a>
+
 ### page.addLocalResource()
 *Wrapper Specific*
 
@@ -769,6 +808,7 @@ page.addLocalResource({
 let status = yield page.openHtml(html);
 ```
 <a name="Page+removeLocalResource"></a>
+
 ### page.removeLocalResource(name) ⇒ <code>boolean</code>
 *Wrapper Specific*
 
@@ -782,6 +822,7 @@ Removes a localresource by name. Returns true if removed,
 | name | <code>string</code> | the name of the resource to remove |
 
 <a name="Page+clearLocalResources"></a>
+
 ### page.clearLocalResources() ⇒ <code>boolean</code>
 *Wrapper Specific*
 
@@ -790,6 +831,7 @@ Removes all resouces within the resource-list
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>boolean</code> - returns true if some were removed, otherwise false  
 <a name="Page+getLocalResource"></a>
+
 ### page.getLocalResource() ⇒ <code>object</code> &#124; <code>null</code>
 *Wrapper Specific*
 
@@ -800,6 +842,7 @@ Retrieves a resource from the resource-list by name, if it exists.
                        otherwise the resource  
 **Params**: <code>string</code> name the name of the resource  
 <a name="Page+renderPdf"></a>
+
 ### page.renderPdf() ⇒ <code>Promise(Buffer)</code>
 *Wrapper Specific*
 
@@ -812,6 +855,7 @@ is deleted after it is completed or throws an error.
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(Buffer)</code> - buffer  
 <a name="Page+openHtml"></a>
+
 ### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
 *Wrapper Specific*
 
@@ -841,6 +885,7 @@ page.openHtml(htmlString)
   .then((textContent) => // textContent === 'This is a body')
 ```
 <a name="Page+renderHtml"></a>
+
 ### page.renderHtml(htmlString, templateRenderDir) ⇒ <code>Promise(Buffer)</code>
 *Wrapper Specific*
 
@@ -876,6 +921,7 @@ page.renderHtml(htmlString)
   .then((pdf) => // pdf now contains the rendered version of the htmlstring)
 ```
 <a name="Page+renderTemplate"></a>
+
 ### page.renderTemplate(template, templateRenderDir, options) ⇒ <code>Promise(Buffer)</code>
 *Wrapper Specific*
 
@@ -909,6 +955,7 @@ use .renderPdf, .render or .renderBase64
 | options | <code>object</code> | options that should be sent to the .render function |
 
 <a name="Page+openTemplate"></a>
+
 ### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
 *Wrapper Specific*
 
@@ -952,6 +999,7 @@ page.openTemplate(template, {pretty: true})
   .then((pdf) => // rendered pdf)
 ```
 <a name="Page+onAlert"></a>
+
 ### page.onAlert(handler)
 [onAlert](http://phantomjs.org/api/webpage/handler/on-alert.html)
 
@@ -966,6 +1014,7 @@ There is no return value expected from the callback handler.
 | handler | <code>function</code> | `function(message) {}` |
 
 <a name="Page+onCallback"></a>
+
 ### page.onCallback(handler)
 [onCallback](http://phantomjs.org/api/webpage/handler/on-callback.html)
 
@@ -989,6 +1038,7 @@ to be continually polling for some variable on the web page.
 | handler | <code>function</code> | `function(object) {}` |
 
 <a name="Page+onClosing"></a>
+
 ### page.onClosing(handler)
 [onClosing](http://phantomjs.org/api/webpage/handler/on-closing.html)
 
@@ -1016,6 +1066,7 @@ be done through .setFn
 | handler | <code>function</code> | `function(closingPage) {}` |
 
 <a name="Page+onConfirm"></a>
+
 ### page.onConfirm(handler)
 [onConfirm](http://phantomjs.org/api/webpage/handler/on-confirm.html)
 
@@ -1037,6 +1088,7 @@ nature of node-phantom-simple. If you need to return a value, please use
 | handler | <code>function</code> | `function(message) {}` |
 
 <a name="Page+onConsoleMessage"></a>
+
 ### page.onConsoleMessage(handler)
 [onConsoleMessage](http://phantomjs.org/api/webpage/handler/on-console-message.html)
 
@@ -1060,6 +1112,7 @@ at least in phantomJS <= 1.8.1. You receive undefined values.
 | handler | <code>function</code> | `function(message, lineNumber, sourceId) {}` |
 
 <a name="Page+onFilePicker"></a>
+
 ### page.onFilePicker(handler)
 [onFilePicker](http://phantomjs.org/api/webpage/handler/on-file-picker.html)
 
@@ -1073,6 +1126,7 @@ you will need to use .setFn if you are to return any values
 | handler | <code>function</code> | Handler `function(oldFile) {}` |
 
 <a name="Page+onInitialized"></a>
+
 ### page.onInitialized(handler)
 [onInitialized](http://phantomjs.org/api/webpage/handler/on-initialized.html)
 
@@ -1091,6 +1145,7 @@ is already initialize when recieved through a promise.
 | handler | <code>function</code> | `function() {}` |
 
 <a name="Page+onLoadFinished"></a>
+
 ### page.onLoadFinished(handler)
 [onLoadFinished](http://phantomjs.org/api/webpage/handler/on-load-finished.html)
 
@@ -1106,6 +1161,7 @@ Also see `page.open` for an alternate hook for the `onLoadFinished` callback.
 | handler | <code>function</code> | `function(status) {}` |
 
 <a name="Page+onLoadStarted"></a>
+
 ### page.onLoadStarted(handler)
 [onLoadStarted](http://phantomjs.org/api/webpage/handler/on-load-started.html)
 
@@ -1119,6 +1175,7 @@ passed to the callback.
 | handler | <code>function</code> | `function() {}` |
 
 <a name="Page+onNavigationRequested"></a>
+
 ### page.onNavigationRequested(handler)
 [onNavigationRequested](http://phantomjs.org/api/webpage/handler/on-navigation-requested.html)
 
@@ -1145,6 +1202,7 @@ event happens and know if it will be blocked (by `page.navigationLocked`)
 | handler | <code>function</code> | `function(url, type, willNavigate, main) {}` |
 
 <a name="Page+onPageCreated"></a>
+
 ### page.onPageCreated(handler)
 [onPageCreated](http://phantomjs.org/api/webpage/handler/on-page-created.html)
 
@@ -1166,6 +1224,7 @@ is to decorate the page (e.g. hook up callbacks, etc.).
 | handler | <code>function</code> | `function(newPage) {}` |
 
 <a name="Page+onPrompt"></a>
+
 ### page.onPrompt(handler)
 [onPrompt](http://phantomjs.org/api/webpage/handler/on-prompt.html)
 
@@ -1185,6 +1244,7 @@ nature of node-phantom-simple. If you need to return a value, please use
 | handler | <code>function</code> | `function(msg, defaultVal) {}` |
 
 <a name="Page+onResourceError"></a>
+
 ### page.onResourceError(handler)
 [onResourceError](http://phantomjs.org/api/webpage/handler/on-resource-error.html)
 
@@ -1204,6 +1264,7 @@ The `resourceError` metadata object contains these properties:
 | handler | <code>function</code> | `function(resourceError) {}` |
 
 <a name="Page+onResourceReceived"></a>
+
 ### page.onResourceReceived(handler)
 [onResourceReceived](http://phantomjs.org/api/webpage/handler/on-resource-received.html)
 
@@ -1232,6 +1293,7 @@ The response metadata object contains these properties:
 | handler | <code>function</code> | `function(response) {}` |
 
 <a name="Page+onResourceRequested"></a>
+
 ### page.onResourceRequested(handler)
 [onResourceRequested](http://phantomjs.org/api/webpage/handler/on-resource-requested.html)
 
@@ -1260,6 +1322,7 @@ are simply too difficult. The networkRequest object is therefore an empty object
 | handler | <code>function</code> | `function(requestData, networkRequest) {}` |
 
 <a name="Page+onResourceTimeout"></a>
+
 ### page.onResourceTimeout(handler)
 [onResourceTimeout](http://phantomjs.org/api/webpage/handler/on-resource-timeout.html)
 
@@ -1283,6 +1346,7 @@ The request metadata object contains these properties:
 | handler | <code>function</code> | `function(request) {}` |
 
 <a name="Page+onUrlChanged"></a>
+
 ### page.onUrlChanged(handler)
 [onUrlChanged](http://phantomjs.org/api/webpage/handler/on-url-changed.html)
 
@@ -1299,12 +1363,14 @@ To retrieve the old URL, use the onLoadStarted callback.
 | handler | <code>function</code> | `function(targetUrl) {}` |
 
 <a name="Page.readOnlyProperties"></a>
+
 ### Page.readOnlyProperties : <code>Array.&lt;string&gt;</code>
 A list of settings that should not be sent through `set` as they are
 read-only variables
 
 **Kind**: static property of <code>[Page](#Page)</code>  
 <a name="Page.allowedSetProperties"></a>
+
 ### Page.allowedSetProperties : <code>Array.&lt;string&gt;</code>
 A list of all the variables that can be used in .set function.
 
@@ -1314,23 +1380,27 @@ A list of all the variables that can be used in .set function.
 - [ ] Add typecheck and check before sending the options to PhantomJS to optimize
 
 <a name="Page.allowedGetProperties"></a>
+
 ### Page.allowedGetProperties : <code>Array.&lt;string&gt;</code>
 A list of all the variables that can be retrieved through .get
 These also include any readOnly variables
 
 **Kind**: static property of <code>[Page](#Page)</code>  
 <a name="Page.passProperties"></a>
+
 ### Page.passProperties : <code>Array.&lt;string&gt;</code>
 A list of settings that are undocumented in type and should therefore
 not be type-checked when that is implemented in the future
 
 **Kind**: static property of <code>[Page](#Page)</code>  
 <a name="Page.base64Formats"></a>
+
 ### Page.base64Formats : <code>Array.&lt;string&gt;</code>
 A list of allowed formats for the base64 format
 
 **Kind**: static property of <code>[Page](#Page)</code>  
 <a name="Page.validRenders"></a>
+
 ### Page.validRenders : <code>Array.&lt;string&gt;</code>
 A list of allowed formats for the render function
 
