@@ -43,7 +43,6 @@ const createServer = function() {
   let close = function() {
     return new Promise(function(resolve, reject) {
       server.close((err) => {
-        console.log('closed');
         if (err) {
           return reject(err);
         }
