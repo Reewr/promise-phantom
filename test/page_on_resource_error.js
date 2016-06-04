@@ -9,7 +9,7 @@ chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-describe('Page.injectJs', function() {
+describe('Page.onResourceError', function() {
   let phantom;
   let page;
   let resourcePage = './test/resources/test-resource.html';
