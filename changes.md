@@ -1,4 +1,16 @@
-# Changes
+# Changelog
+
+## Version 3.1.1
+
+**Date**: 18.04.2016 <br>
+**Changes**: Page.set(name, value)<br>
+**Changes**: Page.get(name, value)<br>
+
+**Resolves**:
+  - [#2](https://www.github.com/Reewr/promise-phantom/issues/2)
+  - [#3](https://www.github.com/Reewr/promise-phantom/issues/3)
+
+Fixes a bug in page.set and page.get where a legal option would throw an error. Also adds more documentation about the header and footer options available.
 
 ## Version 3.1
 
@@ -9,7 +21,7 @@
 **Added:** Page.clearLocalResources()<br>
 **Added:** Page.waitForLoad([timeout])<br>
 
-Fixes #1
+**Resolves**: [#1](https://www.github.com/Reewr/promise-phantom/issues/1)
 
 Prior to this version, if you had any local resources when you opened a HTML string or template using either `page.openHtml`, `page.renderHtml`, `page.openTemplate` or `page.renderTemplate`, these resources wouldn't be retrieved correctly when not using a specific rendering / opening directory. These changes allow you to add resources that you want to be retrievable by the webpage.
 
@@ -22,7 +34,7 @@ let page = yield phantom.createPage();
 let css  = 'body {background-color: #ccc;}';
 let html = '' +
   '<html>' +
-    '<head>' + 
+    '<head>' +
       '<title>Title</title>' +
       '<link rel="stylesheet" href="css/my-css-file.css">' +
     '</head>' +
@@ -84,7 +96,7 @@ Due to a breaking change, the version has gone from 2.1 to 3.0.
 
 `Page.renderHtml(htmlString, renderDirectory)` has been changed to use `Page.openHtml`. Same changes as above.
 
-It should be noted that if you have any includes (i.e. script src="some-javascript-file.js") that are local files, you should still use a renderDirectory as PhantomJS will try to find these files relative to the render directory.
+It should be noted that if you have any includes (i.e. `script src="some-javascript-file.js"`) that are local files, you should still use a renderDirectory as PhantomJS will try to find these files relative to the render directory.
 
 `Phantom.addCookie(cookie)` now has type checking, which will throw TypeError on invalid cookies. It is expected to be an object, with a name as well as a value
 
