@@ -44,6 +44,8 @@ describe('Page.reload', function() {
   });
 
   it('should reload page', function(done) {
+    // In travis, this may take longer than expected
+    this.timeout(5000);
     let isDone = expectDoneCalls(4, done);
     let navigationType = 'Other';
 
