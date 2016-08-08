@@ -156,3 +156,10 @@ Version | Date       | Description
   3.0   | 27.12.2015 | `Page.renderHtml`, `Page.renderTemplate` and `Page.renderPdf` returns buffers instead of strings
   2.1   | 26.12.2015 | `Page.openHtml` and `Page.openTemplate` added. <br> `Page.openHtml`, `Page.openTemplate`, `Page.renderHtml`, `Page.renderTemplate` all have optional *render directories* parameter.
   2.0   | 19.12.2015 | Updated from using [phantomjs-node](https://github.com/sgentle/phantomjs-node) to [node-phantom-simple](https://github.com/baudehlo/node-phantom-simple)
+
+## Contributers
+
+I would like to thank those who have contributed to this project. Your help is always appreciated.
+
+- [jonathanchrisp](https://github.com/jonathanchrisp) for fixing [#8](https://github.com/Reewr/promise-phantom/issues/8)
+
