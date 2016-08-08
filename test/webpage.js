@@ -273,13 +273,13 @@ describe('Page', function() {
     });
 
     it('should give be called with console error from client', function(done) {
-      let keys = ['file', 'line', 'function'];
+      let traceKeys = ['file', 'line', 'function'];
 
       page.onError(function(message, trace) {
         expect(message).to.equal('Error: Testing!');
-        expect(trace.length).to.equal(2);
-        expect(Object.keys(trace[0])).deep.equal(keys);
-        expect(Object.keys(trace[1])).deep.equal(keys);
+        trace.forEach((object) => {
+          expect(Object.keys(object)).deep.equal(traceKeys);
+        });
         done();
       });
 
