@@ -267,6 +267,25 @@ describe('Page', function() {
     });
   });
 
+  describe('Page.onError', function() {
+    it('should throw error on non-functions', function() {
+      expect(() => page.onError(5)).to.throw(TypeError);
+    });
+
+    it('should give be called with console error from client', function(done) {
+      page.onError(function(message, trace) {
+        expect(message).to.equal('Error: Testing!');
+        expect(trace[0]).to.deep.equal({ file: 'undefined', line: 2, function: '' });
+        expect(trace[1]).to.deep.equal({ file: '', line: 3, function: '' });
+        done();
+      });
+
+      page.evaluate(function(msg) {
+        throw new Error('Testing!');
+      });
+    });
+  });
+
   describe('Page.evaluate', function() {
     it('should throw error on non-functions as first argument', function() {
       expect(() => page.evaluate(5, function() {})).to.throw(TypeError);
