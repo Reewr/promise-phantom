@@ -50,6 +50,7 @@ describe('Page.reload', function() {
     let navigationType = 'Other';
 
     page.onNavigationRequested(function(url, type, willNavigate, main) {
+      console.log(url, type, willNavigate, main);
       expect(url).to.be.a('string');
       expect(type).to.equal(navigationType);
       expect(willNavigate).to.equal(true);
@@ -57,7 +58,8 @@ describe('Page.reload', function() {
       isDone();
     });
 
-    page.open('http://www.google.com').then(() => {
+    page.open('http://www.google.com').then((status) => {
+      expect(status).to.equal('success');
       navigationType = 'Reload';
       return page.reload();
     }).should.eventually.equal(undefined).notify(isDone);
