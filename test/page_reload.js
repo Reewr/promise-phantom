@@ -44,18 +44,18 @@ describe('Page.reload', function() {
   });
 
   it('should reload page', function(done) {
-    // In travis, this may take longer than expected
-    this.timeout(5000);
-    let isDone = expectDoneCalls(4, done);
+    let isDone = expectDoneCalls(2, done);
     let navigationType = 'Other';
 
     page.onNavigationRequested(function(url, type, willNavigate, main) {
-      console.log(url, type, willNavigate, main);
       expect(url).to.be.a('string');
       expect(type).to.equal(navigationType);
       expect(willNavigate).to.equal(true);
       expect(main).to.equal(true);
-      isDone();
+
+      if (type === 'Reload') {
+        isDone();
+      }
     });
 
     page.open('http://www.google.com').then((status) => {
