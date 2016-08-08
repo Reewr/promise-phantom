@@ -91,6 +91,7 @@ The full documentation for the PhanomJS page can be found at [here](http://phant
         * [.onClosing(handler)](#Page+onClosing)
         * [.onConfirm(handler)](#Page+onConfirm)
         * [.onConsoleMessage(handler)](#Page+onConsoleMessage)
+        * [.onError(handler)](#Page+onError)
         * [.onFilePicker(handler)](#Page+onFilePicker)
         * [.onInitialized(handler)](#Page+onInitialized)
         * [.onLoadFinished(handler)](#Page+onLoadFinished)
@@ -156,7 +157,7 @@ add the CSS inline, such as `<div style="font-size: 10px;"></div>`.
 
 Another thing to keep in mind is that images are loaded async, so in
 order to have an image in the footer/header, these are to be loaded
-prior to rendering the footer/header. This can be done by adding the 
+prior to rendering the footer/header. This can be done by adding the
 image to the main document and then setting the display to none.
 
 Example: To set/get the value paperSize.width you would do the following:
@@ -195,7 +196,7 @@ add the CSS inline, such as `<div style="font-size: 10px;"></div>`.
 
 Another thing to keep in mind is that images are loaded async, so in
 order to have an image in the footer/header, these are to be loaded
-prior to rendering the footer/header. This can be done by adding the 
+prior to rendering the footer/header. This can be done by adding the
 image to the main document and then setting the display to none.
 
 Example: To set/get the value paperSize.width you would do the following:
@@ -226,6 +227,10 @@ function in the same order. These arguments has to be serializeable!
 The function can also return value. However, this functionality is still a
 bit unstable and can therefore cause undefined returns. The return value
 has to be JSON.stringifiable.
+
+**Developer Note**: Errors that are thrown by this function, through either
+`throw new Error()` or other methods, will not be caught by the evaluated
+function. These are instead caught by the `page.onError` handler.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
@@ -772,7 +777,7 @@ system (/tmp etc), including images, fonts and other
 resources can be tricky.
 
 If you need a local resource to be available, be it font,
-image, css or javascript, you can add these using this 
+image, css or javascript, you can add these using this
 function. All files located within the local resource
 storage of this page will be available when the page
 is loaded.
@@ -1110,6 +1115,26 @@ at least in phantomJS <= 1.8.1. You receive undefined values.
 | Param | Type | Description |
 | --- | --- | --- |
 | handler | <code>function</code> | `function(message, lineNumber, sourceId) {}` |
+
+<a name="Page+onError"></a>
+
+### page.onError(handler)
+[onError](http://phantomjs.org/api/webpage/handler/on-error.html)
+
+This callback is invoked when there is a JavaScript execution error on
+the web page. The callback may accept up to two arguments:
+
+- the error message,
+- the stack trace [as an Array],
+
+By default, errors from the web page are not displayed.
+Using this callback is a typical way to redirect it.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handler | <code>function</code> | `function(message, trace) {}` |
 
 <a name="Page+onFilePicker"></a>
 
