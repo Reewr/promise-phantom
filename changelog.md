@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 3.1.2
+
+**Date**: 09.08.2016 <br>
+**Adds**: Page.onError(handler)<br>
+
+**Resolves**:
+  - [#8](https://www.github.com/Reewr/promise-phantom/issues/8)
+
+Adds `page.onError` that had not been added yet. Thanks to [@jonathanchrisp](https://github.com/jonathanchrisp) for the his pull request.
+
 ## Version 3.1.1
 
 **Date**: 18.04.2016 <br>
