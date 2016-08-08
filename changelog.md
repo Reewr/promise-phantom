@@ -7,8 +7,9 @@
 
 **Resolves**:
   - [#8](https://www.github.com/Reewr/promise-phantom/issues/8)
+  - [#7](https://www.github.com/Reewr/promise-phantom/issues/7)
 
-Adds `page.onError` that had not been added yet. Thanks to [@jonathanchrisp](https://github.com/jonathanchrisp) for the his pull request.
+Adds `page.onError` that had not been added yet. Thanks to [@jonathanchrisp](https://github.com/jonathanchrisp) for the his pull request. This also fixes #7 by adding notes about `page.evaluate` not catching errors that are thrown inside the browser. To catch these, `page.onError` has to be used.
 
 ## Version 3.1.1
 
