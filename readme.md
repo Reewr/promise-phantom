@@ -35,6 +35,8 @@ driver.create({path: phantomPrebuilt.path})
   });
 ```
 
+*Note*: phantomjs-prebuilt requires internet access outside of NPM requests in order to retrieve phantomjs binary.
+
 ## Installation
 
 The package is on NPM, so it can easily be installed with:
