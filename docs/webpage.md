@@ -39,6 +39,13 @@ API also have links to the respective pages.
 
 The full documentation for the PhanomJS page can be found at [here](http://phantomjs.org/api/webpage/)
 
+There are multiple functions that send functions to PhantomJS, such as `page.evaluate` or `page.setFn`. Sadly,
+PhantomJS does not support ES6 yet. In v3, all of these functions will try to warn on ES6 syntax. It currently
+only warns on arrow functions. In v4, these warnings will become thrown errors. Please use ES5 syntax for these
+functions.
+
+These deprecated warnings can be silenced by setting `page.deprecateSilence` to `false`.
+
 **Kind**: global class  
 
 * [Page](#Page)
@@ -129,6 +136,11 @@ Sets a function. This function does not have the same scope. It works
 similar to how evaluate does. It can return values and can therefore
 be used for handlers such as `onConfirm` or `onPrompt`
 
+**Note**: The function argument does **not** support ES6 and should
+therefore not use any ES6 syntax, including arrow functions. This
+is due to it being stringified and sent to PhantomJS which evaluates
+it and PhantomJS only supports ES5. This will be an error in v4
+
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
 | Param | Type | Description |
@@ -199,6 +211,11 @@ order to have an image in the footer/header, these are to be loaded
 prior to rendering the footer/header. This can be done by adding the
 image to the main document and then setting the display to none.
 
+**Note**: If the value argument is a function it should not
+include any ES6 syntax, including arrow functions. This
+is due to it being stringified and sent to PhantomJS which evaluates
+it and PhantomJS only supports ES5. This will be an error in v4
+
 Example: To set/get the value paperSize.width you would do the following:
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
@@ -227,6 +244,11 @@ function in the same order. These arguments has to be serializeable!
 The function can also return value. However, this functionality is still a
 bit unstable and can therefore cause undefined returns. The return value
 has to be JSON.stringifiable.
+
+**Note**: If the value argument is a function it should not
+include any ES6 syntax, including arrow functions. This
+is due to it being stringified and sent to PhantomJS which evaluates
+it and PhantomJS only supports ES5. This will be an error in v4
 
 **Developer Note**: Errors that are thrown by this function, through either
 `throw new Error()` or other methods, will not be caught by the evaluated
@@ -258,6 +280,7 @@ see if it exists. This operation is performed every 150 ms until it
 reaches the timeout limit. If the limit is exceeded, an error is thrown.
 If an element is found prior to this, the function returns, indicating
 that the element has been rendered.
+
 The selector is a selector accepted by document.querySelectorAll.
 This can be useful when an element has to be active, but is appended by Javascript
 and doesn't exist at pageload.
