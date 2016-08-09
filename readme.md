@@ -140,6 +140,23 @@ For full documentation of the objects, please see the following links:
 - [Page](https://github.com/Reewr/promise-phantom/blob/master/docs/webpage.md)
 - [Promise-Phantom](https://github.com/Reewr/promise-phantom/blob/master/docs/index.md)
 
+## ES6 and PhantomJS
+
+Most of us prefer ES6 to ES5, which is one of the reasons this library exists. Sadly, PhantomJS does not support ES6 yet and probably won't for some time. At the time of writing, [PhantomJS 2.0 supports 4% of ES6 functionality](https://kangax.github.io/compat-table/es6/#phantom). Due to this, some compromises has to be made.
+
+Functions that are sent to PhantomJS cannot use ES6 syntax. The only exception to this is if you are using a transpiler to compile your code before running it. The functions that cannot have ES6 syntax in the inputted function are the following:
+
+- `page.evaluate`
+- `page.evaluateAsync`
+- `page.set` (if the value to be stored is a function)
+- `page.setFn`
+
+All of these methods can receive functions. These functions are stringified before being sent to PhantomJS. When the functions are then evaluated and contains ES6 syntax, PhantomJS will just throw an error as it does not understand the syntax.
+
+All of the above functions will now (as of v3.1.2) try to warn on some ES6 syntax (only arrow functions for now) instead of trying to fix it. In next major version (v4), these will become errors. This is, to me, the only reasonable way to fix it for this library, as taking in large dependencies to transpile these functions to ES5 compatible functions seems like a waste.
+
+If the warning messages are triggering on incorrect syntax, please let me know.
+
 ## Issues
 
 If you find any issues, please create a new issue for this library. When creating an issue, it is very much appreciated if you include relevant examples as well as logs so it is easier for me to debug.

@@ -8,8 +8,9 @@
 **Resolves**:
   - [#8](https://www.github.com/Reewr/promise-phantom/issues/8)
   - [#7](https://www.github.com/Reewr/promise-phantom/issues/7)
+  - [#6](https://www.github.com/Reewr/promise-phantom/issues/6)
 
-Adds `page.onError` that had not been added yet. Thanks to [@jonathanchrisp](https://github.com/jonathanchrisp) for the his pull request. This also fixes #7 by adding notes about `page.evaluate` not catching errors that are thrown inside the browser. To catch these, `page.onError` has to be used.
+Adds `page.onError` that had not been added yet. Thanks to [@jonathanchrisp](https://github.com/jonathanchrisp) for the his pull request. This also fixes #7 by adding notes about `page.evaluate` not catching errors that are thrown inside the browser. To catch these, `page.onError` has to be used. It also fixes #6, kind of, by adding a warning whenever you are using arrow functions. Sadly, any ES6 syntax in these specific functions will cause it to throw errors that you cannot see and due to the amount dependencies I would need to include, I cannot check for all ES6 syntax.
 
 ## Version 3.1.1
 
