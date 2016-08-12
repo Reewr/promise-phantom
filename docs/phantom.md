@@ -7,7 +7,7 @@ be in the global `phantom`-object in PhantomJS.
 All functions that are part of PhantomJS' API include the documentation
 from their webpage. Comments outside of the PhantomJS docs will include a
 *Developer Note*-tag. In addition, all functions that can be found in the
-API also have links to the respective pages.
+API also have links to the respective pages. All functions are listed in alphabetical order
 
 The full PhantomJS documentation for the Phantom object can be found [here](http://phantomjs.org/api/phantom/)
 
@@ -15,71 +15,21 @@ The full PhantomJS documentation for the Phantom object can be found [here](http
 
 * [Phantom](#Phantom)
     * _instance_
-        * [.hasExited()](#Phantom+hasExited) ⇒ <code>Boolean</code>
-        * [.createPage()](#Phantom+createPage) ⇒ <code>Promise(Page)</code>
-        * [.setProxy(ip, port, proxyType, username, password)](#Phantom+setProxy) ⇒ <code>Promise()</code>
-        * [.injectJs(filename)](#Phantom+injectJs) ⇒ <code>Promise(boolean)</code>
         * [.addCookie(cookie)](#Phantom+addCookie) ⇒ <code>Promise(boolean)</code>
-        * [.getCookie(cookieName)](#Phantom+getCookie) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
         * [.clearCookies()](#Phantom+clearCookies) ⇒ <code>Promise(boolean)</code>
+        * [.createPage()](#Phantom+createPage) ⇒ <code>Promise(Page)</code>
         * [.deleteCookie(cookieName)](#Phantom+deleteCookie) ⇒ <code>Promise(boolean)</code>
-        * [.set(property)](#Phantom+set) ⇒ <code>Promise(boolean)</code>
-        * [.get(property)](#Phantom+get) ⇒ <code>Promise(value)</code>
         * [.exit()](#Phantom+exit) ⇒ <code>Promise()</code>
+        * [.get(property)](#Phantom+get) ⇒ <code>Promise(value)</code>
+        * [.getCookie(cookieName)](#Phantom+getCookie) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
+        * [.hasExited()](#Phantom+hasExited) ⇒ <code>Boolean</code>
+        * [.injectJs(filename)](#Phantom+injectJs) ⇒ <code>Promise(boolean)</code>
         * [.on()](#Phantom+on)
+        * [.set(property)](#Phantom+set) ⇒ <code>Promise(boolean)</code>
+        * [.setProxy(ip, port, proxyType, username, password)](#Phantom+setProxy) ⇒ <code>Promise()</code>
     * _static_
         * [.allowedSetProperties](#Phantom.allowedSetProperties) : <code>Array.&lt;string&gt;</code>
         * [.allowedGetProperties](#Phantom.allowedGetProperties) : <code>Array.&lt;String&gt;</code>
-
-<a name="Phantom+hasExited"></a>
-
-### phantom.hasExited() ⇒ <code>Boolean</code>
-*Wrapper specific*
-
-Returns true if `phantom.exit()` has been run.
-
-**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-<a name="Phantom+createPage"></a>
-
-### phantom.createPage() ⇒ <code>Promise(Page)</code>
-Creates a Page. This is equivalent to doing `webpage.create()` in PhantomJS
-
-See [webpage docs](./webpage.md) for how to use the Page object
-
-**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-<a name="Phantom+setProxy"></a>
-
-### phantom.setProxy(ip, port, proxyType, username, password) ⇒ <code>Promise()</code>
-*Developer Note*: Sets a proxy by different settings.
-This function is undocumented and is not in the API-documentation of PhantomJS.
-
-**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| ip | <code>string</code> | ip to the proxy |
-| port | <code>string</code> | Port of the proxy |
-| proxyType | <code>string</code> | http, sock5 or non |
-| username | <code>string</code> | username of the proxy |
-| password | <code>string</code> | password of the proxy |
-
-<a name="Phantom+injectJs"></a>
-
-### phantom.injectJs(filename) ⇒ <code>Promise(boolean)</code>
-[injectJs](http://phantomjs.org/api/phantom/method/inject-js.html)
-
-Injects external script code from the specified file into
-the Phantom outer space. If the file cannot be found in
-the current directory, libraryPath is used for additional look up.
-This function returns true if injection is successful,
-otherwise it returns false.
-
-**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if successful, false if not  
-
-| Param | Type |
-| --- | --- |
-| filename | <code>string</code> | 
 
 <a name="Phantom+addCookie"></a>
 
@@ -107,27 +57,20 @@ Cookie object is as follows:
 | --- | --- |
 | cookie | <code>object</code> | 
 
-<a name="Phantom+getCookie"></a>
-
-### phantom.getCookie(cookieName) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
-*Wrapper specific*
-
-Retrieves a cookie by name. Does this by retreiving the cookie array
-and finding the cookie that has the cookieName.
-
-**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-**Returns**: <code>Promise(undefined)</code> &#124; <code>Promise(object)</code> - Undefined if not found, otherwise cookie  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cookieName | <code>string</code> | name of the cookie (cannot contain spaces) |
-
 <a name="Phantom+clearCookies"></a>
 
 ### phantom.clearCookies() ⇒ <code>Promise(boolean)</code>
 [clearCookie](http://phantomjs.org/api/phantom/method/clear-cookies.html)
 
 Delete all Cookies in the CookieJar
+
+**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+<a name="Phantom+createPage"></a>
+
+### phantom.createPage() ⇒ <code>Promise(Page)</code>
+Creates a Page. This is equivalent to doing `webpage.create()` in PhantomJS
+
+See [webpage docs](./webpage.md) for how to use the Page object
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
 <a name="Phantom+deleteCookie"></a>
@@ -146,22 +89,14 @@ Returns true if successful, otherwise false
 | --- | --- |
 | cookieName | <code>string</code> | 
 
-<a name="Phantom+set"></a>
+<a name="Phantom+exit"></a>
 
-### phantom.set(property) ⇒ <code>Promise(boolean)</code>
-*node-phantom-simple specific*
+### phantom.exit() ⇒ <code>Promise()</code>
+[exit](http://phantomjs.org/api/phantom/method/exit.html)
 
-Sets a property to a set value. The following can be changed:
-- cookies
-- cookiesEnabled
-- libraryPath
+Exits the phantom process, will lock down all other functions
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
-
-| Param | Type |
-| --- | --- |
-| property | <code>string</code> | 
-
 <a name="Phantom+get"></a>
 
 ### phantom.get(property) ⇒ <code>Promise(value)</code>
@@ -181,14 +116,47 @@ Returns a property, the following can be retrieved:
 | --- | --- |
 | property | <code>string</code> | 
 
-<a name="Phantom+exit"></a>
+<a name="Phantom+getCookie"></a>
 
-### phantom.exit() ⇒ <code>Promise()</code>
-[exit](http://phantomjs.org/api/phantom/method/exit.html)
+### phantom.getCookie(cookieName) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
+*Wrapper specific*
 
-Exits the phantom process, will lock down all other functions
+Retrieves a cookie by name. Does this by retreiving the cookie array
+and finding the cookie that has the cookieName.
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+**Returns**: <code>Promise(undefined)</code> &#124; <code>Promise(object)</code> - Undefined if not found, otherwise cookie  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cookieName | <code>string</code> | name of the cookie (cannot contain spaces) |
+
+<a name="Phantom+hasExited"></a>
+
+### phantom.hasExited() ⇒ <code>Boolean</code>
+*Wrapper specific*
+
+Returns true if `phantom.exit()` has been run.
+
+**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+<a name="Phantom+injectJs"></a>
+
+### phantom.injectJs(filename) ⇒ <code>Promise(boolean)</code>
+[injectJs](http://phantomjs.org/api/phantom/method/inject-js.html)
+
+Injects external script code from the specified file into
+the Phantom outer space. If the file cannot be found in
+the current directory, libraryPath is used for additional look up.
+This function returns true if injection is successful,
+otherwise it returns false.
+
+**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+**Returns**: <code>Promise(boolean)</code> - true if successful, false if not  
+
+| Param | Type |
+| --- | --- |
+| filename | <code>string</code> | 
+
 <a name="Phantom+on"></a>
 
 ### phantom.on()
@@ -199,6 +167,38 @@ can be used to set certain event handlers on, such as
 'error'. All arguments are sent to the node-phantom-simples `on` handler
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+<a name="Phantom+set"></a>
+
+### phantom.set(property) ⇒ <code>Promise(boolean)</code>
+*node-phantom-simple specific*
+
+Sets a property to a set value. The following can be changed:
+- cookies
+- cookiesEnabled
+- libraryPath
+
+**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+
+| Param | Type |
+| --- | --- |
+| property | <code>string</code> | 
+
+<a name="Phantom+setProxy"></a>
+
+### phantom.setProxy(ip, port, proxyType, username, password) ⇒ <code>Promise()</code>
+*Developer Note*: Sets a proxy by different settings.
+This function is undocumented and is not in the API-documentation of PhantomJS.
+
+**Kind**: instance method of <code>[Phantom](#Phantom)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ip | <code>string</code> | ip to the proxy |
+| port | <code>string</code> | Port of the proxy |
+| proxyType | <code>string</code> | http, sock5 or non |
+| username | <code>string</code> | username of the proxy |
+| password | <code>string</code> | password of the proxy |
+
 <a name="Phantom.allowedSetProperties"></a>
 
 ### Phantom.allowedSetProperties : <code>Array.&lt;string&gt;</code>

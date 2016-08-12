@@ -46,53 +46,32 @@ functions.
 
 These deprecated warnings can be silenced by setting `page.deprecateSilence` to `false`.
 
+All functions are listed in alphabetical order
+
 **Kind**: global class  
 
 * [Page](#Page)
     * _instance_
-        * [.isClosed()](#Page+isClosed) ⇒ <code>Promise(Boolean)</code>
-        * [.setFn(name, fn)](#Page+setFn) ⇒ <code>Promise()</code>
-        * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
-        * [.set(name, value)](#Page+set) ⇒ <code>Promise()</code>
-        * [.evaluate(fn)](#Page+evaluate) ⇒ <code>Promise(StringifiableValue)</code>
-        * [.waitForSelector(selector, timeout)](#Page+waitForSelector) ⇒ <code>Promise()</code>
         * [.addCookie(options)](#Page+addCookie) ⇒ <code>Promise(Boolean)</code>
+        * [.addLocalResource()](#Page+addLocalResource)
         * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(boolean)</code>
+        * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
+        * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
         * [.close()](#Page+close) ⇒ <code>Promise()</code>
         * [.deleteCookie(name)](#Page+deleteCookie) ⇒ <code>Promise(Boolean)</code>
-        * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
+        * [.evaluate(fn)](#Page+evaluate) ⇒ <code>Promise(StringifiableValue)</code>
         * [.evaluateJavaScript(javaScriptStr)](#Page+evaluateJavaScript) ⇒ <code>Promise()</code>
         * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
+        * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
+        * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
+        * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
         * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
         * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(boolean)</code>
         * [.goBack()](#Page+goBack) ⇒ <code>Promise(boolean)</code>
         * [.goForward()](#Page+goForward) ⇒ <code>Promise(boolean)</code>
+        * [.isClosed()](#Page+isClosed) ⇒ <code>Promise(Boolean)</code>
         * [.includeJs(url)](#Page+includeJs) ⇒ <code>Promise()</code>
         * [.injectJs(filename)](#Page+injectJs) ⇒ <code>Promise()</code>
-        * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(string)</code>
-        * [.openUrl(url, httpConf, settings)](#Page+openUrl) ⇒ <code>Promise()</code>
-        * [.reload()](#Page+reload) ⇒ <code>Promise()</code>
-        * [.render(filename, format, quality)](#Page+render) ⇒ <code>Promise()</code>
-        * [.renderBase64(format)](#Page+renderBase64) ⇒ <code>Promise(string)</code>
-        * [.sendEvent()](#Page+sendEvent) ⇒ <code>Promise()</code>
-        * [.setContent(content, url)](#Page+setContent) ⇒ <code>Promise()</code>
-        * [.stop()](#Page+stop) ⇒ <code>Promise()</code>
-        * [.switchToFocusedFrame()](#Page+switchToFocusedFrame) ⇒ <code>Promise()</code>
-        * [.switchToFrame(framePosition)](#Page+switchToFrame) ⇒ <code>Promise(boolean)</code>
-        * [.switchToMainFrame()](#Page+switchToMainFrame) ⇒ <code>Promise()</code>
-        * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
-        * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
-        * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
-        * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
-        * [.addLocalResource()](#Page+addLocalResource)
-        * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
-        * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
-        * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
-        * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
-        * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
-        * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
-        * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
-        * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
         * [.onAlert(handler)](#Page+onAlert)
         * [.onCallback(handler)](#Page+onCallback)
         * [.onClosing(handler)](#Page+onClosing)
@@ -111,6 +90,29 @@ These deprecated warnings can be silenced by setting `page.deprecateSilence` to 
         * [.onResourceRequested(handler)](#Page+onResourceRequested)
         * [.onResourceTimeout(handler)](#Page+onResourceTimeout)
         * [.onUrlChanged(handler)](#Page+onUrlChanged)
+        * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(string)</code>
+        * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
+        * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
+        * [.openUrl(url, httpConf, settings)](#Page+openUrl) ⇒ <code>Promise()</code>
+        * [.reload()](#Page+reload) ⇒ <code>Promise()</code>
+        * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
+        * [.render(filename, format, quality)](#Page+render) ⇒ <code>Promise()</code>
+        * [.renderBase64(format)](#Page+renderBase64) ⇒ <code>Promise(string)</code>
+        * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
+        * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
+        * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
+        * [.sendEvent()](#Page+sendEvent) ⇒ <code>Promise()</code>
+        * [.set(name, value)](#Page+set) ⇒ <code>Promise()</code>
+        * [.setContent(content, url)](#Page+setContent) ⇒ <code>Promise()</code>
+        * [.setFn(name, fn)](#Page+setFn) ⇒ <code>Promise()</code>
+        * [.stop()](#Page+stop) ⇒ <code>Promise()</code>
+        * [.switchToFocusedFrame()](#Page+switchToFocusedFrame) ⇒ <code>Promise()</code>
+        * [.switchToFrame(framePosition)](#Page+switchToFrame) ⇒ <code>Promise(boolean)</code>
+        * [.switchToMainFrame()](#Page+switchToMainFrame) ⇒ <code>Promise()</code>
+        * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
+        * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
+        * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
+        * [.waitForSelector(selector, timeout)](#Page+waitForSelector) ⇒ <code>Promise()</code>
     * _static_
         * [.readOnlyProperties](#Page.readOnlyProperties) : <code>Array.&lt;string&gt;</code>
         * [.allowedSetProperties](#Page.allowedSetProperties) : <code>Array.&lt;string&gt;</code>
@@ -119,34 +121,208 @@ These deprecated warnings can be silenced by setting `page.deprecateSilence` to 
         * [.base64Formats](#Page.base64Formats) : <code>Array.&lt;string&gt;</code>
         * [.validRenders](#Page.validRenders) : <code>Array.&lt;string&gt;</code>
 
-<a name="Page+isClosed"></a>
+<a name="Page+addCookie"></a>
 
-### page.isClosed() ⇒ <code>Promise(Boolean)</code>
-*Wrapper-specific*
+### page.addCookie(options) ⇒ <code>Promise(Boolean)</code>
+[addCookie](http://phantomjs.org/api/webpage/method/add-cookie.html)
 
-Tells you whether the page has ran `close` or not
+Adds a cookie to the webpage. Settings can be seen below. Some are required
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+setFn"></a>
+**Returns**: <code>Promise(Boolean)</code> - true if successful, false if not  
 
-### page.setFn(name, fn) ⇒ <code>Promise()</code>
-*node-simple-phantom specific*
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| options | <code>object</code> |  |  |
+| options.name | <code>string</code> |  | A valid cookie name |
+| options.value | <code>string</code> |  | A cookie value |
+| options.path | <code>string</code> |  | The path of the cookie |
+| options.domain | <code>string</code> | <code>&quot;string&quot;</code> | The domain of the cookie |
+| options.httponly | <code>boolean</code> | <code>false</code> | Whether to use HTTP only. |
+| options.secure | <code>boolean</code> | <code>false</code> | Whether it should be secure or not |
+| options.expires | <code>Number</code> |  | Number of miliseonds given                                                     with Date.now / Date.getTime                                                      it should be valid |
 
-Sets a function. This function does not have the same scope. It works
-similar to how evaluate does. It can return values and can therefore
-be used for handlers such as `onConfirm` or `onPrompt`
+<a name="Page+addLocalResource"></a>
 
-**Note**: The function argument does **not** support ES6 and should
-therefore not use any ES6 syntax, including arrow functions. This
+### page.addLocalResource()
+*Wrapper Specific*
+
+Adds a local resource for use in pages that are rendered
+using temporary files. As they pages themselves are
+located within the temp directories of the operating
+system (/tmp etc), including images, fonts and other
+resources can be tricky.
+
+If you need a local resource to be available, be it font,
+image, css or javascript, you can add these using this
+function. All files located within the local resource
+storage of this page will be available when the page
+is loaded.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Params**: <code>object</code> options  
+**Params**: <code>string</code> options.name Unique name, used for retrieval/removal  
+**Params**: <code>buffer</code> options.content A buffer of the file content  
+**Params**: <code>string</code> options.filename Full filename and directory of
+                                  the file as it should be stored
+                                  in the temporary directory in
+                                  order to be retrievable by the page  
+**Example**  
+```js
+let page = yield phantom.createPage();
+let css  = 'body {background-color: #ccc;}';
+let html = '' +
+  '<html>' +
+    '<head>' +
+      '<title>Title</title>' +
+      '<link rel="stylesheet" href="css/my-css-file.css">' +
+    '</head>' +
+  '</html>';
+
+let cssBuffer = new Buffer(css);
+
+page.addLocalResource({
+  name    : 'mycssfile',
+  filename: 'css/my-css-file.css',
+  content : cssBuffer
+});
+
+let status = yield page.openHtml(html);
+```
+<a name="Page+clearCookies"></a>
+
+### page.clearCookies() ⇒ <code>Promise(boolean)</code>
+[clearCookie](http://phantomjs.org/api/webpage/method/clear-cookies.html)
+
+Deletes all the cookies visible to the current URL.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+clearLocalResources"></a>
+
+### page.clearLocalResources() ⇒ <code>boolean</code>
+*Wrapper Specific*
+
+Removes all resouces within the resource-list
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>boolean</code> - returns true if some were removed, otherwise false  
+<a name="Page+clearMemoryCache"></a>
+
+### page.clearMemoryCache() ⇒ <code>Promise()</code>
+*Developer Note*: There is little to no documentation on this function,
+but from what I can gather from an [issue](https://github.com/ariya/phantomjs/issues/10357)
+on their github, this function clears the HTTP-cache.
+[Commit](https://github.com/ariya/phantomjs/commit/5768b705a019da719fa356fdbf370f3ea72b4c93)
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+close"></a>
+
+### page.close() ⇒ <code>Promise()</code>
+[close](http://phantomjs.org/api/webpage/method/close.html)
+
+Closes the page and releases the memory heap associated with it. Do
+not use the page instance after calling this.
+
+Due to some technical limitations, the page object might not be completely
+garbage collected. This is often encountered when the same object is used
+over and over again. Calling this function may stop the increasing
+heap allocation
+
+*Developer note*: Calling this function will lock down all the other
+functions, causing them to throw errors if they are used.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+deleteCookie"></a>
+
+### page.deleteCookie(name) ⇒ <code>Promise(Boolean)</code>
+[deletCookie](http://phantomjs.org/api/webpage/method/delete-cookie.html)
+
+Delete any Cookies visible to the current URL with a name that matches
+the argument.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(Boolean)</code> - true if successful, false if not.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Cookie name |
+
+<a name="Page+evaluate"></a>
+
+### page.evaluate(fn) ⇒ <code>Promise(StringifiableValue)</code>
+[evaluate](http://phantomjs.org/api/webpage/method/evaluate.html)
+
+Evaluates the given function in the context of the web page. The execution
+is sandboxed. Any extra arguments to this function will be sent to the sandboxed
+function in the same order. These arguments has to be serializeable!
+
+The function can also return value. However, this functionality is still a
+bit unstable and can therefore cause undefined returns. The return value
+has to be JSON.stringifiable.
+
+**Note**: If the value argument is a function it should not
+include any ES6 syntax, including arrow functions. This
 is due to it being stringified and sent to PhantomJS which evaluates
 it and PhantomJS only supports ES5. This will be an error in v4
+
+**Developer Note**: Errors that are thrown by this function, through either
+`throw new Error()` or other methods, will not be caught by the evaluated
+function. These are instead caught by the `page.onError` handler.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | name of the event ('onConfirm', etc) |
-| fn | <code>function</code> | handler of the event |
+| fn | <code>function</code> | function to be evaluated |
+
+**Example**  
+```js
+page.evaluate(function(name, id) {
+  document.body.setAttribute('name', name);
+  document.body.setAttribute('id', id);
+  return document.getElementById('my-div').textContent;
+}, 'name-of-body', 'id-of-body').then((textContent) => {
+  // do something with text content
+});
+```
+<a name="Page+evaluateJavaScript"></a>
+
+### page.evaluateJavaScript(javaScriptStr) ⇒ <code>Promise()</code>
+[evaluateJavaScript](http://phantomjs.org/api/webpage/method/evaluate-java-script.html)
+
+Evaluate a function as a string. Evaluates the given function string in the context
+of the webpage. It is very familiar with `evaluate`.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type |
+| --- | --- |
+| javaScriptStr | <code>string</code> | 
+
+<a name="Page+evaluateAsync"></a>
+
+### page.evaluateAsync(fn, num, args) ⇒ <code>Promise()</code>
+[evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)
+
+Evaulates a given function in the context of the webpage without blocking
+the current execution (Phantom process - not Node). Unlike `evaluate`, this
+function cannot take any arguments and will not return any values.
+
+*Developer Note*: It seems like the signature of the function is wrong according
+to [this](http://stackoverflow.com/questions/22474525/how-we-can-use-evaluateasync-in-phantomjs) stackoverflow
+question. I cannot find any sources to back it up, so I will have to check this later.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Todo**
+
+- [ ] Make sure to throughly test this function
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fn | <code>function</code> | Function to be evaluated |
+| num | <code>number</code> | number of miliseconds to wait until the function should run |
+| args | <code>args</code> | arguments to send |
 
 <a name="Page+get"></a>
 
@@ -187,180 +363,6 @@ page.set('paperSize.width', '50px')
 page.get('paperSize.width')
   .then((value) => // value of paperSize.width);
 ```
-<a name="Page+set"></a>
-
-### page.set(name, value) ⇒ <code>Promise()</code>
-*node-phantom-simple specific*
-
-As all operations are done over HTTP, the setting and getting
-of properties uses callbacks to indicate that they're set or to return
-a value
-Will check the name against allowed properties. Throws error if the
-property doesn't exist or if it's a read only value.
-
-*Developer Note*: `paperSize.header.contents` and `paperSize.footer.contents` take
-functions that are evaluated in PhantomJS, meaning they will not have
-the context of where you are creating them. In addition, the HTML
-returned by these functions are rendered in a HTML document outside
-of the main document (the page itself) and will therefore not have access to
-resources such as CSS and JS. In order to style HTML, you will have to
-add the CSS inline, such as `<div style="font-size: 10px;"></div>`.
-
-Another thing to keep in mind is that images are loaded async, so in
-order to have an image in the footer/header, these are to be loaded
-prior to rendering the footer/header. This can be done by adding the
-image to the main document and then setting the display to none.
-
-**Note**: If the value argument is a function it should not
-include any ES6 syntax, including arrow functions. This
-is due to it being stringified and sent to PhantomJS which evaluates
-it and PhantomJS only supports ES5. This will be an error in v4
-
-Example: To set/get the value paperSize.width you would do the following:
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| name | <code>string</code> | name of the property |
-| value | <code>anything</code> | value of the property |
-
-**Example**  
-```js
-page.set('paperSize.width', '50px')
-  .then((result) => {// result is true or false depending on success});
-page.get('paperSize.width')
-  .then((value) => // value of paperSize.width);
-```
-<a name="Page+evaluate"></a>
-
-### page.evaluate(fn) ⇒ <code>Promise(StringifiableValue)</code>
-[evaluate](http://phantomjs.org/api/webpage/method/evaluate.html)
-
-Evaluates the given function in the context of the web page. The execution
-is sandboxed. Any extra arguments to this function will be sent to the sandboxed
-function in the same order. These arguments has to be serializeable!
-
-The function can also return value. However, this functionality is still a
-bit unstable and can therefore cause undefined returns. The return value
-has to be JSON.stringifiable.
-
-**Note**: If the value argument is a function it should not
-include any ES6 syntax, including arrow functions. This
-is due to it being stringified and sent to PhantomJS which evaluates
-it and PhantomJS only supports ES5. This will be an error in v4
-
-**Developer Note**: Errors that are thrown by this function, through either
-`throw new Error()` or other methods, will not be caught by the evaluated
-function. These are instead caught by the `page.onError` handler.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| fn | <code>function</code> | function to be evaluated |
-
-**Example**  
-```js
-page.evaluate(function(name, id) {
-  document.body.setAttribute('name', name);
-  document.body.setAttribute('id', id);
-  return document.getElementById('my-div').textContent;
-}, 'name-of-body', 'id-of-body').then((textContent) => {
-  // do something with text content
-});
-```
-<a name="Page+waitForSelector"></a>
-
-### page.waitForSelector(selector, timeout) ⇒ <code>Promise()</code>
-*node-phantom-simple specific*
-
-Uses page.evaluate in order select an element on the page to
-see if it exists. This operation is performed every 150 ms until it
-reaches the timeout limit. If the limit is exceeded, an error is thrown.
-If an element is found prior to this, the function returns, indicating
-that the element has been rendered.
-
-The selector is a selector accepted by document.querySelectorAll.
-This can be useful when an element has to be active, but is appended by Javascript
-and doesn't exist at pageload.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| selector | <code>string</code> | selector such as '.myclass' or '#myid' |
-| timeout | <code>number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
-
-**Example**  
-```js
-page.open(somePage)
-  .then(() => page.waitForSelector('.select'))
-  .then(() => {
-    // ready to do something as the whole page is now rendered
-  });
-```
-<a name="Page+addCookie"></a>
-
-### page.addCookie(options) ⇒ <code>Promise(Boolean)</code>
-[addCookie](http://phantomjs.org/api/webpage/method/add-cookie.html)
-
-Adds a cookie to the webpage. Settings can be seen below. Some are required
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(Boolean)</code> - true if successful, false if not  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| options | <code>object</code> |  |  |
-| options.name | <code>string</code> |  | A valid cookie name |
-| options.value | <code>string</code> |  | A cookie value |
-| options.path | <code>string</code> |  | The path of the cookie |
-| options.domain | <code>string</code> | <code>&quot;string&quot;</code> | The domain of the cookie |
-| options.httponly | <code>boolean</code> | <code>false</code> | Whether to use HTTP only. |
-| options.secure | <code>boolean</code> | <code>false</code> | Whether it should be secure or not |
-| options.expires | <code>Number</code> |  | Number of miliseonds given                                                     with Date.now / Date.getTime                                                      it should be valid |
-
-<a name="Page+clearCookies"></a>
-
-### page.clearCookies() ⇒ <code>Promise(boolean)</code>
-[clearCookie](http://phantomjs.org/api/webpage/method/clear-cookies.html)
-
-Deletes all the cookies visible to the current URL.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+close"></a>
-
-### page.close() ⇒ <code>Promise()</code>
-[close](http://phantomjs.org/api/webpage/method/close.html)
-
-Closes the page and releases the memory heap associated with it. Do
-not use the page instance after calling this.
-
-Due to some technical limitations, the page object might not be completely
-garbage collected. This is often encountered when the same object is used
-over and over again. Calling this function may stop the increasing
-heap allocation
-
-*Developer note*: Calling this function will lock down all the other
-functions, causing them to throw errors if they are used.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+deleteCookie"></a>
-
-### page.deleteCookie(name) ⇒ <code>Promise(Boolean)</code>
-[deletCookie](http://phantomjs.org/api/webpage/method/delete-cookie.html)
-
-Delete any Cookies visible to the current URL with a name that matches
-the argument.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(Boolean)</code> - true if successful, false if not.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| name | <code>string</code> | Cookie name |
-
 <a name="Page+getCookie"></a>
 
 ### page.getCookie(name) ⇒ <code>Promise(object)</code>
@@ -376,45 +378,17 @@ Name is not case-sensitive
 | --- | --- |
 | name | <code>string</code> | 
 
-<a name="Page+evaluateJavaScript"></a>
+<a name="Page+getLocalResource"></a>
 
-### page.evaluateJavaScript(javaScriptStr) ⇒ <code>Promise()</code>
-[evaluateJavaScript](http://phantomjs.org/api/webpage/method/evaluate-java-script.html)
+### page.getLocalResource() ⇒ <code>object</code> &#124; <code>null</code>
+*Wrapper Specific*
 
-Evaluate a function as a string. Evaluates the given function string in the context
-of the webpage. It is very familiar with `evaluate`.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type |
-| --- | --- |
-| javaScriptStr | <code>string</code> | 
-
-<a name="Page+evaluateAsync"></a>
-
-### page.evaluateAsync(fn, num, args) ⇒ <code>Promise()</code>
-[evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)
-
-Evaulates a given function in the context of the webpage without blocking
-the current execution (Phantom process - not Node). Unlike `evaluate`, this
-function cannot take any arguments and will not return any values.
-
-*Developer Note*: It seems like the signature of the function is wrong according
-to [this](http://stackoverflow.com/questions/22474525/how-we-can-use-evaluateasync-in-phantomjs) stackoverflow
-question. I cannot find any sources to back it up, so I will have to check this later.
+Retrieves a resource from the resource-list by name, if it exists.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Todo**
-
-- [ ] Make sure to throughly test this function
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| fn | <code>function</code> | Function to be evaluated |
-| num | <code>number</code> | number of miliseconds to wait until the function should run |
-| args | <code>args</code> | arguments to send |
-
+**Returns**: <code>object</code> &#124; <code>null</code> - null if no resource was found,
+                       otherwise the resource  
+**Params**: <code>string</code> name the name of the resource  
 <a name="Page+getPage"></a>
 
 ### page.getPage(windowName) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
@@ -485,6 +459,14 @@ Goes forward in the Navigation History
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Promise(boolean)</code> - true if goes forward in Navigation History, false otherwise  
+<a name="Page+isClosed"></a>
+
+### page.isClosed() ⇒ <code>Promise(Boolean)</code>
+*Wrapper-specific*
+
+Tells you whether the page has ran `close` or not
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+includeJs"></a>
 
 ### page.includeJs(url) ⇒ <code>Promise()</code>
@@ -518,514 +500,6 @@ in PhantomJS) is used for additional lookup.
 | --- | --- | --- |
 | filename | <code>string</code> | filename to inject |
 
-<a name="Page+open"></a>
-
-### page.open(url, methodOrSettings, data) ⇒ <code>Promise(string)</code>
-[open](http://phantomjs.org/api/webpage/method/open.html)
-
-Opens the URL and loads it to the page. Once the page is loaded the promise function
-is invoked. In addition, the page.onLoadFinished will also be called.
-Will give a status in the form of 'success' or 'fail' string
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - status of the load, either 'success' or 'fail'  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| url | <code>string</code> | URL to do the request towards. Can be local file |
-| methodOrSettings | <code>string</code> &#124; <code>object</code> | The method as a string or a settings object |
-| settings.operation | <code>string</code> | The type of method - POST / GEt |
-| settings.encoding | <code>encoding</code> | The encoding to use |
-| settings.headers | <code>object</code> | An object with headers |
-| settings.data | <code>string</code> | Stringified data (JSON etc) |
-| data | <code>string</code> | Only used when methodOrSettings is a string |
-
-<a name="Page+openUrl"></a>
-
-### page.openUrl(url, httpConf, settings) ⇒ <code>Promise()</code>
-[openUrl](http://phantomjs.org/api/webpage/method/open-url.html)
-
-*Developer Note*: No documentation
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type |
-| --- | --- |
-| url | <code>string</code> | 
-| httpConf | <code>httpConf</code> | 
-| settings | <code>settings</code> | 
-
-<a name="Page+reload"></a>
-
-### page.reload() ⇒ <code>Promise()</code>
-[reload](http://phantomjs.org/api/webpage/method/reload.html)
-
-*Developer Note*: Performs a reload of the page.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+render"></a>
-
-### page.render(filename, format, quality) ⇒ <code>Promise()</code>
-[render](http://phantomjs.org/api/webpage/method/render.html)
-
-Renders the webpage to an image buffer and saves it as the specified
-filename. Currently the ouput format is automatically set based on the file
-extension.
-
-*Developer Note*: Sadly, due to how PhantomJS handles PDF rendering, the
-PDF needs to be saved to a file. This wrapper does however include `renderPdf`
-which gives the PDF back as a buffer
-
-*Another Developer Note*: PhantomJS says to support `GIF` images, however,
-the documentation on
-[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)
-does not include `GIF`.
-Use with caution.
-There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| filename | <code>string</code> |  | Where to save the file. |
-| format | <code>string</code> | <code>&quot;png&quot;</code> | If format is not specified, the file extension                             is extracted and used as the format. |
-| quality | <code>number</code> | <code>100</code> | String or number value between 0 and 100 |
-
-<a name="Page+renderBase64"></a>
-
-### page.renderBase64(format) ⇒ <code>Promise(string)</code>
-[renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)
-
-Renders the webpage to an image buffer and returns the result as a
-Base64-encoded string representation of that image.
-
-*Developer Note*: PhantomJS says to support `GIF` images, however,
-the documentation on
-[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)
-does not include `GIF`.
-Use with caution.
-There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - base64-encoded string  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| format | <code>string</code> | <code>&quot;png&quot;</code> | Either 'png', 'gif' or 'jpeg' |
-
-<a name="Page+sendEvent"></a>
-
-### page.sendEvent() ⇒ <code>Promise()</code>
-[sendEvent](http://phantomjs.org/api/webpage/method/send-event.html)
-
-The events are not synthetic DOM events, each event is sent to the web page
-as if it comes as part of user interaction.
-
-Mouse events
-
-`sendEvent(mouseEventType[, mouseX, mouseY, button='left'])`
-
-The first argument is the event type. Supported types are:
-'mouseup', 'mousedown', 'mousemove', 'doubleclick' and 'click'.
-The next two arguments are optional but represent the mouse position
-for the event.
-
-The button parameter (defaults to left) specifies the button to push.
-For 'mousemove', however, there is no button pressed (i.e. it is not dragging).
-
-Keyboard events
-sendEvent(keyboardEventType, keyOrKeys, [null, null, modifier])
-The first argument is the event type. The supported types are:
-keyup, keypress and keydown.
-The second parameter is a key (from page.event.key), or a string.
-You can also indicate a fifth argument, which is an integer indicating
-the modifier key.
-
-- 0: No modifier key is pressed
-- 0x02000000: A Shift key on the keyboard is pressed
-- 0x04000000: A Ctrl key on the keyboard is pressed
-- 0x08000000: An Alt key on the keyboard is pressed
-- 0x10000000: A Meta key on the keyboard is pressed
-- 0x20000000: A keypad button is pressed
-Third and fourth argument are not taken account for keyboard events.
-Just give null for them.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+setContent"></a>
-
-### page.setContent(content, url) ⇒ <code>Promise()</code>
-[setContent](http://phantomjs.org/api/webpage/method/set-content.html)
-
-Allows to set both page.content and page.url properties. The webpage
-will be reloaded with new content and the current location set as the given
-url, without any actual http request being made.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| content | <code>string</code> | The HTML content of the webpage |
-| url | <code>string</code> | The URL of the webpage |
-
-<a name="Page+stop"></a>
-
-### page.stop() ⇒ <code>Promise()</code>
-[stop](http://phantomjs.org/api/webpage/method/stop.html)
-
-*Developer Note*: Above link contains no information.
-This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
-
-Stops loading page (if the page is loading)
-
-NOTE: This method does nothing when page is not actually loading.
-It's effect can be applied in that very short window of time between
-"onLoadStarted" and "onLoadFinished".
-
-*Another Developer Note*: This function may not work properly, as the short
-time in between these two events may be missed due to events being polled
-by node-phantom-simple
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+switchToFocusedFrame"></a>
-
-### page.switchToFocusedFrame() ⇒ <code>Promise()</code>
-[switchToFocusedFrame](http://phantomjs.org/api/webpage/method/switch-to-focused-frame.html)
-
-*Developer Note*: Above link contains no information.
-This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
-
-Switches to the currently focused frame, as per QWebPage. This is the frame whose
-window element was last focus()ed, and is currently the target of key events.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+switchToFrame"></a>
-
-### page.switchToFrame(framePosition) ⇒ <code>Promise(boolean)</code>
-[switchToFrame](http://phantomjs.org/api/webpage/method/switch-to-frame.html)
-
-*Developer Note*: Above link contains no information.
-This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
-
-Switches focus from the Current Frame to a Child Frame, identified by it positional order.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if the frame was found, false otherwise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| framePosition | <code>number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
-
-<a name="Page+switchToMainFrame"></a>
-
-### page.switchToMainFrame() ⇒ <code>Promise()</code>
-[switchToMainFrame](http://phantomjs.org/api/webpage/method/switch-to-main-frame.html)
-
-*Developer Note*: Above link contains no information.
-This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
-
-Switches focus to the Main Frame within this Page.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+switchToParentFrame"></a>
-
-### page.switchToParentFrame() ⇒ <code>Promise(boolean)</code>
-[switchToParentFrame](http://phantomjs.org/api/webpage/method/switch-to-parent-frame.html)
-
-*Developer Note*: Above link contains no information.
-This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
-
-Switches focus to the Parent Frame of the Current Frame (if it exists).
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if the Current Frame is not a Main Frame,
-                            false otherwise (i.e. there is no parent frame to switch to)  
-<a name="Page+uploadFile"></a>
-
-### page.uploadFile(selector, filename) ⇒ <code>Promise()</code>
-[uploadFile](http://phantomjs.org/api/webpage/method/upload-file.html)
-
-Updates the specified file (filename) to the form element associated with
-selector. This function is used to automate the upload of a file, which is
-usually handled with a file dialog in a traditional browser. Since there
-is no dialog in this headless mode, such an upload mechanism is handled
-via this special function instead
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-
-| Param | Type |
-| --- | --- |
-| selector | <code>string</code> | 
-| filename | <code>string</code> | 
-
-<a name="Page+clearMemoryCache"></a>
-
-### page.clearMemoryCache() ⇒ <code>Promise()</code>
-*Developer Note*: There is little to no documentation on this function,
-but from what I can gather from an [issue](https://github.com/ariya/phantomjs/issues/10357)
-on their github, this function clears the HTTP-cache.
-[Commit](https://github.com/ariya/phantomjs/commit/5768b705a019da719fa356fdbf370f3ea72b4c93)
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-<a name="Page+waitForLoad"></a>
-
-### page.waitForLoad() ⇒ <code>Promise()</code>
-*Wrapper Specific*
-
-Waits for the page to be loaded before
-fulfilling the promise.
-
-Will reject the promise if the time for the page
-to load takes more than specified by `timeout`, which
-defaults to 20 seconds (20 000 milliseocnds)
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Params**: <code>number</code> [timeout=20000] time to wait before rejecting  
-**Example**  
-```js
-let page = yield phantom.createPage();
-let status = yield page.open('http://www.google.com');
-
-yield page.waitForLoad();
-yield page.render('./google.pdf');
-```
-<a name="Page+addLocalResource"></a>
-
-### page.addLocalResource()
-*Wrapper Specific*
-
-Adds a local resource for use in pages that are rendered
-using temporary files. As they pages themselves are
-located within the temp directories of the operating
-system (/tmp etc), including images, fonts and other
-resources can be tricky.
-
-If you need a local resource to be available, be it font,
-image, css or javascript, you can add these using this
-function. All files located within the local resource
-storage of this page will be available when the page
-is loaded.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Params**: <code>object</code> options  
-**Params**: <code>string</code> options.name Unique name, used for retrieval/removal  
-**Params**: <code>buffer</code> options.content A buffer of the file content  
-**Params**: <code>string</code> options.filename Full filename and directory of
-                                  the file as it should be stored
-                                  in the temporary directory in
-                                  order to be retrievable by the page  
-**Example**  
-```js
-let page = yield phantom.createPage();
-let css  = 'body {background-color: #ccc;}';
-let html = '' +
-  '<html>' +
-    '<head>' +
-      '<title>Title</title>' +
-      '<link rel="stylesheet" href="css/my-css-file.css">' +
-    '</head>' +
-  '</html>';
-
-let cssBuffer = new Buffer(css);
-
-page.addLocalResource({
-  name    : 'mycssfile',
-  filename: 'css/my-css-file.css',
-  content : cssBuffer
-});
-
-let status = yield page.openHtml(html);
-```
-<a name="Page+removeLocalResource"></a>
-
-### page.removeLocalResource(name) ⇒ <code>boolean</code>
-*Wrapper Specific*
-
-Removes a localresource by name. Returns true if removed,
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>boolean</code> - true if removed, false if not found  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| name | <code>string</code> | the name of the resource to remove |
-
-<a name="Page+clearLocalResources"></a>
-
-### page.clearLocalResources() ⇒ <code>boolean</code>
-*Wrapper Specific*
-
-Removes all resouces within the resource-list
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>boolean</code> - returns true if some were removed, otherwise false  
-<a name="Page+getLocalResource"></a>
-
-### page.getLocalResource() ⇒ <code>object</code> &#124; <code>null</code>
-*Wrapper Specific*
-
-Retrieves a resource from the resource-list by name, if it exists.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>object</code> &#124; <code>null</code> - null if no resource was found,
-                       otherwise the resource  
-**Params**: <code>string</code> name the name of the resource  
-<a name="Page+renderPdf"></a>
-
-### page.renderPdf() ⇒ <code>Promise(Buffer)</code>
-*Wrapper Specific*
-
-Renders a PDF and returns the content as a buffer. Due to PhantomJS
-this function has to save a file to disk.
-This wrapper uses [node-tmp](https://github.com/raszi/node-tmp) to do
-this. This saves a temporary file (in memory or file, depending on OS), which
-is deleted after it is completed or throws an error.
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(Buffer)</code> - buffer  
-<a name="Page+openHtml"></a>
-
-### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
-*Wrapper Specific*
-
-Uses a HTML string to open a webpage. If templateRenderDir
-is undefined, a temporary file is created to store the HTML.
-Use templateRenderDir if the HTML code includes scripts that has to be
-retrieved from file, as PhantomJS will look relative to the save location
-for these files if they are local ones.
-
-*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the
-template again. If you need to render after using .openHtml,
-use .renderPdf, .render or .renderBase64
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - either success or fail  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| htmlString | <code>string</code> | String to render |
-| templateRenderDir | <code>string</code> | Where to save the HTML file (optional) |
-
-**Example**  
-```js
-let htmlString = '<html><head></head><body>This is a body</body></html>';
-page.openHtml(htmlString)
-  .then(() => page.evaluate(function() {return document.body.textContent;}))
-  .then((textContent) => // textContent === 'This is a body')
-```
-<a name="Page+renderHtml"></a>
-
-### page.renderHtml(htmlString, templateRenderDir) ⇒ <code>Promise(Buffer)</code>
-*Wrapper Specific*
-
-Renders a HTML string to a PDF by saving the HTML as a temporary file,
-in the directory specified as `templateRenderDir` (this is nessassary
-due to possible Javascript or CSS files that will be included) before it
-uses `renderPdf` to save the PDF as a temporary file, loading it and then
-returning the Buffer
-
-If you are sure that the HTML file does not request any JavaScript or
-CSS files, you can omit the templateRenderDir. The file will then
-be saved in a temporary directory and rendered like that.
-
-Will throw error if the page fails to open. Sadly, due to lack of error
-message from phantomJS, the exact reason why this happened is not known.
-
-*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the
-template again. If you need to render after using .openHtml,
-use .renderPdf, .render or .renderBase64
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(Buffer)</code> - PDF  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| htmlString | <code>string</code> | the HTML string |
-| templateRenderDir | <code>string</code> | directory to save the temp HTML file |
-
-**Example**  
-```js
-let htmlString = '<html><head></head><body>This is a body</body></html>';
-page.renderHtml(htmlString)
-  .then((pdf) => // pdf now contains the rendered version of the htmlstring)
-```
-<a name="Page+renderTemplate"></a>
-
-### page.renderTemplate(template, templateRenderDir, options) ⇒ <code>Promise(Buffer)</code>
-*Wrapper Specific*
-
-Expects a template that has a .render function that takes the options
-sent to it. A structure of such an example can be seen
-at [reewr-template](https://github.com/Reewr/reewr-template).
-
-This function will render the the template into a PDF and returns the
-content as a Buffer
-
-If templateRenderDir is omitted, the HTML file will be saved in a temporary
-directory (memory or file depending on OS). If the HTML file / template
-has any includes such as CSS or JS files that are local files, you should
-specify a templateRenderDir so that it can correctly load these. Remember
-to specify the location of these CSS and JS files relative to the templateRenderDir
-
-Will throw error if the page fails to open. Sadly, due to lack of error
-message from phantomJS, the exact reason why this happened is not known.
-
-*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the
-template again. If you need to render after using .openTemplate,
-use .renderPdf, .render or .renderBase64
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(Buffer)</code> - PDF  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| template | <code>object</code> | template object with a .render function |
-| templateRenderDir | <code>string</code> | Where to render the html file |
-| options | <code>object</code> | options that should be sent to the .render function |
-
-<a name="Page+openTemplate"></a>
-
-### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
-*Wrapper Specific*
-
-Expects a template that has a .render function that takes the options
-sent to it. A structure of such an example can be seen
-at [reewr-template](https://github.com/Reewr/reewr-template).
-
-This function will render the template, save the file and open it.
-After this has completed, the page should be ready and can be run evaluations
-on.
-
-If templateRenderDir is omitted, the HTML file will be saved in a temporary
-directory (memory or file depending on OS). If the HTML file / template
-has any includes such as CSS or JS files that are local files, you should
-specify a templateRenderDir so that it can correctly load these. Remember
-to specify the location of these CSS and JS files relative to the templateRenderDir
-
-*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the
-template again. If you need to render after using .openTemplate,
-use .renderPdf, .render or .renderBase64
-
-**Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - status that is either fail or success  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| template | <code>object</code> | template object with a .render function |
-| templateRenderDir | <code>string</code> | Where to render the html file |
-| options | <code>object</code> | options that should be sent to the .render function |
-
-**Example**  
-```js
-let template = {
-  render: function(options) {
-    return jade.render(options); // jade used as an example
-  }
-};
-page.openTemplate(template, {pretty: true})
-  .then(() => // do something with the open page)
-  .then(() => page.renderPdf())
-  .then((pdf) => // rendered pdf)
-```
 <a name="Page+onAlert"></a>
 
 ### page.onAlert(handler)
@@ -1410,6 +884,534 @@ To retrieve the old URL, use the onLoadStarted callback.
 | --- | --- | --- |
 | handler | <code>function</code> | `function(targetUrl) {}` |
 
+<a name="Page+open"></a>
+
+### page.open(url, methodOrSettings, data) ⇒ <code>Promise(string)</code>
+[open](http://phantomjs.org/api/webpage/method/open.html)
+
+Opens the URL and loads it to the page. Once the page is loaded the promise function
+is invoked. In addition, the page.onLoadFinished will also be called.
+Will give a status in the form of 'success' or 'fail' string
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(string)</code> - status of the load, either 'success' or 'fail'  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | URL to do the request towards. Can be local file |
+| methodOrSettings | <code>string</code> &#124; <code>object</code> | The method as a string or a settings object |
+| settings.operation | <code>string</code> | The type of method - POST / GEt |
+| settings.encoding | <code>encoding</code> | The encoding to use |
+| settings.headers | <code>object</code> | An object with headers |
+| settings.data | <code>string</code> | Stringified data (JSON etc) |
+| data | <code>string</code> | Only used when methodOrSettings is a string |
+
+<a name="Page+openHtml"></a>
+
+### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
+*Wrapper Specific*
+
+Uses a HTML string to open a webpage. If templateRenderDir
+is undefined, a temporary file is created to store the HTML.
+Use templateRenderDir if the HTML code includes scripts that has to be
+retrieved from file, as PhantomJS will look relative to the save location
+for these files if they are local ones.
+
+*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the
+template again. If you need to render after using .openHtml,
+use .renderPdf, .render or .renderBase64
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(string)</code> - either success or fail  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| htmlString | <code>string</code> | String to render |
+| templateRenderDir | <code>string</code> | Where to save the HTML file (optional) |
+
+**Example**  
+```js
+let htmlString = '<html><head></head><body>This is a body</body></html>';
+page.openHtml(htmlString)
+  .then(() => page.evaluate(function() {return document.body.textContent;}))
+  .then((textContent) => // textContent === 'This is a body')
+```
+<a name="Page+openTemplate"></a>
+
+### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
+*Wrapper Specific*
+
+Expects a template that has a .render function that takes the options
+sent to it. A structure of such an example can be seen
+at [reewr-template](https://github.com/Reewr/reewr-template).
+
+This function will render the template, save the file and open it.
+After this has completed, the page should be ready and can be run evaluations
+on.
+
+If templateRenderDir is omitted, the HTML file will be saved in a temporary
+directory (memory or file depending on OS). If the HTML file / template
+has any includes such as CSS or JS files that are local files, you should
+specify a templateRenderDir so that it can correctly load these. Remember
+to specify the location of these CSS and JS files relative to the templateRenderDir
+
+*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the
+template again. If you need to render after using .openTemplate,
+use .renderPdf, .render or .renderBase64
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(string)</code> - status that is either fail or success  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| template | <code>object</code> | template object with a .render function |
+| templateRenderDir | <code>string</code> | Where to render the html file |
+| options | <code>object</code> | options that should be sent to the .render function |
+
+**Example**  
+```js
+let template = {
+  render: function(options) {
+    return jade.render(options); // jade used as an example
+  }
+};
+page.openTemplate(template, {pretty: true})
+  .then(() => // do something with the open page)
+  .then(() => page.renderPdf())
+  .then((pdf) => // rendered pdf)
+```
+<a name="Page+openUrl"></a>
+
+### page.openUrl(url, httpConf, settings) ⇒ <code>Promise()</code>
+[openUrl](http://phantomjs.org/api/webpage/method/open-url.html)
+
+*Developer Note*: No documentation
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type |
+| --- | --- |
+| url | <code>string</code> | 
+| httpConf | <code>httpConf</code> | 
+| settings | <code>settings</code> | 
+
+<a name="Page+reload"></a>
+
+### page.reload() ⇒ <code>Promise()</code>
+[reload](http://phantomjs.org/api/webpage/method/reload.html)
+
+*Developer Note*: Performs a reload of the page.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+removeLocalResource"></a>
+
+### page.removeLocalResource(name) ⇒ <code>boolean</code>
+*Wrapper Specific*
+
+Removes a localresource by name. Returns true if removed,
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>boolean</code> - true if removed, false if not found  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | the name of the resource to remove |
+
+<a name="Page+render"></a>
+
+### page.render(filename, format, quality) ⇒ <code>Promise()</code>
+[render](http://phantomjs.org/api/webpage/method/render.html)
+
+Renders the webpage to an image buffer and saves it as the specified
+filename. Currently the ouput format is automatically set based on the file
+extension.
+
+*Developer Note*: Sadly, due to how PhantomJS handles PDF rendering, the
+PDF needs to be saved to a file. This wrapper does however include `renderPdf`
+which gives the PDF back as a buffer
+
+*Another Developer Note*: PhantomJS says to support `GIF` images, however,
+the documentation on
+[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)
+does not include `GIF`.
+Use with caution.
+There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| filename | <code>string</code> |  | Where to save the file. |
+| format | <code>string</code> | <code>&quot;png&quot;</code> | If format is not specified, the file extension                             is extracted and used as the format. |
+| quality | <code>number</code> | <code>100</code> | String or number value between 0 and 100 |
+
+<a name="Page+renderBase64"></a>
+
+### page.renderBase64(format) ⇒ <code>Promise(string)</code>
+[renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)
+
+Renders the webpage to an image buffer and returns the result as a
+Base64-encoded string representation of that image.
+
+*Developer Note*: PhantomJS says to support `GIF` images, however,
+the documentation on
+[Qt ImageWriter](http://doc.qt.io/qt-4.8/qimagewriter.html#supportedImageFormats)
+does not include `GIF`.
+Use with caution.
+There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(string)</code> - base64-encoded string  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| format | <code>string</code> | <code>&quot;png&quot;</code> | Either 'png', 'gif' or 'jpeg' |
+
+<a name="Page+renderHtml"></a>
+
+### page.renderHtml(htmlString, templateRenderDir) ⇒ <code>Promise(Buffer)</code>
+*Wrapper Specific*
+
+Renders a HTML string to a PDF by saving the HTML as a temporary file,
+in the directory specified as `templateRenderDir` (this is nessassary
+due to possible Javascript or CSS files that will be included) before it
+uses `renderPdf` to save the PDF as a temporary file, loading it and then
+returning the Buffer
+
+If you are sure that the HTML file does not request any JavaScript or
+CSS files, you can omit the templateRenderDir. The file will then
+be saved in a temporary directory and rendered like that.
+
+Will throw error if the page fails to open. Sadly, due to lack of error
+message from phantomJS, the exact reason why this happened is not known.
+
+*Note* Do not use .openHtml and then .renderHtml, as renderHtml opens the
+template again. If you need to render after using .openHtml,
+use .renderPdf, .render or .renderBase64
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(Buffer)</code> - PDF  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| htmlString | <code>string</code> | the HTML string |
+| templateRenderDir | <code>string</code> | directory to save the temp HTML file |
+
+**Example**  
+```js
+let htmlString = '<html><head></head><body>This is a body</body></html>';
+page.renderHtml(htmlString)
+  .then((pdf) => // pdf now contains the rendered version of the htmlstring)
+```
+<a name="Page+renderPdf"></a>
+
+### page.renderPdf() ⇒ <code>Promise(Buffer)</code>
+*Wrapper Specific*
+
+Renders a PDF and returns the content as a buffer. Due to PhantomJS
+this function has to save a file to disk.
+This wrapper uses [node-tmp](https://github.com/raszi/node-tmp) to do
+this. This saves a temporary file (in memory or file, depending on OS), which
+is deleted after it is completed or throws an error.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(Buffer)</code> - buffer  
+<a name="Page+renderTemplate"></a>
+
+### page.renderTemplate(template, templateRenderDir, options) ⇒ <code>Promise(Buffer)</code>
+*Wrapper Specific*
+
+Expects a template that has a .render function that takes the options
+sent to it. A structure of such an example can be seen
+at [reewr-template](https://github.com/Reewr/reewr-template).
+
+This function will render the the template into a PDF and returns the
+content as a Buffer
+
+If templateRenderDir is omitted, the HTML file will be saved in a temporary
+directory (memory or file depending on OS). If the HTML file / template
+has any includes such as CSS or JS files that are local files, you should
+specify a templateRenderDir so that it can correctly load these. Remember
+to specify the location of these CSS and JS files relative to the templateRenderDir
+
+Will throw error if the page fails to open. Sadly, due to lack of error
+message from phantomJS, the exact reason why this happened is not known.
+
+*Note* Do not use .openTemplate and then .renderTemplate, as renderTemplate opens the
+template again. If you need to render after using .openTemplate,
+use .renderPdf, .render or .renderBase64
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(Buffer)</code> - PDF  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| template | <code>object</code> | template object with a .render function |
+| templateRenderDir | <code>string</code> | Where to render the html file |
+| options | <code>object</code> | options that should be sent to the .render function |
+
+<a name="Page+sendEvent"></a>
+
+### page.sendEvent() ⇒ <code>Promise()</code>
+[sendEvent](http://phantomjs.org/api/webpage/method/send-event.html)
+
+The events are not synthetic DOM events, each event is sent to the web page
+as if it comes as part of user interaction.
+
+Mouse events
+
+`sendEvent(mouseEventType[, mouseX, mouseY, button='left'])`
+
+The first argument is the event type. Supported types are:
+'mouseup', 'mousedown', 'mousemove', 'doubleclick' and 'click'.
+The next two arguments are optional but represent the mouse position
+for the event.
+
+The button parameter (defaults to left) specifies the button to push.
+For 'mousemove', however, there is no button pressed (i.e. it is not dragging).
+
+Keyboard events
+sendEvent(keyboardEventType, keyOrKeys, [null, null, modifier])
+The first argument is the event type. The supported types are:
+keyup, keypress and keydown.
+The second parameter is a key (from page.event.key), or a string.
+You can also indicate a fifth argument, which is an integer indicating
+the modifier key.
+
+- 0: No modifier key is pressed
+- 0x02000000: A Shift key on the keyboard is pressed
+- 0x04000000: A Ctrl key on the keyboard is pressed
+- 0x08000000: An Alt key on the keyboard is pressed
+- 0x10000000: A Meta key on the keyboard is pressed
+- 0x20000000: A keypad button is pressed
+Third and fourth argument are not taken account for keyboard events.
+Just give null for them.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+set"></a>
+
+### page.set(name, value) ⇒ <code>Promise()</code>
+*node-phantom-simple specific*
+
+As all operations are done over HTTP, the setting and getting
+of properties uses callbacks to indicate that they're set or to return
+a value
+Will check the name against allowed properties. Throws error if the
+property doesn't exist or if it's a read only value.
+
+*Developer Note*: `paperSize.header.contents` and `paperSize.footer.contents` take
+functions that are evaluated in PhantomJS, meaning they will not have
+the context of where you are creating them. In addition, the HTML
+returned by these functions are rendered in a HTML document outside
+of the main document (the page itself) and will therefore not have access to
+resources such as CSS and JS. In order to style HTML, you will have to
+add the CSS inline, such as `<div style="font-size: 10px;"></div>`.
+
+Another thing to keep in mind is that images are loaded async, so in
+order to have an image in the footer/header, these are to be loaded
+prior to rendering the footer/header. This can be done by adding the
+image to the main document and then setting the display to none.
+
+**Note**: If the value argument is a function it should not
+include any ES6 syntax, including arrow functions. This
+is due to it being stringified and sent to PhantomJS which evaluates
+it and PhantomJS only supports ES5. This will be an error in v4
+
+Example: To set/get the value paperSize.width you would do the following:
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | name of the property |
+| value | <code>anything</code> | value of the property |
+
+**Example**  
+```js
+page.set('paperSize.width', '50px')
+  .then((result) => {// result is true or false depending on success});
+page.get('paperSize.width')
+  .then((value) => // value of paperSize.width);
+```
+<a name="Page+setContent"></a>
+
+### page.setContent(content, url) ⇒ <code>Promise()</code>
+[setContent](http://phantomjs.org/api/webpage/method/set-content.html)
+
+Allows to set both page.content and page.url properties. The webpage
+will be reloaded with new content and the current location set as the given
+url, without any actual http request being made.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| content | <code>string</code> | The HTML content of the webpage |
+| url | <code>string</code> | The URL of the webpage |
+
+<a name="Page+setFn"></a>
+
+### page.setFn(name, fn) ⇒ <code>Promise()</code>
+*node-simple-phantom specific*
+
+Sets a function. This function does not have the same scope. It works
+similar to how evaluate does. It can return values and can therefore
+be used for handlers such as `onConfirm` or `onPrompt`
+
+**Note**: The function argument does **not** support ES6 and should
+therefore not use any ES6 syntax, including arrow functions. This
+is due to it being stringified and sent to PhantomJS which evaluates
+it and PhantomJS only supports ES5. This will be an error in v4
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | name of the event ('onConfirm', etc) |
+| fn | <code>function</code> | handler of the event |
+
+<a name="Page+stop"></a>
+
+### page.stop() ⇒ <code>Promise()</code>
+[stop](http://phantomjs.org/api/webpage/method/stop.html)
+
+*Developer Note*: Above link contains no information.
+This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
+
+Stops loading page (if the page is loading)
+
+NOTE: This method does nothing when page is not actually loading.
+It's effect can be applied in that very short window of time between
+"onLoadStarted" and "onLoadFinished".
+
+*Another Developer Note*: This function may not work properly, as the short
+time in between these two events may be missed due to events being polled
+by node-phantom-simple
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+switchToFocusedFrame"></a>
+
+### page.switchToFocusedFrame() ⇒ <code>Promise()</code>
+[switchToFocusedFrame](http://phantomjs.org/api/webpage/method/switch-to-focused-frame.html)
+
+*Developer Note*: Above link contains no information.
+This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
+
+Switches to the currently focused frame, as per QWebPage. This is the frame whose
+window element was last focus()ed, and is currently the target of key events.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+switchToFrame"></a>
+
+### page.switchToFrame(framePosition) ⇒ <code>Promise(boolean)</code>
+[switchToFrame](http://phantomjs.org/api/webpage/method/switch-to-frame.html)
+
+*Developer Note*: Above link contains no information.
+This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
+
+Switches focus from the Current Frame to a Child Frame, identified by it positional order.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(boolean)</code> - true if the frame was found, false otherwise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| framePosition | <code>number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
+
+<a name="Page+switchToMainFrame"></a>
+
+### page.switchToMainFrame() ⇒ <code>Promise()</code>
+[switchToMainFrame](http://phantomjs.org/api/webpage/method/switch-to-main-frame.html)
+
+*Developer Note*: Above link contains no information.
+This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
+
+Switches focus to the Main Frame within this Page.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+<a name="Page+switchToParentFrame"></a>
+
+### page.switchToParentFrame() ⇒ <code>Promise(boolean)</code>
+[switchToParentFrame](http://phantomjs.org/api/webpage/method/switch-to-parent-frame.html)
+
+*Developer Note*: Above link contains no information.
+This is taken from [PhantomJS source code comments](https://github.com/ariya/phantomjs/blob/master/src/webpage.h)
+
+Switches focus to the Parent Frame of the Current Frame (if it exists).
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Returns**: <code>Promise(boolean)</code> - true if the Current Frame is not a Main Frame,
+                            false otherwise (i.e. there is no parent frame to switch to)  
+<a name="Page+uploadFile"></a>
+
+### page.uploadFile(selector, filename) ⇒ <code>Promise()</code>
+[uploadFile](http://phantomjs.org/api/webpage/method/upload-file.html)
+
+Updates the specified file (filename) to the form element associated with
+selector. This function is used to automate the upload of a file, which is
+usually handled with a file dialog in a traditional browser. Since there
+is no dialog in this headless mode, such an upload mechanism is handled
+via this special function instead
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type |
+| --- | --- |
+| selector | <code>string</code> | 
+| filename | <code>string</code> | 
+
+<a name="Page+waitForLoad"></a>
+
+### page.waitForLoad() ⇒ <code>Promise()</code>
+*Wrapper Specific*
+
+Waits for the page to be loaded before
+fulfilling the promise.
+
+Will reject the promise if the time for the page
+to load takes more than specified by `timeout`, which
+defaults to 20 seconds (20 000 milliseocnds)
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+**Params**: <code>number</code> [timeout=20000] time to wait before rejecting  
+**Example**  
+```js
+let page = yield phantom.createPage();
+let status = yield page.open('http://www.google.com');
+
+yield page.waitForLoad();
+yield page.render('./google.pdf');
+```
+<a name="Page+waitForSelector"></a>
+
+### page.waitForSelector(selector, timeout) ⇒ <code>Promise()</code>
+*node-phantom-simple specific*
+
+Uses page.evaluate in order select an element on the page to
+see if it exists. This operation is performed every 150 ms until it
+reaches the timeout limit. If the limit is exceeded, an error is thrown.
+If an element is found prior to this, the function returns, indicating
+that the element has been rendered.
+
+The selector is a selector accepted by document.querySelectorAll.
+This can be useful when an element has to be active, but is appended by Javascript
+and doesn't exist at pageload.
+
+**Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| selector | <code>string</code> | selector such as '.myclass' or '#myid' |
+| timeout | <code>number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
+
+**Example**  
+```js
+page.open(somePage)
+  .then(() => page.waitForSelector('.select'))
+  .then(() => {
+    // ready to do something as the whole page is now rendered
+  });
+```
 <a name="Page.readOnlyProperties"></a>
 
 ### Page.readOnlyProperties : <code>Array.&lt;string&gt;</code>
