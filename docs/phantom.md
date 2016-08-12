@@ -14,22 +14,18 @@ The full PhantomJS documentation for the Phantom object can be found [here](http
 **Kind**: global class  
 
 * [Phantom](#Phantom)
-    * _instance_
-        * [.addCookie(cookie)](#Phantom+addCookie) ⇒ <code>Promise(boolean)</code>
-        * [.clearCookies()](#Phantom+clearCookies) ⇒ <code>Promise(boolean)</code>
-        * [.createPage()](#Phantom+createPage) ⇒ <code>Promise(Page)</code>
-        * [.deleteCookie(cookieName)](#Phantom+deleteCookie) ⇒ <code>Promise(boolean)</code>
-        * [.exit()](#Phantom+exit) ⇒ <code>Promise()</code>
-        * [.get(property)](#Phantom+get) ⇒ <code>Promise(value)</code>
-        * [.getCookie(cookieName)](#Phantom+getCookie) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
-        * [.hasExited()](#Phantom+hasExited) ⇒ <code>Boolean</code>
-        * [.injectJs(filename)](#Phantom+injectJs) ⇒ <code>Promise(boolean)</code>
-        * [.on()](#Phantom+on)
-        * [.set(property)](#Phantom+set) ⇒ <code>Promise(boolean)</code>
-        * [.setProxy(ip, port, proxyType, username, password)](#Phantom+setProxy) ⇒ <code>Promise()</code>
-    * _static_
-        * [.allowedSetProperties](#Phantom.allowedSetProperties) : <code>Array.&lt;string&gt;</code>
-        * [.allowedGetProperties](#Phantom.allowedGetProperties) : <code>Array.&lt;String&gt;</code>
+    * [.addCookie(cookie)](#Phantom+addCookie) ⇒ <code>Promise(boolean)</code>
+    * [.clearCookies()](#Phantom+clearCookies) ⇒ <code>Promise(boolean)</code>
+    * [.createPage()](#Phantom+createPage) ⇒ <code>Promise(Page)</code>
+    * [.deleteCookie(cookieName)](#Phantom+deleteCookie) ⇒ <code>Promise(boolean)</code>
+    * [.exit()](#Phantom+exit) ⇒ <code>Promise()</code>
+    * [.get(property)](#Phantom+get) ⇒ <code>Promise(value)</code>
+    * [.getCookie(cookieName)](#Phantom+getCookie) ⇒ <code>Promise(undefined)</code> &#124; <code>Promise(object)</code>
+    * [.hasExited()](#Phantom+hasExited) ⇒ <code>Boolean</code>
+    * [.injectJs(filename)](#Phantom+injectJs) ⇒ <code>Promise(boolean)</code>
+    * [.on()](#Phantom+on)
+    * [.set(property)](#Phantom+set) ⇒ <code>Promise(boolean)</code>
+    * [.setProxy(ip, port, proxyType, username, password)](#Phantom+setProxy) ⇒ <code>Promise()</code>
 
 <a name="Phantom+addCookie"></a>
 
@@ -199,17 +195,3 @@ This function is undocumented and is not in the API-documentation of PhantomJS.
 | username | <code>string</code> | username of the proxy |
 | password | <code>string</code> | password of the proxy |
 
-<a name="Phantom.allowedSetProperties"></a>
-
-### Phantom.allowedSetProperties : <code>Array.&lt;string&gt;</code>
-A list of allowed properties that are availble through .set
-
-**Kind**: static property of <code>[Phantom](#Phantom)</code>  
-<a name="Phantom.allowedGetProperties"></a>
-
-### Phantom.allowedGetProperties : <code>Array.&lt;String&gt;</code>
-A list of allowed properties that is available through .get
-The ones not retrieved from .allowedSetProperties are read-only values
-properties
-
-**Kind**: static property of <code>[Phantom](#Phantom)</code>  

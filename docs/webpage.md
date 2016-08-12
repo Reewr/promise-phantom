@@ -51,75 +51,67 @@ All functions are listed in alphabetical order
 **Kind**: global class  
 
 * [Page](#Page)
-    * _instance_
-        * [.addCookie(options)](#Page+addCookie) ⇒ <code>Promise(Boolean)</code>
-        * [.addLocalResource()](#Page+addLocalResource)
-        * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(boolean)</code>
-        * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
-        * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
-        * [.close()](#Page+close) ⇒ <code>Promise()</code>
-        * [.deleteCookie(name)](#Page+deleteCookie) ⇒ <code>Promise(Boolean)</code>
-        * [.evaluate(fn)](#Page+evaluate) ⇒ <code>Promise(StringifiableValue)</code>
-        * [.evaluateJavaScript(javaScriptStr)](#Page+evaluateJavaScript) ⇒ <code>Promise()</code>
-        * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
-        * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
-        * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
-        * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
-        * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
-        * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(boolean)</code>
-        * [.goBack()](#Page+goBack) ⇒ <code>Promise(boolean)</code>
-        * [.goForward()](#Page+goForward) ⇒ <code>Promise(boolean)</code>
-        * [.isClosed()](#Page+isClosed) ⇒ <code>Promise(Boolean)</code>
-        * [.includeJs(url)](#Page+includeJs) ⇒ <code>Promise()</code>
-        * [.injectJs(filename)](#Page+injectJs) ⇒ <code>Promise()</code>
-        * [.onAlert(handler)](#Page+onAlert)
-        * [.onCallback(handler)](#Page+onCallback)
-        * [.onClosing(handler)](#Page+onClosing)
-        * [.onConfirm(handler)](#Page+onConfirm)
-        * [.onConsoleMessage(handler)](#Page+onConsoleMessage)
-        * [.onError(handler)](#Page+onError)
-        * [.onFilePicker(handler)](#Page+onFilePicker)
-        * [.onInitialized(handler)](#Page+onInitialized)
-        * [.onLoadFinished(handler)](#Page+onLoadFinished)
-        * [.onLoadStarted(handler)](#Page+onLoadStarted)
-        * [.onNavigationRequested(handler)](#Page+onNavigationRequested)
-        * [.onPageCreated(handler)](#Page+onPageCreated)
-        * [.onPrompt(handler)](#Page+onPrompt)
-        * [.onResourceError(handler)](#Page+onResourceError)
-        * [.onResourceReceived(handler)](#Page+onResourceReceived)
-        * [.onResourceRequested(handler)](#Page+onResourceRequested)
-        * [.onResourceTimeout(handler)](#Page+onResourceTimeout)
-        * [.onUrlChanged(handler)](#Page+onUrlChanged)
-        * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(string)</code>
-        * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
-        * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
-        * [.openUrl(url, httpConf, settings)](#Page+openUrl) ⇒ <code>Promise()</code>
-        * [.reload()](#Page+reload) ⇒ <code>Promise()</code>
-        * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
-        * [.render(filename, format, quality)](#Page+render) ⇒ <code>Promise()</code>
-        * [.renderBase64(format)](#Page+renderBase64) ⇒ <code>Promise(string)</code>
-        * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
-        * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
-        * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
-        * [.sendEvent()](#Page+sendEvent) ⇒ <code>Promise()</code>
-        * [.set(name, value)](#Page+set) ⇒ <code>Promise()</code>
-        * [.setContent(content, url)](#Page+setContent) ⇒ <code>Promise()</code>
-        * [.setFn(name, fn)](#Page+setFn) ⇒ <code>Promise()</code>
-        * [.stop()](#Page+stop) ⇒ <code>Promise()</code>
-        * [.switchToFocusedFrame()](#Page+switchToFocusedFrame) ⇒ <code>Promise()</code>
-        * [.switchToFrame(framePosition)](#Page+switchToFrame) ⇒ <code>Promise(boolean)</code>
-        * [.switchToMainFrame()](#Page+switchToMainFrame) ⇒ <code>Promise()</code>
-        * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
-        * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
-        * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
-        * [.waitForSelector(selector, timeout)](#Page+waitForSelector) ⇒ <code>Promise()</code>
-    * _static_
-        * [.readOnlyProperties](#Page.readOnlyProperties) : <code>Array.&lt;string&gt;</code>
-        * [.allowedSetProperties](#Page.allowedSetProperties) : <code>Array.&lt;string&gt;</code>
-        * [.allowedGetProperties](#Page.allowedGetProperties) : <code>Array.&lt;string&gt;</code>
-        * [.passProperties](#Page.passProperties) : <code>Array.&lt;string&gt;</code>
-        * [.base64Formats](#Page.base64Formats) : <code>Array.&lt;string&gt;</code>
-        * [.validRenders](#Page.validRenders) : <code>Array.&lt;string&gt;</code>
+    * [.addCookie(options)](#Page+addCookie) ⇒ <code>Promise(Boolean)</code>
+    * [.addLocalResource()](#Page+addLocalResource)
+    * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(boolean)</code>
+    * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
+    * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
+    * [.close()](#Page+close) ⇒ <code>Promise()</code>
+    * [.deleteCookie(name)](#Page+deleteCookie) ⇒ <code>Promise(Boolean)</code>
+    * [.evaluate(fn)](#Page+evaluate) ⇒ <code>Promise(StringifiableValue)</code>
+    * [.evaluateJavaScript(javaScriptStr)](#Page+evaluateJavaScript) ⇒ <code>Promise()</code>
+    * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
+    * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
+    * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
+    * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
+    * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
+    * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(boolean)</code>
+    * [.goBack()](#Page+goBack) ⇒ <code>Promise(boolean)</code>
+    * [.goForward()](#Page+goForward) ⇒ <code>Promise(boolean)</code>
+    * [.isClosed()](#Page+isClosed) ⇒ <code>Promise(Boolean)</code>
+    * [.includeJs(url)](#Page+includeJs) ⇒ <code>Promise()</code>
+    * [.injectJs(filename)](#Page+injectJs) ⇒ <code>Promise()</code>
+    * [.onAlert(handler)](#Page+onAlert)
+    * [.onCallback(handler)](#Page+onCallback)
+    * [.onClosing(handler)](#Page+onClosing)
+    * [.onConfirm(handler)](#Page+onConfirm)
+    * [.onConsoleMessage(handler)](#Page+onConsoleMessage)
+    * [.onError(handler)](#Page+onError)
+    * [.onFilePicker(handler)](#Page+onFilePicker)
+    * [.onInitialized(handler)](#Page+onInitialized)
+    * [.onLoadFinished(handler)](#Page+onLoadFinished)
+    * [.onLoadStarted(handler)](#Page+onLoadStarted)
+    * [.onNavigationRequested(handler)](#Page+onNavigationRequested)
+    * [.onPageCreated(handler)](#Page+onPageCreated)
+    * [.onPrompt(handler)](#Page+onPrompt)
+    * [.onResourceError(handler)](#Page+onResourceError)
+    * [.onResourceReceived(handler)](#Page+onResourceReceived)
+    * [.onResourceRequested(handler)](#Page+onResourceRequested)
+    * [.onResourceTimeout(handler)](#Page+onResourceTimeout)
+    * [.onUrlChanged(handler)](#Page+onUrlChanged)
+    * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(string)</code>
+    * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
+    * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
+    * [.openUrl(url, httpConf, settings)](#Page+openUrl) ⇒ <code>Promise()</code>
+    * [.reload()](#Page+reload) ⇒ <code>Promise()</code>
+    * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
+    * [.render(filename, format, quality)](#Page+render) ⇒ <code>Promise()</code>
+    * [.renderBase64(format)](#Page+renderBase64) ⇒ <code>Promise(string)</code>
+    * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
+    * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
+    * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
+    * [.sendEvent()](#Page+sendEvent) ⇒ <code>Promise()</code>
+    * [.set(name, value)](#Page+set) ⇒ <code>Promise()</code>
+    * [.setContent(content, url)](#Page+setContent) ⇒ <code>Promise()</code>
+    * [.setFn(name, fn)](#Page+setFn) ⇒ <code>Promise()</code>
+    * [.stop()](#Page+stop) ⇒ <code>Promise()</code>
+    * [.switchToFocusedFrame()](#Page+switchToFocusedFrame) ⇒ <code>Promise()</code>
+    * [.switchToFrame(framePosition)](#Page+switchToFrame) ⇒ <code>Promise(boolean)</code>
+    * [.switchToMainFrame()](#Page+switchToMainFrame) ⇒ <code>Promise()</code>
+    * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
+    * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
+    * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
+    * [.waitForSelector(selector, timeout)](#Page+waitForSelector) ⇒ <code>Promise()</code>
 
 <a name="Page+addCookie"></a>
 
@@ -1412,46 +1404,3 @@ page.open(somePage)
     // ready to do something as the whole page is now rendered
   });
 ```
-<a name="Page.readOnlyProperties"></a>
-
-### Page.readOnlyProperties : <code>Array.&lt;string&gt;</code>
-A list of settings that should not be sent through `set` as they are
-read-only variables
-
-**Kind**: static property of <code>[Page](#Page)</code>  
-<a name="Page.allowedSetProperties"></a>
-
-### Page.allowedSetProperties : <code>Array.&lt;string&gt;</code>
-A list of all the variables that can be used in .set function.
-
-**Kind**: static property of <code>[Page](#Page)</code>  
-**Todo**
-
-- [ ] Add typecheck and check before sending the options to PhantomJS to optimize
-
-<a name="Page.allowedGetProperties"></a>
-
-### Page.allowedGetProperties : <code>Array.&lt;string&gt;</code>
-A list of all the variables that can be retrieved through .get
-These also include any readOnly variables
-
-**Kind**: static property of <code>[Page](#Page)</code>  
-<a name="Page.passProperties"></a>
-
-### Page.passProperties : <code>Array.&lt;string&gt;</code>
-A list of settings that are undocumented in type and should therefore
-not be type-checked when that is implemented in the future
-
-**Kind**: static property of <code>[Page](#Page)</code>  
-<a name="Page.base64Formats"></a>
-
-### Page.base64Formats : <code>Array.&lt;string&gt;</code>
-A list of allowed formats for the base64 format
-
-**Kind**: static property of <code>[Page](#Page)</code>  
-<a name="Page.validRenders"></a>
-
-### Page.validRenders : <code>Array.&lt;string&gt;</code>
-A list of allowed formats for the render function
-
-**Kind**: static property of <code>[Page](#Page)</code>  
