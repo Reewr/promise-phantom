@@ -21,16 +21,16 @@ also contains some utility functions that makes it easier to use production
 where you would need to create PDF reports.
 
 The added functions are:
+- addLocalResource
+- clearLocalResources
 - getCookie
+- getLocalResource
+- openTemplate
+- openHtml
+- removeLocalResource
 - renderPdf
 - renderTemplate
 - renderHtml
-- openTemplate
-- openHtml
-- addLocalResource
-- removeLocalResource
-- getLocalResource
-- clearLocalResources
 
 All functions that are part of PhantomJS' API include the documentation
 from their webpage. Comments outside of the PhantomJS docs will include a
@@ -53,8 +53,8 @@ All functions are listed in alphabetical order
 * [Page](#Page)
     * [.addCookie(options)](#Page+addCookie) ⇒ <code>Promise(Boolean)</code>
     * [.addLocalResource()](#Page+addLocalResource)
-    * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(boolean)</code>
-    * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>boolean</code>
+    * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(Boolean)</code>
+    * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>Boolean</code>
     * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
     * [.close()](#Page+close) ⇒ <code>Promise()</code>
     * [.deleteCookie(name)](#Page+deleteCookie) ⇒ <code>Promise(Boolean)</code>
@@ -62,12 +62,12 @@ All functions are listed in alphabetical order
     * [.evaluateJavaScript(javaScriptStr)](#Page+evaluateJavaScript) ⇒ <code>Promise()</code>
     * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
     * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
-    * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(object)</code>
-    * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>object</code> &#124; <code>null</code>
+    * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(Object)</code>
+    * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>Object</code> &#124; <code>Null</code>
     * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
-    * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(boolean)</code>
-    * [.goBack()](#Page+goBack) ⇒ <code>Promise(boolean)</code>
-    * [.goForward()](#Page+goForward) ⇒ <code>Promise(boolean)</code>
+    * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(Boolean)</code>
+    * [.goBack()](#Page+goBack) ⇒ <code>Promise(Boolean)</code>
+    * [.goForward()](#Page+goForward) ⇒ <code>Promise(Boolean)</code>
     * [.isClosed()](#Page+isClosed) ⇒ <code>Promise(Boolean)</code>
     * [.includeJs(url)](#Page+includeJs) ⇒ <code>Promise()</code>
     * [.injectJs(filename)](#Page+injectJs) ⇒ <code>Promise()</code>
@@ -89,18 +89,18 @@ All functions are listed in alphabetical order
     * [.onResourceRequested(handler)](#Page+onResourceRequested)
     * [.onResourceTimeout(handler)](#Page+onResourceTimeout)
     * [.onUrlChanged(handler)](#Page+onUrlChanged)
-    * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(string)</code>
-    * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(string)</code>
-    * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(string)</code>
+    * [.open(url, methodOrSettings, data)](#Page+open) ⇒ <code>Promise(String)</code>
+    * [.openHtml(htmlString, templateRenderDir)](#Page+openHtml) ⇒ <code>Promise(String)</code>
+    * [.openTemplate(template, templateRenderDir, options)](#Page+openTemplate) ⇒ <code>Promise(String)</code>
     * [.openUrl(url, httpConf, settings)](#Page+openUrl) ⇒ <code>Promise()</code>
     * [.reload()](#Page+reload) ⇒ <code>Promise()</code>
-    * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>boolean</code>
-    * [.render(filename, format, quality)](#Page+render) ⇒ <code>Promise()</code>
-    * [.renderBase64(format)](#Page+renderBase64) ⇒ <code>Promise(string)</code>
+    * [.removeLocalResource(name)](#Page+removeLocalResource) ⇒ <code>Boolean</code>
+    * [.render(filename, [format], [quality])](#Page+render) ⇒ <code>Promise()</code>
+    * [.renderBase64([format])](#Page+renderBase64) ⇒ <code>Promise(String)</code>
     * [.renderHtml(htmlString, templateRenderDir)](#Page+renderHtml) ⇒ <code>Promise(Buffer)</code>
     * [.renderPdf()](#Page+renderPdf) ⇒ <code>Promise(Buffer)</code>
     * [.renderTemplate(template, templateRenderDir, options)](#Page+renderTemplate) ⇒ <code>Promise(Buffer)</code>
-    * [.sendEvent()](#Page+sendEvent) ⇒ <code>Promise()</code>
+    * [.sendEvent(eventType, mouseXOrKeys, mouseY, button, modifier)](#Page+sendEvent) ⇒ <code>Promise()</code>
     * [.set(name, value)](#Page+set) ⇒ <code>Promise()</code>
     * [.setContent(content, url)](#Page+setContent) ⇒ <code>Promise()</code>
     * [.setFn(name, fn)](#Page+setFn) ⇒ <code>Promise()</code>
@@ -108,7 +108,7 @@ All functions are listed in alphabetical order
     * [.switchToFocusedFrame()](#Page+switchToFocusedFrame) ⇒ <code>Promise()</code>
     * [.switchToFrame(framePosition)](#Page+switchToFrame) ⇒ <code>Promise(boolean)</code>
     * [.switchToMainFrame()](#Page+switchToMainFrame) ⇒ <code>Promise()</code>
-    * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(boolean)</code>
+    * [.switchToParentFrame()](#Page+switchToParentFrame) ⇒ <code>Promise(Boolean)</code>
     * [.uploadFile(selector, filename)](#Page+uploadFile) ⇒ <code>Promise()</code>
     * [.waitForLoad()](#Page+waitForLoad) ⇒ <code>Promise()</code>
     * [.waitForSelector(selector, timeout)](#Page+waitForSelector) ⇒ <code>Promise()</code>
@@ -125,13 +125,13 @@ Adds a cookie to the webpage. Settings can be seen below. Some are required
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| options | <code>object</code> |  |  |
-| options.name | <code>string</code> |  | A valid cookie name |
-| options.value | <code>string</code> |  | A cookie value |
-| options.path | <code>string</code> |  | The path of the cookie |
-| options.domain | <code>string</code> | <code>&quot;string&quot;</code> | The domain of the cookie |
-| options.httponly | <code>boolean</code> | <code>false</code> | Whether to use HTTP only. |
-| options.secure | <code>boolean</code> | <code>false</code> | Whether it should be secure or not |
+| options | <code>Object</code> |  |  |
+| options.name | <code>String</code> |  | A valid cookie name |
+| options.value | <code>String</code> |  | A cookie value |
+| options.path | <code>String</code> |  | The path of the cookie |
+| options.domain | <code>String</code> | <code>string</code> | The domain of the cookie |
+| options.httponly | <code>Boolean</code> | <code>false</code> | Whether to use HTTP only. |
+| options.secure | <code>Boolean</code> | <code>false</code> | Whether it should be secure or not |
 | options.expires | <code>Number</code> |  | Number of miliseonds given                                                     with Date.now / Date.getTime                                                      it should be valid |
 
 <a name="Page+addLocalResource"></a>
@@ -152,10 +152,10 @@ storage of this page will be available when the page
 is loaded.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Params**: <code>object</code> options  
-**Params**: <code>string</code> options.name Unique name, used for retrieval/removal  
-**Params**: <code>buffer</code> options.content A buffer of the file content  
-**Params**: <code>string</code> options.filename Full filename and directory of
+**Params**: <code>Object</code> options  
+**Params**: <code>String</code> options.name Unique name, used for retrieval/removal  
+**Params**: <code>Buffer</code> options.content A buffer of the file content  
+**Params**: <code>String</code> options.filename Full filename and directory of
                                   the file as it should be stored
                                   in the temporary directory in
                                   order to be retrievable by the page  
@@ -183,7 +183,7 @@ let status = yield page.openHtml(html);
 ```
 <a name="Page+clearCookies"></a>
 
-### page.clearCookies() ⇒ <code>Promise(boolean)</code>
+### page.clearCookies() ⇒ <code>Promise(Boolean)</code>
 [clearCookie](http://phantomjs.org/api/webpage/method/clear-cookies.html)
 
 Deletes all the cookies visible to the current URL.
@@ -191,13 +191,13 @@ Deletes all the cookies visible to the current URL.
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+clearLocalResources"></a>
 
-### page.clearLocalResources() ⇒ <code>boolean</code>
+### page.clearLocalResources() ⇒ <code>Boolean</code>
 *Wrapper Specific*
 
 Removes all resouces within the resource-list
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>boolean</code> - returns true if some were removed, otherwise false  
+**Returns**: <code>Boolean</code> - returns true if some were removed, otherwise false  
 <a name="Page+clearMemoryCache"></a>
 
 ### page.clearMemoryCache() ⇒ <code>Promise()</code>
@@ -237,7 +237,7 @@ the argument.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | Cookie name |
+| name | <code>String</code> | Cookie name |
 
 <a name="Page+evaluate"></a>
 
@@ -289,7 +289,7 @@ of the webpage. It is very familiar with `evaluate`.
 
 | Param | Type |
 | --- | --- |
-| javaScriptStr | <code>string</code> | 
+| javaScriptStr | <code>String</code> | 
 
 <a name="Page+evaluateAsync"></a>
 
@@ -305,16 +305,12 @@ to [this](http://stackoverflow.com/questions/22474525/how-we-can-use-evaluateasy
 question. I cannot find any sources to back it up, so I will have to check this later.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Todo**
-
-- [ ] Make sure to throughly test this function
-
 
 | Param | Type | Description |
 | --- | --- | --- |
 | fn | <code>function</code> | Function to be evaluated |
-| num | <code>number</code> | number of miliseconds to wait until the function should run |
-| args | <code>args</code> | arguments to send |
+| num | <code>Number</code> | number of miliseconds to wait until the function should run |
+| args | <code>Args</code> | arguments to send |
 
 <a name="Page+get"></a>
 
@@ -346,7 +342,7 @@ Example: To set/get the value paperSize.width you would do the following:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | name of the property |
+| name | <code>String</code> | name of the property |
 
 **Example**  
 ```js
@@ -357,30 +353,30 @@ page.get('paperSize.width')
 ```
 <a name="Page+getCookie"></a>
 
-### page.getCookie(name) ⇒ <code>Promise(object)</code>
+### page.getCookie(name) ⇒ <code>Promise(Object)</code>
 *Wrapper Specific*
 
 Retrives a cookie by a name. Returns undefined if none is found.
 Name is not case-sensitive
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(object)</code> - object of same type as can be found in `addCookie` documentation  
+**Returns**: <code>Promise(Object)</code> - object of same type as can be found in `addCookie` documentation  
 
 | Param | Type |
 | --- | --- |
-| name | <code>string</code> | 
+| name | <code>String</code> | 
 
 <a name="Page+getLocalResource"></a>
 
-### page.getLocalResource() ⇒ <code>object</code> &#124; <code>null</code>
+### page.getLocalResource() ⇒ <code>Object</code> &#124; <code>Null</code>
 *Wrapper Specific*
 
 Retrieves a resource from the resource-list by name, if it exists.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>object</code> &#124; <code>null</code> - null if no resource was found,
+**Returns**: <code>Object</code> &#124; <code>Null</code> - null if no resource was found,
                        otherwise the resource  
-**Params**: <code>string</code> name the name of the resource  
+**Params**: <code>String</code> name the name of the resource  
 <a name="Page+getPage"></a>
 
 ### page.getPage(windowName) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
@@ -403,11 +399,11 @@ and try to match.
 
 | Param | Type |
 | --- | --- |
-| windowName | <code>string</code> | 
+| windowName | <code>String</code> | 
 
 <a name="Page+go"></a>
 
-### page.go(historyRelativeIndex) ⇒ <code>Promise(boolean)</code>
+### page.go(historyRelativeIndex) ⇒ <code>Promise(Boolean)</code>
 [go](http://phantomjs.org/api/webpage/method/go.html)
 
 *Developer Note*: Above link contains no information.
@@ -420,15 +416,15 @@ Modelled after JavaScript "window.go(num)" method:
 {@see https://developer.mozilla.org/en-US/docs/DOM/window.history#Syntax}.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if it goes forward/backward in Navigation History, false otherwise  
+**Returns**: <code>Promise(Boolean)</code> - true if it goes forward/backward in Navigation History, false otherwise  
 
 | Param | Type |
 | --- | --- |
-| historyRelativeIndex | <code>number</code> | 
+| historyRelativeIndex | <code>Number</code> | 
 
 <a name="Page+goBack"></a>
 
-### page.goBack() ⇒ <code>Promise(boolean)</code>
+### page.goBack() ⇒ <code>Promise(Boolean)</code>
 [goBack](http://phantomjs.org/api/webpage/method/go-back.html)
 
 
@@ -438,10 +434,10 @@ This is taken from [PhantomJS source code comments](https://github.com/ariya/pha
 Goes back in the Navigation History
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if it does go back in Navigation History, false otherwise  
+**Returns**: <code>Promise(Boolean)</code> - true if it does go back in Navigation History, false otherwise  
 <a name="Page+goForward"></a>
 
-### page.goForward() ⇒ <code>Promise(boolean)</code>
+### page.goForward() ⇒ <code>Promise(Boolean)</code>
 [goForward](http://phantomjs.org/api/webpage/method/go-forward.html)
 
 *Developer Note*: Above link contains no information.
@@ -450,7 +446,7 @@ This is taken from [PhantomJS source code comments](https://github.com/ariya/pha
 Goes forward in the Navigation History
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if goes forward in Navigation History, false otherwise  
+**Returns**: <code>Promise(Boolean)</code> - true if goes forward in Navigation History, false otherwise  
 <a name="Page+isClosed"></a>
 
 ### page.isClosed() ⇒ <code>Promise(Boolean)</code>
@@ -471,7 +467,7 @@ page and executes the callback upon completion.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| url | <code>string</code> | The url to retrieve the JS from |
+| url | <code>String</code> | The url to retrieve the JS from |
 
 <a name="Page+injectJs"></a>
 
@@ -490,7 +486,7 @@ in PhantomJS) is used for additional lookup.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| filename | <code>string</code> | filename to inject |
+| filename | <code>String</code> | filename to inject |
 
 <a name="Page+onAlert"></a>
 
@@ -878,7 +874,7 @@ To retrieve the old URL, use the onLoadStarted callback.
 
 <a name="Page+open"></a>
 
-### page.open(url, methodOrSettings, data) ⇒ <code>Promise(string)</code>
+### page.open(url, methodOrSettings, data) ⇒ <code>Promise(String)</code>
 [open](http://phantomjs.org/api/webpage/method/open.html)
 
 Opens the URL and loads it to the page. Once the page is loaded the promise function
@@ -886,21 +882,21 @@ is invoked. In addition, the page.onLoadFinished will also be called.
 Will give a status in the form of 'success' or 'fail' string
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - status of the load, either 'success' or 'fail'  
+**Returns**: <code>Promise(String)</code> - status of the load, either 'success' or 'fail'  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| url | <code>string</code> | URL to do the request towards. Can be local file |
-| methodOrSettings | <code>string</code> &#124; <code>object</code> | The method as a string or a settings object |
-| settings.operation | <code>string</code> | The type of method - POST / GEt |
-| settings.encoding | <code>encoding</code> | The encoding to use |
-| settings.headers | <code>object</code> | An object with headers |
-| settings.data | <code>string</code> | Stringified data (JSON etc) |
-| data | <code>string</code> | Only used when methodOrSettings is a string |
+| url | <code>String</code> | URL to do the request towards. Can be local file |
+| methodOrSettings | <code>String</code> &#124; <code>Object</code> | The method as a string or a settings object |
+| settings.operation | <code>String</code> | The type of method - POST / GEt |
+| settings.encoding | <code>String</code> | The encoding to use |
+| settings.headers | <code>Object</code> | An object with headers |
+| settings.data | <code>String</code> | Stringified data (JSON etc) |
+| data | <code>String</code> | Only used when methodOrSettings is a string |
 
 <a name="Page+openHtml"></a>
 
-### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(string)</code>
+### page.openHtml(htmlString, templateRenderDir) ⇒ <code>Promise(String)</code>
 *Wrapper Specific*
 
 Uses a HTML string to open a webpage. If templateRenderDir
@@ -914,12 +910,12 @@ template again. If you need to render after using .openHtml,
 use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - either success or fail  
+**Returns**: <code>Promise(String)</code> - either success or fail  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| htmlString | <code>string</code> | String to render |
-| templateRenderDir | <code>string</code> | Where to save the HTML file (optional) |
+| htmlString | <code>String</code> | String to render |
+| templateRenderDir | <code>String</code> | Where to save the HTML file (optional) |
 
 **Example**  
 ```js
@@ -930,7 +926,7 @@ page.openHtml(htmlString)
 ```
 <a name="Page+openTemplate"></a>
 
-### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(string)</code>
+### page.openTemplate(template, templateRenderDir, options) ⇒ <code>Promise(String)</code>
 *Wrapper Specific*
 
 Expects a template that has a .render function that takes the options
@@ -952,13 +948,13 @@ template again. If you need to render after using .openTemplate,
 use .renderPdf, .render or .renderBase64
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - status that is either fail or success  
+**Returns**: <code>Promise(String)</code> - status that is either fail or success  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| template | <code>object</code> | template object with a .render function |
-| templateRenderDir | <code>string</code> | Where to render the html file |
-| options | <code>object</code> | options that should be sent to the .render function |
+| template | <code>Object</code> | template object with a .render function |
+| templateRenderDir | <code>String</code> | Where to render the html file |
+| options | <code>Object</code> | options that should be sent to the .render function |
 
 **Example**  
 ```js
@@ -983,9 +979,9 @@ page.openTemplate(template, {pretty: true})
 
 | Param | Type |
 | --- | --- |
-| url | <code>string</code> | 
-| httpConf | <code>httpConf</code> | 
-| settings | <code>settings</code> | 
+| url | <code>String</code> | 
+| httpConf | <code>HttpConf</code> | 
+| settings | <code>Settings</code> | 
 
 <a name="Page+reload"></a>
 
@@ -997,21 +993,21 @@ page.openTemplate(template, {pretty: true})
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+removeLocalResource"></a>
 
-### page.removeLocalResource(name) ⇒ <code>boolean</code>
+### page.removeLocalResource(name) ⇒ <code>Boolean</code>
 *Wrapper Specific*
 
 Removes a localresource by name. Returns true if removed,
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>boolean</code> - true if removed, false if not found  
+**Returns**: <code>Boolean</code> - true if removed, false if not found  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | the name of the resource to remove |
+| name | <code>String</code> | the name of the resource to remove |
 
 <a name="Page+render"></a>
 
-### page.render(filename, format, quality) ⇒ <code>Promise()</code>
+### page.render(filename, [format], [quality]) ⇒ <code>Promise()</code>
 [render](http://phantomjs.org/api/webpage/method/render.html)
 
 Renders the webpage to an image buffer and saves it as the specified
@@ -1033,13 +1029,13 @@ There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| filename | <code>string</code> |  | Where to save the file. |
-| format | <code>string</code> | <code>&quot;png&quot;</code> | If format is not specified, the file extension                             is extracted and used as the format. |
-| quality | <code>number</code> | <code>100</code> | String or number value between 0 and 100 |
+| filename | <code>String</code> |  | Where to save the file. |
+| [format] | <code>String</code> | <code>png</code> | If format is not specified, the file extension                               is extracted and used as the format. |
+| [quality] | <code>Number</code> | <code>100</code> | String or number value between 0 and 100 |
 
 <a name="Page+renderBase64"></a>
 
-### page.renderBase64(format) ⇒ <code>Promise(string)</code>
+### page.renderBase64([format]) ⇒ <code>Promise(String)</code>
 [renderBase64](http://phantomjs.org/api/webpage/method/render-base64.html)
 
 Renders the webpage to an image buffer and returns the result as a
@@ -1053,11 +1049,11 @@ Use with caution.
 There is also an issue on [this](https://github.com/ariya/phantomjs/issues/13135)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(string)</code> - base64-encoded string  
+**Returns**: <code>Promise(String)</code> - base64-encoded string  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| format | <code>string</code> | <code>&quot;png&quot;</code> | Either 'png', 'gif' or 'jpeg' |
+| [format] | <code>String</code> | <code>png</code> | Either 'png', 'gif' or 'jpeg' |
 
 <a name="Page+renderHtml"></a>
 
@@ -1086,8 +1082,8 @@ use .renderPdf, .render or .renderBase64
 
 | Param | Type | Description |
 | --- | --- | --- |
-| htmlString | <code>string</code> | the HTML string |
-| templateRenderDir | <code>string</code> | directory to save the temp HTML file |
+| htmlString | <code>String</code> | the HTML string |
+| templateRenderDir | <code>String</code> | directory to save the temp HTML file |
 
 **Example**  
 ```js
@@ -1138,19 +1134,19 @@ use .renderPdf, .render or .renderBase64
 
 | Param | Type | Description |
 | --- | --- | --- |
-| template | <code>object</code> | template object with a .render function |
-| templateRenderDir | <code>string</code> | Where to render the html file |
-| options | <code>object</code> | options that should be sent to the .render function |
+| template | <code>Object</code> | template object with a .render function |
+| templateRenderDir | <code>String</code> | Where to render the html file |
+| options | <code>Object</code> | options that should be sent to the .render function |
 
 <a name="Page+sendEvent"></a>
 
-### page.sendEvent() ⇒ <code>Promise()</code>
+### page.sendEvent(eventType, mouseXOrKeys, mouseY, button, modifier) ⇒ <code>Promise()</code>
 [sendEvent](http://phantomjs.org/api/webpage/method/send-event.html)
 
 The events are not synthetic DOM events, each event is sent to the web page
 as if it comes as part of user interaction.
 
-Mouse events
+## Mouse events
 
 `sendEvent(mouseEventType[, mouseX, mouseY, button='left'])`
 
@@ -1162,8 +1158,10 @@ for the event.
 The button parameter (defaults to left) specifies the button to push.
 For 'mousemove', however, there is no button pressed (i.e. it is not dragging).
 
-Keyboard events
-sendEvent(keyboardEventType, keyOrKeys, [null, null, modifier])
+## Keyboard events
+
+`sendEvent(keyboardEventType, keyOrKeys, [null, null, modifier])`
+
 The first argument is the event type. The supported types are:
 keyup, keypress and keydown.
 The second parameter is a key (from page.event.key), or a string.
@@ -1176,10 +1174,20 @@ the modifier key.
 - 0x08000000: An Alt key on the keyboard is pressed
 - 0x10000000: A Meta key on the keyboard is pressed
 - 0x20000000: A keypad button is pressed
+
 Third and fourth argument are not taken account for keyboard events.
 Just give null for them.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eventType | <code>String</code> | See above |
+| mouseXOrKeys | <code>Number</code> &#124; <code>Array.&lt;String&gt;</code> | See above |
+| mouseY | <code>Number</code> &#124; <code>Null</code> | See above |
+| button | <code>String</code> | See above |
+| modifier | <code>String</code> | See above |
+
 <a name="Page+set"></a>
 
 ### page.set(name, value) ⇒ <code>Promise()</code>
@@ -1215,8 +1223,8 @@ Example: To set/get the value paperSize.width you would do the following:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | name of the property |
-| value | <code>anything</code> | value of the property |
+| name | <code>String</code> | name of the property |
+| value | <code>Anything</code> | value of the property |
 
 **Example**  
 ```js
@@ -1238,8 +1246,8 @@ url, without any actual http request being made.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| content | <code>string</code> | The HTML content of the webpage |
-| url | <code>string</code> | The URL of the webpage |
+| content | <code>String</code> | The HTML content of the webpage |
+| url | <code>String</code> | The URL of the webpage |
 
 <a name="Page+setFn"></a>
 
@@ -1259,7 +1267,7 @@ it and PhantomJS only supports ES5. This will be an error in v4
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | name of the event ('onConfirm', etc) |
+| name | <code>String</code> | name of the event ('onConfirm', etc) |
 | fn | <code>function</code> | handler of the event |
 
 <a name="Page+stop"></a>
@@ -1308,7 +1316,7 @@ Switches focus from the Current Frame to a Child Frame, identified by it positio
 
 | Param | Type | Description |
 | --- | --- | --- |
-| framePosition | <code>number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
+| framePosition | <code>Number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
 
 <a name="Page+switchToMainFrame"></a>
 
@@ -1323,7 +1331,7 @@ Switches focus to the Main Frame within this Page.
 **Kind**: instance method of <code>[Page](#Page)</code>  
 <a name="Page+switchToParentFrame"></a>
 
-### page.switchToParentFrame() ⇒ <code>Promise(boolean)</code>
+### page.switchToParentFrame() ⇒ <code>Promise(Boolean)</code>
 [switchToParentFrame](http://phantomjs.org/api/webpage/method/switch-to-parent-frame.html)
 
 *Developer Note*: Above link contains no information.
@@ -1332,7 +1340,7 @@ This is taken from [PhantomJS source code comments](https://github.com/ariya/pha
 Switches focus to the Parent Frame of the Current Frame (if it exists).
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Returns**: <code>Promise(boolean)</code> - true if the Current Frame is not a Main Frame,
+**Returns**: <code>Promise(Boolean)</code> - true if the Current Frame is not a Main Frame,
                             false otherwise (i.e. there is no parent frame to switch to)  
 <a name="Page+uploadFile"></a>
 
@@ -1349,8 +1357,8 @@ via this special function instead
 
 | Param | Type |
 | --- | --- |
-| selector | <code>string</code> | 
-| filename | <code>string</code> | 
+| selector | <code>String</code> | 
+| filename | <code>String</code> | 
 
 <a name="Page+waitForLoad"></a>
 
@@ -1365,7 +1373,7 @@ to load takes more than specified by `timeout`, which
 defaults to 20 seconds (20 000 milliseocnds)
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Params**: <code>number</code> [timeout=20000] time to wait before rejecting  
+**Params**: <code>Number</code> [timeout=20000] time to wait before rejecting  
 **Example**  
 ```js
 let page = yield phantom.createPage();
@@ -1393,8 +1401,8 @@ and doesn't exist at pageload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| selector | <code>string</code> | selector such as '.myclass' or '#myid' |
-| timeout | <code>number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
+| selector | <code>String</code> | selector such as '.myclass' or '#myid' |
+| timeout | <code>Number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
 
 **Example**  
 ```js
