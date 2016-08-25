@@ -1196,8 +1196,98 @@ Just give null for them.
 As all operations are done over HTTP, the setting and getting
 of properties uses callbacks to indicate that they're set or to return
 a value
+
 Will check the name against allowed properties. Throws error if the
 property doesn't exist or if it's a read only value.
+
+The legal properties to change using this method are the following:
+
+Name                              | Type           | Description
+----------------------------------|----------------|---------------------------------------------------
+[canGoBack][1]                    | Boolean        | Sets whether the page should be able to go back.
+[canGoForward][2]                 | Boolean        | Sets whether the page should be able to go forward.
+[clipRect][3]                     | Object         | Defines the rectangular area to be rendered
+[clipRect.top][3]                 | Number         | Defines the top point of the rectangular area
+[clipRect.left][3]                | Number         | Defines the left point of the rectangular area
+[clipRect.width][3]               | Number         | Defines the width of the rectangular area
+[clipRect.width][3]               | Number         | Defines the height of the rectangular area
+[content][4]                      | String         | This property contains the HTML of the page.
+[cookies][5]                      | Object[]       | A list of all the cookies defined on the page
+[customHeaders][6]                | Object         | Specifies headers that should be included on requests
+[event][7]                        | Undocumented   | No documentation
+[libraryPath][16]                 | String         | Stores the path used by `page.injectJs`
+[navigationLocked][17]            | Boolean        | If true, the page wont be able to navigate from current page
+[offlineStoragePath][18]          | String         | The path to the offline storage
+[offlineStorageQuota][19]         | Undocumented   | No documentation
+[ownsPages][20]                   | Undocumented   | No documentation
+[pagesWindowName][21]             | String         | No documentation
+[pages][22]                       | Object         | No documentation
+[paperSize][23]                   | Object         | Defines the size of teh webpage when rendered to PDF
+[paperSize.width][23]             | Number         | Defines the width of the webpage when rendered to PDF
+[paperSize.height][23]            | Number         | Defines the height of the webpage when rendered to PDF
+[papersize.format][23]            | String         | Supporeted are 'A3', 'A4', 'A5', 'Legal', 'Letter' and 'Tabloid'
+[paperSize.orientation][23]       | String         | Oritentation of the document, either 'landscape' or 'portrait'
+[paperSize.margin][23]            | Object, Number | Margin of the document.
+[paperSize.margin.top][23]        | Number         | Top margin of the document
+[paperSize.margin.right][23]      | Number         | Right margin of the document
+[paperSize.margin.bottom][23]     | Number         | Bottom margin of the document
+[paperSize.margin.left][23]       | Number         | Left margin of the document
+[paperSize.header][23]            | Object         | Can be used to add a repeating header on all pages
+[paperSize.header.height][23]     | Number         | The total height of the header                // string
+[paperSize.header.contents][23]   | Function       | Function that should be executed to get header
+[paperSize.footer][23]            | Object         | Can be used to add a repeating footer on all pages
+[paperSize.footer.height][23]     | Number         | The total height of the footer
+[paperSize.footer.contents][23]   | Function       | Function that should be executed to get header
+[scrollPosition][25]              | Object         | Defines the scroll position on the page
+[scrollPosition.top][25]          | Number         | Defines the top scroll position
+[scrollPosition.left][25]         | Number         | Defines the left scroll position
+[setttings][26]                   | Object         | Settings that can be set, must be set before `page.open`
+[settings.localToRemoteUrlAccessEnabled][26] | Boolean   | Whether local resource can access remote Urls.
+[settings.javascriptEnabled][26]  | Boolean        | Whether JavaScript should be enabled or not
+[settings.loadImages][26]         | Boolean        | Whether inline images should be loaded
+[settings.userAgent][26]          | String         | Defines the user agent sent to server
+[settings.userName][26]           | String         | Sets the username used for HTTP authentication
+[settings.password][26]           | String         | Sets the password used for HTTP authentication
+[settings.XSSAuditingEnabled][26] | Boolean        | Whether load requests should be monitored for XSS-attempts
+[settings.webSecurityEnabled][26] | Boolean        | Whether web security should be enabled or not
+[settings.resourceTimeout][26]    | Number         | How many miliseconds it should wait before cancelling resources
+[viewportSize][29]                | Object         | Size of the windows that PhantomJS has.
+[viewportSize.width][29]          | Number         | Width of the window, height must also be defined
+[viewportSize.height][29]         | Number         | Height of the window
+[windowName][30]                  | String         | Name of the window
+[zoomFactor][31]                  | Number         | Sets how far in the page should be zoomed
+
+[1]: http://phantomjs.org/api/webpage/property/can-go-back.html
+[2]: http://phantomjs.org/api/webpage/property/can-go-forward.html
+[3]: http://phantomjs.org/api/webpage/property/clip-rect.html
+[4]: http://phantomjs.org/api/webpage/property/content.html
+[5]: http://phantomjs.org/api/webpage/property/cookies.html
+[6]: http://phantomjs.org/api/webpage/property/custom-headers.html
+[7]: http://phantomjs.org/api/webpage/property/event.html
+[8]: http://phantomjs.org/api/webpage/property/focused-frame-name.html
+[9]: http://phantomjs.org/api/webpage/property/frame-content.html
+[10]: http://phantomjs.org/api/webpage/property/frame-name.html
+[11]: http://phantomjs.org/api/webpage/property/frame-plain-text.html
+[12]: http://phantomjs.org/api/webpage/property/frame-title.html
+[13]: http://phantomjs.org/api/webpage/property/frame-url.html
+[14]: http://phantomjs.org/api/webpage/property/frames-count.html
+[15]: http://phantomjs.org/api/webpage/property/frames-name.html
+[16]: http://phantomjs.org/api/webpage/property/library-path.html
+[17]: http://phantomjs.org/api/webpage/property/navigation-locked.html
+[18]: http://phantomjs.org/api/webpage/property/offline-storage-path.html
+[19]: http://phantomjs.org/api/webpage/property/offline-storage-quota.html
+[20]: http://phantomjs.org/api/webpage/property/owns-pages.html
+[21]: http://phantomjs.org/api/webpage/property/pages-window-name.html
+[22]: http://phantomjs.org/api/webpage/property/pages.html
+[23]: http://phantomjs.org/api/webpage/property/paper-size.html
+[24]: http://phantomjs.org/api/webpage/property/plain-text.html
+[25]: http://phantomjs.org/api/webpage/property/scroll-position.html
+[26]: http://phantomjs.org/api/webpage/property/settings.html
+[27]: http://phantomjs.org/api/webpage/property/title.html
+[28]: http://phantomjs.org/api/webpage/property/url.html
+[29]: http://phantomjs.org/api/webpage/property/viewport-size.html
+[30]: http://phantomjs.org/api/webpage/property/window-name.html
+[31]: http://phantomjs.org/api/webpage/property/zoom-factor.html
 
 *Developer Note*: `paperSize.header.contents` and `paperSize.footer.contents` take
 functions that are evaluated in PhantomJS, meaning they will not have
