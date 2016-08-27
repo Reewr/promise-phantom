@@ -1,0 +1,14 @@
+#!/bin/node
+'use strict';
+const markdown = require('jsdoc-to-markdown');
+const fs = require('fs');
+
+let toMarkdown = function(input, output) {
+  fs.createReadStream(input)
+    .pipe(markdown())
+    .pipe(fs.createWriteStream(output));
+};
+
+toMarkdown('index.js', 'docs/index.md');
+toMarkdown('lib/webpage.js', 'docs/webpage.md');
+toMarkdown('lib/phantom.js', 'docs/phantom.md');
