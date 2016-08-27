@@ -14,6 +14,7 @@ In order to use this library you need to have two things:
 2. PhantomJS either installed or somewhere located on your system.
 
 If you can do the following:
+
 ```
 $ phantomjs
 ```
@@ -77,8 +78,13 @@ driver.create(options)
 With [co](https://github.com/tj/co), this becomes significantly cleaner:
 
 ```javascript
-let co = require('co');
+'use strict';
+let co      = require('co');
+let driver  = require('promise-phantom');
+let options = {path: 'path/to/phantomjs/if/not/in/global/path'};
+
 let renderGoogle = function* () {
+  // Start phantom and create page
   let phantom = yield driver.create(options);
   let page    = yield phantom.createPage();
 
@@ -180,5 +186,5 @@ Version | Date       | Description
 
 I would like to thank those who have contributed to this project. Your help is always appreciated.
 
-- [jonathanchrisp](https://github.com/jonathanchrisp) for fixing [#8](https://github.com/Reewr/promise-phantom/issues/8)
+- [Jonathan Chrisp](https://github.com/jonathanchrisp) for fixing [#8](https://github.com/Reewr/promise-phantom/issues/8)
 
