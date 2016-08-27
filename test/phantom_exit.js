@@ -25,6 +25,10 @@ describe('phantom.exit', function() {
     return phantom.exit().should.eventually.equal(undefined).notify(done);
   });
 
+  it('should just return if already exited', function(done) {
+    return phantom.exit().should.eventually.equal(undefined).notify(done);
+  });
+
   it('should cause all other functions to throw errors', function() {
     expect(phantom.hasExited()).to.equal(true);
     expect(() => phantom.throwIfExited()).to.throw(Error);
