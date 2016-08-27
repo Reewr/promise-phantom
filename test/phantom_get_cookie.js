@@ -56,6 +56,10 @@ describe('phantom.getCookie', function() {
     });
   });
 
+  it('should return undefined on non-existing cookies', function() {
+    return phantom.getCookie('not-exist').should.eventually.equal(undefined);
+  });
+
   after(function stopPhantom(done) {
     return phantom.exit().then(() => done()).catch((err) => done(err));
   });
