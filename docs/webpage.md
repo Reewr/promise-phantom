@@ -52,7 +52,7 @@ All functions are listed in alphabetical order
 
 * [Page](#Page)
     * [.addCookie(options)](#Page+addCookie) ⇒ <code>Promise(Boolean)</code>
-    * [.addLocalResource()](#Page+addLocalResource)
+    * [.addLocalResource(options)](#Page+addLocalResource)
     * [.clearCookies()](#Page+clearCookies) ⇒ <code>Promise(Boolean)</code>
     * [.clearLocalResources()](#Page+clearLocalResources) ⇒ <code>Boolean</code>
     * [.clearMemoryCache()](#Page+clearMemoryCache) ⇒ <code>Promise()</code>
@@ -63,7 +63,7 @@ All functions are listed in alphabetical order
     * [.evaluateAsync(fn, num, args)](#Page+evaluateAsync) ⇒ <code>Promise()</code>
     * [.get(name)](#Page+get) ⇒ <code>Promise(value)</code>
     * [.getCookie(name)](#Page+getCookie) ⇒ <code>Promise(Object)</code>
-    * [.getLocalResource()](#Page+getLocalResource) ⇒ <code>Object</code> &#124; <code>Null</code>
+    * [.getLocalResource(name)](#Page+getLocalResource) ⇒ <code>Object</code> &#124; <code>Null</code>
     * [.getPage(windowName)](#Page+getPage) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
     * [.go(historyRelativeIndex)](#Page+go) ⇒ <code>Promise(Boolean)</code>
     * [.goBack()](#Page+goBack) ⇒ <code>Promise(Boolean)</code>
@@ -132,11 +132,11 @@ Adds a cookie to the webpage. Settings can be seen below. Some are required
 | options.domain | <code>String</code> | <code>string</code> | The domain of the cookie |
 | options.httponly | <code>Boolean</code> | <code>false</code> | Whether to use HTTP only. |
 | options.secure | <code>Boolean</code> | <code>false</code> | Whether it should be secure or not |
-| options.expires | <code>Number</code> |  | Number of miliseonds given                                                     with Date.now / Date.getTime                                                      it should be valid |
+| options.expires | <code>Number</code> |  | Number of milliseconds given                                                     with Date.now / Date.getTime                                                      it should be valid |
 
 <a name="Page+addLocalResource"></a>
 
-### page.addLocalResource()
+### page.addLocalResource(options)
 *Wrapper Specific*
 
 Adds a local resource for use in pages that are rendered
@@ -152,13 +152,14 @@ storage of this page will be available when the page
 is loaded.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
-**Params**: <code>Object</code> options  
-**Params**: <code>String</code> options.name Unique name, used for retrieval/removal  
-**Params**: <code>Buffer</code> options.content A buffer of the file content  
-**Params**: <code>String</code> options.filename Full filename and directory of
-                                  the file as it should be stored
-                                  in the temporary directory in
-                                  order to be retrievable by the page  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> |  |
+| options.name | <code>String</code> | Unique name, used for retrieval/removal |
+| options.content | <code>Buffer</code> | A buffer of the file content |
+| options.filename | <code>String</code> | Full filename and directory of                                   the file as it should be stored                                   in the temporary directory in                                   order to be retrievable by the page |
+
 **Example**  
 ```js
 let page = yield phantom.createPage();
@@ -227,7 +228,7 @@ functions, causing them to throw errors if they are used.
 <a name="Page+deleteCookie"></a>
 
 ### page.deleteCookie(name) ⇒ <code>Promise(Boolean)</code>
-[deletCookie](http://phantomjs.org/api/webpage/method/delete-cookie.html)
+[deleteCookie](http://phantomjs.org/api/webpage/method/delete-cookie.html)
 
 Delete any Cookies visible to the current URL with a name that matches
 the argument.
@@ -296,7 +297,7 @@ of the webpage. It is very familiar with `evaluate`.
 ### page.evaluateAsync(fn, num, args) ⇒ <code>Promise()</code>
 [evaulateAsync](http://phantomjs.org/api/webpage/method/evaluate-async.html)
 
-Evaulates a given function in the context of the webpage without blocking
+Evaluates a given function in the context of the webpage without blocking
 the current execution (Phantom process - not Node). Unlike `evaluate`, this
 function cannot take any arguments and will not return any values.
 
@@ -309,7 +310,7 @@ question. I cannot find any sources to back it up, so I will have to check this 
 | Param | Type | Description |
 | --- | --- | --- |
 | fn | <code>function</code> | Function to be evaluated |
-| num | <code>Number</code> | number of miliseconds to wait until the function should run |
+| num | <code>Number</code> | number of milliseconds to wait until the function should run |
 | args | <code>Args</code> | arguments to send |
 
 <a name="Page+get"></a>
@@ -356,8 +357,8 @@ Name                              | Type           | Description
 [paperSize][23]                   | Object         | Defines the size of teh webpage when rendered to PDF
 [paperSize.width][23]             | Number         | Defines the width of the webpage when rendered to PDF
 [paperSize.height][23]            | Number         | Defines the height of the webpage when rendered to PDF
-[papersize.format][23]            | String         | Supporeted are 'A3', 'A4', 'A5', 'Legal', 'Letter' and 'Tabloid'
-[paperSize.orientation][23]       | String         | Oritentation of the document, either 'landscape' or 'portrait'
+[papersize.format][23]            | String         | Supported are 'A3', 'A4', 'A5', 'Legal', 'Letter' and 'Tabloid'
+[paperSize.orientation][23]       | String         | Orientation of the document, either 'landscape' or 'portrait'
 [paperSize.margin][23]            | Object, Number | Margin of the document.
 [paperSize.margin.top][23]        | Number         | Top margin of the document
 [paperSize.margin.right][23]      | Number         | Right margin of the document
@@ -382,7 +383,7 @@ Name                              | Type           | Description
 [settings.password][26]           | String         | Sets the password used for HTTP authentication
 [settings.XSSAuditingEnabled][26] | Boolean        | Whether load requests should be monitored for XSS-attempts
 [settings.webSecurityEnabled][26] | Boolean        | Whether web security should be enabled or not
-[settings.resourceTimeout][26]    | Number         | How many miliseconds it should wait before cancelling resources
+[settings.resourceTimeout][26]    | Number         | How many milliseconds it should wait before cancelling resources
 [title][27]                       | String         | Retrieve the title of the page
 [url][28]                         | String         | Retrieve the url of the page
 [viewportSize][29]                | Object         | Size of the windows that PhantomJS has.
@@ -443,7 +444,7 @@ page.get('paperSize.width')
 ### page.getCookie(name) ⇒ <code>Promise(Object)</code>
 *Wrapper Specific*
 
-Retrives a cookie by a name. Returns undefined if none is found.
+Retrieves a cookie by a name. Returns undefined if none is found.
 Name is not case-sensitive
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
@@ -455,7 +456,7 @@ Name is not case-sensitive
 
 <a name="Page+getLocalResource"></a>
 
-### page.getLocalResource() ⇒ <code>Object</code> &#124; <code>Null</code>
+### page.getLocalResource(name) ⇒ <code>Object</code> &#124; <code>Null</code>
 *Wrapper Specific*
 
 Retrieves a resource from the resource-list by name, if it exists.
@@ -463,7 +464,11 @@ Retrieves a resource from the resource-list by name, if it exists.
 **Kind**: instance method of <code>[Page](#Page)</code>  
 **Returns**: <code>Object</code> &#124; <code>Null</code> - null if no resource was found,
                        otherwise the resource  
-**Params**: <code>String</code> name the name of the resource  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>String</code> | the name of the resource |
+
 <a name="Page+getPage"></a>
 
 ### page.getPage(windowName) ⇒ <code>Promise(Page)</code> &#124; <code>Promise(null)</code>
@@ -633,7 +638,7 @@ the WebPage object closingPage will become invalid.
 as the onClosing handler in PhantomJS has already returned. This is, again, due to
 the async nature of node-phantom-simple.
 
-If you need to do something special with teh closingPage, this should
+If you need to do something special with the closingPage, this should
 be done through .setFn
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
@@ -733,7 +738,7 @@ may be used to change global objects
 *Developer Note*: Due to the async nature of node-phantom-simple, this call will
 most likely not be set in time, before the page is already initialized. Therefore
 it is suggested to not use this function and instead assume that the page
-is already initialize when recieved through a promise.
+is already initialize when received through a promise.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
 
@@ -747,7 +752,7 @@ is already initialize when recieved through a promise.
 [onLoadFinished](http://phantomjs.org/api/webpage/handler/on-load-finished.html)
 
 This callback is invoked when the page finishes the loading. It may accept a single argument
-indicating the page's status: 'success' if no network error occured, otherwise 'fail'.
+indicating the page's status: 'success' if no network error occurred, otherwise 'fail'.
 
 Also see `page.open` for an alternate hook for the `onLoadFinished` callback.
 
@@ -762,7 +767,7 @@ Also see `page.open` for an alternate hook for the `onLoadFinished` callback.
 ### page.onLoadStarted(handler)
 [onLoadStarted](http://phantomjs.org/api/webpage/handler/on-load-started.html)
 
-This callback is invoked when the page sarts the loading. There is no argument
+This callback is invoked when the page starts the loading. There is no argument
 passed to the callback.
 
 **Kind**: instance method of <code>[Page](#Page)</code>  
@@ -1200,7 +1205,7 @@ Expects a template that has a .render function that takes the options
 sent to it. A structure of such an example can be seen
 at [reewr-template](https://github.com/Reewr/reewr-template).
 
-This function will render the the template into a PDF and returns the
+This function will render the template into a PDF and returns the
 content as a Buffer
 
 If templateRenderDir is omitted, the HTML file will be saved in a temporary
@@ -1309,11 +1314,11 @@ Name                              | Type           | Description
 [ownsPages][20]                   | Undocumented   | No documentation
 [pagesWindowName][21]             | String         | No documentation
 [pages][22]                       | Object         | No documentation
-[paperSize][23]                   | Object         | Defines the size of teh webpage when rendered to PDF
+[paperSize][23]                   | Object         | Defines the size of the webpage when rendered to PDF
 [paperSize.width][23]             | Number         | Defines the width of the webpage when rendered to PDF
 [paperSize.height][23]            | Number         | Defines the height of the webpage when rendered to PDF
-[papersize.format][23]            | String         | Supporeted are 'A3', 'A4', 'A5', 'Legal', 'Letter' and 'Tabloid'
-[paperSize.orientation][23]       | String         | Oritentation of the document, either 'landscape' or 'portrait'
+[papersize.format][23]            | String         | Supported are 'A3', 'A4', 'A5', 'Legal', 'Letter' and 'Tabloid'
+[paperSize.orientation][23]       | String         | Orientation of the document, either 'landscape' or 'portrait'
 [paperSize.margin][23]            | Object, Number | Margin of the document.
 [paperSize.margin.top][23]        | Number         | Top margin of the document
 [paperSize.margin.right][23]      | Number         | Right margin of the document
@@ -1337,7 +1342,7 @@ Name                              | Type           | Description
 [settings.password][26]           | String         | Sets the password used for HTTP authentication
 [settings.XSSAuditingEnabled][26] | Boolean        | Whether load requests should be monitored for XSS-attempts
 [settings.webSecurityEnabled][26] | Boolean        | Whether web security should be enabled or not
-[settings.resourceTimeout][26]    | Number         | How many miliseconds it should wait before cancelling resources
+[settings.resourceTimeout][26]    | Number         | How many milliseconds it should wait before cancelling resources
 [viewportSize][29]                | Object         | Size of the windows that PhantomJS has.
 [viewportSize.width][29]          | Number         | Width of the window, height must also be defined
 [viewportSize.height][29]         | Number         | Height of the window
@@ -1392,6 +1397,7 @@ image to the main document and then setting the display to none.
 **Note**: If the value argument is a function it should not
 include any ES6 syntax, including arrow functions. This
 is due to it being stringified and sent to PhantomJS which evaluates
+
 it and PhantomJS only supports ES5. This will be an error in v4
 
 Example: To set/get the value paperSize.width you would do the following:
@@ -1493,7 +1499,7 @@ Switches focus from the Current Frame to a Child Frame, identified by it positio
 
 | Param | Type | Description |
 | --- | --- | --- |
-| framePosition | <code>Number</code> | Position of the Frame isnide the Child Frames Array (i.e "window.frames[i]") |
+| framePosition | <code>Number</code> | Position of the Frame inside the Child Frames Array (i.e "window.frames[i]") |
 
 <a name="Page+switchToMainFrame"></a>
 
@@ -1579,7 +1585,7 @@ and doesn't exist at pageload.
 | Param | Type | Description |
 | --- | --- | --- |
 | selector | <code>String</code> | selector such as '.myclass' or '#myid' |
-| timeout | <code>Number</code> | How long to wait at maxmium before throwing error, 10 seconds is default |
+| timeout | <code>Number</code> | How long to wait at maximum before throwing error, 10 seconds is default |
 
 **Example**  
 ```js

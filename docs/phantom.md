@@ -1,7 +1,7 @@
 <a name="Phantom"></a>
 
 ## Phantom
-The Phantom Class contains all the functionaility that would otherwise
+The Phantom Class contains all the functionality that would otherwise
 be in the global `phantom`-object in PhantomJS.
 
 All functions that are part of PhantomJS' API include the documentation
@@ -117,7 +117,7 @@ Returns a property, the following can be retrieved:
 ### phantom.getCookie(cookieName) ⇒ <code>Promise(Undefined)</code> &#124; <code>Promise(object)</code>
 *Wrapper specific*
 
-Retrieves a cookie by name. Does this by retreiving the cookie array
+Retrieves a cookie by name. Does this by retrieving the cookie array
 and finding the cookie that has the cookieName.
 
 **Kind**: instance method of <code>[Phantom](#Phantom)</code>  
