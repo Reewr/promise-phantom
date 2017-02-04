@@ -1,8 +1,8 @@
 # Changelog
 
-## Version 3.1.3 (NOT YET RELEASED)
+## Version 3.1.3
 
-**Date**: xx.xx.xxxx
+**Date**: 02.04.2017
 
 **Resolves**:
   - [#16](https://www.github.com/Reewr/promise-phantom/issues/16)
@@ -11,6 +11,8 @@
   - [#10](https://www.github.com/Reewr/promise-phantom/issues/10)
 
 This update mostly consists of documentation updates, which doesn't really need an NPM update. Adds legal options for [Page.set](./docs/webpage.md#Page+set) and [Page.get](./docs/webpage.md#Page+get) to the documentation. Fixes inconsistencies in the return types of the documentation. Removes static properties from the documentation due to them given no additional information. Also orders all functions in alphabetical order so that the documentation is easier to read.
+
+Lastly, this version updates the dependencies.
 
 ## Version 3.1.2
 
