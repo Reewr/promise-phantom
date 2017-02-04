@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/Reewr/promise-phantom.svg?branch=master)](https://travis-ci.org/Reewr/promise-phantom)
 [![Coverage Status](https://coveralls.io/repos/github/Reewr/promise-phantom/badge.svg?branch=master)](https://coveralls.io/github/Reewr/promise-phantom?branch=master)
 [![Dependency Status](https://david-dm.org/reewr/promise-phantom.svg)](https://david-dm.org/reewr/promise-phantom.svg)
+
 # promise-phantom
 
 This library is a more extensive promise-wrapper around the [node-simple-phantom](https://github.com/baudehlo/node-phantom-simple) library.
