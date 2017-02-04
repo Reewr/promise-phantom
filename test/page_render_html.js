@@ -51,6 +51,6 @@ describe('Page.renderHtml', function() {
   });
 
   it('should render a pdf', function(done) {
-    return page.renderHtml(html).should.eventually.be.instanceOf(Buffer).notify(done);
+    page.renderHtml(html).should.eventually.be.instanceOf(Buffer).notify(done);
   });
 });

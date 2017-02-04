@@ -54,7 +54,7 @@ describe('Page.render', function() {
 
   it('should render images to file', function(done) {
     this.timeout(5000);
-    return page.open(testPage).should.eventually.equal('success').then(() => {
+    page.open(testPage).should.eventually.equal('success').then(() => {
       return Promise.all([
         page.render(file1).should.eventually.equal(true),
         page.render(file2).should.eventually.equal(true),

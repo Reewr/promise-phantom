@@ -17,7 +17,7 @@ describe('phantom.injectJs', function() {
   before(function(done) {
     // starting up phantom may take some time on the first run
     this.timeout(5000);
-    return driver.create().then((ph) => {
+    driver.create().then((ph) => {
       phantom = ph;
 
       // Save the test function to inject

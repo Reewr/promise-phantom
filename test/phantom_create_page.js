@@ -15,7 +15,7 @@ describe('phantom.createPage', function() {
   before(function(done) {
     // starting up phantom may take some time on the first run
     this.timeout(5000);
-    return driver.create().then((ph) => {
+    driver.create().then((ph) => {
       phantom = ph;
       done();
     });
@@ -26,6 +26,6 @@ describe('phantom.createPage', function() {
   });
 
   after(function stopPhantom(done) {
-    return phantom.exit().then(() => done()).catch((err) => done(err));
+    phantom.exit().then(() => done()).catch((err) => done(err));
   });
 });

@@ -15,18 +15,18 @@ describe('phantom.exit', function() {
   before(function(done) {
     // starting up phantom may take some time on the first run
     this.timeout(5000);
-    return driver.create().then((ph) => {
+    driver.create().then((ph) => {
       phantom = ph;
       done();
     });
   });
 
   it('should close and return undefined', function(done) {
-    return phantom.exit().should.eventually.equal(undefined).notify(done);
+    phantom.exit().should.eventually.equal(undefined).notify(done);
   });
 
   it('should just return if already exited', function(done) {
-    return phantom.exit().should.eventually.equal(undefined).notify(done);
+    phantom.exit().should.eventually.equal(undefined).notify(done);
   });
 
   it('should cause all other functions to throw errors', function() {
