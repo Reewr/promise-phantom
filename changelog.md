@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 3.1.6
+
+**Date**: 02.04.2017
+
+This update adds an example that was made for an issue. In addition, it also removes some files that shouldnt have been in the NPM package. These are not on Github and should therefore not have been on NPM.
+
 ## Version 3.1.3
 
 **Date**: 02.04.2017
