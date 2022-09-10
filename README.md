@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/Reewr/promise-phantom.svg?branch=master)](https://travis-ci.org/Reewr/promise-phantom)
-[![Coverage Status](https://coveralls.io/repos/github/Reewr/promise-phantom/badge.svg?branch=master)](https://coveralls.io/github/Reewr/promise-phantom?branch=master)
-[![Dependency Status](https://david-dm.org/reewr/promise-phantom.svg)](https://david-dm.org/reewr/promise-phantom.svg)
-
 # promise-phantom
+
+**Note**: This repository has been archived. It is not recommended to use this package any longer as PhantomJS is no longer maintained. If you need the functionality that PhantomJS offers, I recommend looking at either Playwright or Puppeteer.
 
 This library is a more extensive promise-wrapper around the [node-simple-phantom](https://github.com/baudehlo/node-phantom-simple) library.
 
